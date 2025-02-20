@@ -2,15 +2,14 @@
 
 import { Drawer, DrawerHeader, DrawerBody, DrawerContent, DrawerFooter, Button, useDisclosure} from "@heroui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faTrash, faFaceFrown } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faTrash, faFaceFrown, faMinusCircle, faPlusCircle  } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import { useCartStore } from "@/store/useCartStore";
 import { useRouter } from "next/navigation";
 
 const Cart = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { cart } = useCartStore((state) => state);
-  const {clearCart} = useCartStore((state) => state);
+  const { cart, clearCart, removeFromCart, updateCartItem } = useCartStore((state) => state);
   const [products, setProducts] = useState(cart);
 
   const router = useRouter();
@@ -19,6 +18,17 @@ const Cart = () => {
     setProducts(cart);
   }, [cart]);
 
+  const increaseQuantity = (id: number, cantidad: number) => {
+    updateCartItem(id, cantidad + 1);
+  };
+
+  const decreaseQuantity = (id: number, cantidad: number) => {
+    if (cantidad > 1) {
+      updateCartItem(id, cantidad - 1);
+    } else {
+      removeFromCart(id); // Si la cantidad es 1 y se reduce, elimina el producto
+    }
+  };
 
   
   const sendMessage = () => {
@@ -31,7 +41,8 @@ const Cart = () => {
         subtotal += product.price * product.cantidad;
       });
 
-      message += `Total: $${subtotal}`
+      message += `Total: $${subtotal}`;
+      console.log(subtotal);
     return router.push(`https://wa.me/${number}?text=${message}`)
 
   }
@@ -47,10 +58,19 @@ const Cart = () => {
           <DrawerBody>
             {products.length > 0 ? (
               products.map((product) => (
-                <article key={product.id} className="flex justify-between items-center p-3 border-b border-gray-200">
-                  <h1 className="font-semibold">{product.name}</h1>
-                  <p className="text-gray-700">{product.price}</p>
-                  <p className="text-sm text-gray-600">x{product.cantidad}</p>
+                <article key={product.id} className="flex flex-col p-3 border-b border-gray-200">
+                  <div className="flex flex-row justify-between items-center">
+                    <header>
+                        <h1 className="font-semibold">{product.name}</h1>
+                        <p className="text-gray-700">{product.price}</p>
+                    </header>
+                    <Button onPress={()=> removeFromCart(product.id)} className="bg-red-600 text-white font-bold"><FontAwesomeIcon icon={faTrash}/></Button>
+                  </div>
+                  <div className="flex flex-row gap-5 mt-2 items-center">
+                    <Button onPress={()=>decreaseQuantity(product.id, product.cantidad)} className="bg-transparent border-1 hover:bg-slate-100"><FontAwesomeIcon icon={faMinusCircle} size="lg"/></Button>
+                    <p>x{product.cantidad}</p>
+                    <Button onPress={()=>increaseQuantity(product.id, product.cantidad)} className="bg-transparent border-1 hover:bg-slate-100"><FontAwesomeIcon icon={faPlusCircle} size="lg"/></Button>
+                  </div>
                 </article>
               ))
             ) : (
