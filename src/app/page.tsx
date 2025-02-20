@@ -2,16 +2,14 @@
 import { Product } from "@/product/products";
 import api from "@/product/api";
 import { useEffect, useState } from "react";
-import { useProductStore } from "@/store/productsStore";
-import { useRouter } from "next/navigation";
-import { Image, Button } from "@heroui/react";
+import { useCartStore } from "@/store/useCartStore";
+import ProductCard from "@/components/ProductCard";
 
 export default function Home() {
 
-  const router = useRouter();
-  const setSelectedProduct = useProductStore((state) => state.setSelectedProduct);
+  const [products, setProducts] = useState<Product[]>([]);
 
-  const [products, setProducts] = useState<Product[]>([])
+  const { addToCart } = useCartStore((state) => state);
 
   useEffect(() => {
     const fetchProducts = async() => {
@@ -40,11 +38,7 @@ export default function Home() {
         <h1 className="font-bold text-5xl text-black mb-10">Productos</h1>
         <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
           {products.map((product) => (
-            <article key={product.id} className={`justify-center flex flex-col items-center bg-white text-black shadow-black rounded-3xl p-5 border-1 border-black ${product.stock === 0 ? "opacity-50" : ""}`}>
-              <Image src={product.image} alt={product.name} className="my-10 object-cover" width={150} height={150}/>
-              <h2>{product.name} - {product.price}</h2>
-              <Button className="bg-red-600 text-white w-full font-bold" onPress={() => { setSelectedProduct(product); router.push("/details");}}>Ver más</Button>
-            </article>
+            <ProductCard key={product.id} product={product} addToCart={addToCart} />
           ))}
         </section>
       </section>
