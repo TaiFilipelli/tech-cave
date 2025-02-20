@@ -2,12 +2,19 @@
 import { useProductStore } from "@/store/productsStore";
 import { Button, Image } from "@heroui/react";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
 export default function ProductDetails() {
     const product = useProductStore((state) => state.selectedProduct);
 
     if (!product) {
-        return <p>Loading...</p>;
+        return(
+            <div className="items-center justify-center text-center flex flex-col p-5">
+                <h1 className="font-bold text-4xl mb-10">Cargando el producto, pa</h1> 
+                <FontAwesomeIcon icon={faCircleNotch} spin size="2xl" />
+            </div>
+        );
     }
 
     return (

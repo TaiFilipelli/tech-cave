@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Montserrat } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import Cart from "@/components/Cart";
@@ -9,8 +9,7 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const mont = Montserrat({
   subsets: ["latin"],
 });
 
@@ -26,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-gray-200">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${mont.className} antialiased`}>
         <Providers>
           {children}
           <Cart/>

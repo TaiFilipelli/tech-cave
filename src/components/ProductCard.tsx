@@ -43,7 +43,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
   return (
     <article className={`justify-center flex flex-col items-center bg-white text-black shadow-black rounded-3xl p-5 border-1 border-black ${product.stock === 0 ? "opacity-50" : ""}`}>
       <Image src={product.image} alt={product.name} className="my-10 object-cover" width={150} height={150} />
-      <h2>{product.name} - ${product.price}</h2>
+      <h2>{product.name}</h2>
+      <h3>{product.price}</h3>
       <div className="w-full flex justify-between gap-5">
         <Button className={`${onCart ? "bg-green-600": "bg-gray-300"} w-3/4 hover:scale-105 font-bold`} onPress={handleAddToCart}>
           <FontAwesomeIcon icon={onCart ? faCheck : faCartShopping} size="xl" /> {onCart ? "Agregado" : "Agregar"}
