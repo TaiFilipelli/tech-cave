@@ -36,6 +36,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
         title: "Producto agregado al carrito",
         timeout: 2000,
         shouldShowTimeoutProgess: true,
+        color:"success",
     });
   };
 
