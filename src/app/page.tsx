@@ -2,9 +2,14 @@
 import { Product } from "@/product/products";
 import api from "@/product/api";
 import { useEffect, useState } from "react";
+import { useProductStore } from "@/store/productsStore";
+import { useRouter } from "next/navigation";
 import { Image, Button } from "@heroui/react";
 
 export default function Home() {
+
+  const router = useRouter();
+  const setSelectedProduct = useProductStore((state) => state.setSelectedProduct);
 
   const [products, setProducts] = useState<Product[]>([])
 
@@ -28,16 +33,17 @@ export default function Home() {
 
 
   return (
-    <main className="bg-black m-10 text-center">
-      <h1 className="text-6xl font-extrabold m-5 p-16"><span className="bg-gradient-to-b from-violet-600 to-yellow-500 bg-clip-text text-transparent">Tech`s</span> Cave</h1> 
-      <section className="bg-gray-500 rounded-2xl items-center justify-center flex flex-col p-10 mb-10">
-        <h1 className="font-bold text-5xl text-white mb-10">Products</h1>
-        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10">
+    <main className=" m-10 text-center">
+      <h1 className="text-6xl font-extrabold pt-12 pb-6"><span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">Tech`s</span> Cave</h1>
+      <h2 className="text-2xl font-bold m-5 pb-12">El lugar perfecto donde cumplir tus fetiches más oscuros (informáticos, al menos). Tuneá a la maleducada como te parezca, nosotros lo tenemos.</h2> 
+      <section className="bg-white rounded-2xl items-center justify-center flex flex-col p-10 mb-10">
+        <h1 className="font-bold text-5xl text-black mb-10">Productos</h1>
+        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
           {products.map((product) => (
-            <article key={product.id} className="justify-center flex flex-col items-center bg-white text-black shadow-black rounded-3xl p-5">
+            <article key={product.id} className={`justify-center flex flex-col items-center bg-white text-black shadow-black rounded-3xl p-5 border-1 border-black ${product.stock === 0 ? "opacity-50" : ""}`}>
+              <Image src={product.image} alt={product.name} className="my-10 object-cover" width={150} height={150}/>
               <h2>{product.name} - {product.price}</h2>
-              <Image src={product.image} alt={product.name} className="my-10" width={150} height={150}/>
-              <Button className="bg-red-600 text-white font-bold">See more</Button>
+              <Button className="bg-red-600 text-white w-full font-bold" onPress={() => { setSelectedProduct(product); router.push("/details");}}>Ver más</Button>
             </article>
           ))}
         </section>
