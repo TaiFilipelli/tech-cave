@@ -28,7 +28,8 @@ export default function Home() {
 
 
   return (
-    <main className="bg-black m-10">
+    <main className="bg-black m-10 text-center">
+      <h1 className="text-6xl font-extrabold m-5 p-16"><span className="bg-gradient-to-b from-violet-600 to-yellow-500 bg-clip-text text-transparent">Tech`s</span> Cave</h1> 
       <section className="bg-gray-500 rounded-2xl items-center justify-center flex flex-col p-10 mb-10">
         <h1 className="font-bold text-5xl text-white mb-10">Products</h1>
         <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10">
