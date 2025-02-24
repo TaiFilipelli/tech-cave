@@ -45,11 +45,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
       <Image src={product.image} alt={product.name} className="my-10 object-cover" width={150} height={150} />
       <h2>{product.name}</h2>
       <h3>{product.price}</h3>
-      <div className="w-full flex justify-between gap-5">
-        <Button className={`${onCart ? "bg-green-600": "bg-gray-300"} w-3/4 hover:scale-105 font-bold`} onPress={handleAddToCart}>
+      <div className="w-full flex max-[1300px]:flex-col justify-between gap-5 max-[1300px]:gap-2 max-[1300px]:mt-4">
+        <Button className={`${onCart ? "bg-green-600": "bg-gray-300"} w-3/4 max-[1300px]:w-full hover:scale-105 font-bold`} onPress={handleAddToCart}>
           <FontAwesomeIcon icon={onCart ? faCheck : faCartShopping} size="xl" /> {onCart ? "Agregado" : "Agregar"}
         </Button>
-        <Button className="bg-red-600 text-white w-1/2 font-bold hover:scale-105" onPress={() => { 
+        <Button className="bg-blue-600 text-white w-1/2 max-[1300px]:w-full font-bold hover:scale-105" onPress={() => { 
           setSelectedProduct(product); 
           router.push("/details");
         }}>
