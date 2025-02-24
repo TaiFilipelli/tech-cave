@@ -31,8 +31,7 @@ export default function Home() {
 
 
   return (
-    <main className=" m-10 text-center">
-      <h1 className="text-6xl font-extrabold pt-12 pb-6"><span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">Tech`s</span> Cave</h1>
+    <main className="m-10 text-center">
       <h2 className="text-2xl font-bold m-5 pb-12">El lugar perfecto donde cumplir tus fetiches más oscuros (informáticos, al menos). Tuneá a la maleducada como te parezca, nosotros lo tenemos.</h2> 
       <section className="bg-white rounded-2xl items-center justify-center flex flex-col p-10 mb-10">
         <h1 className="font-bold text-5xl text-black mb-10">Productos</h1>
