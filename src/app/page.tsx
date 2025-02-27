@@ -32,7 +32,7 @@ export default function Home() {
 
   return (
     <main className="m-10 text-center">
-      <h2 className="text-2xl font-bold m-5 pb-12">El lugar perfecto donde cumplir tus fetiches más oscuros (informáticos, al menos). Tuneá a la maleducada como te parezca, nosotros lo tenemos.</h2> 
+      <h2 className="text-2xl font-bold m-5 pb-12">Tuneá a la maleducada como te parezca. Lo necesitas? Lo tenemos.</h2> 
       <section className="bg-white rounded-2xl items-center justify-center flex flex-col p-10 mb-10">
         <h1 className="font-bold text-5xl text-black mb-10">Productos</h1>
         <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
