@@ -22,10 +22,10 @@ export default function ProductDetails() {
         <Button as={Link} href="/" className="bg-red-600 text-white font-bold text-3xl items-center text-center">←</Button>
         <section className="bg-white text-black my-10 items-center rounded-2xl">
             <article className="flex flex-wrap p-10">
-                <div className="w-1/2">
-                    <Image src={product?.image} alt={product?.name} className="object-cover"/>
+                <div className="w-1/3 flex items-center justify-center">
+                    <Image src={product?.image} alt={product?.name} className="object-cover max-h-72"/>
                 </div>
-                <div className="w-1/2">
+                <div className="w-2/3">
                     <h1 className="text-4xl font-bold mb-5">{product?.name}</h1>
                     <p className="text-2xl font-semibold">Categoria: {product?.type}</p>
                     <h3 className="text-2xl font-semibold mt-5 text-green-600">{product?.price}</h3>
