@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Image, addToast } from "@heroui/react";
 import { Product } from "@/product/products";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import { useProductStore } from "@/store/productsStore";
+import { useCartStore } from "@/store/useCartStore";
 
 interface CartItem {
   id: number;
@@ -23,6 +24,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
   const [onCart, setOnCart] = useState(false);
   const router = useRouter();
   const setSelectedProduct = useProductStore((state) => state.setSelectedProduct);
+  const cart = useCartStore((state) => state.cart);
 
   const handleAddToCart = () => {
     addToCart({
@@ -39,6 +41,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
         color:"success",
     });
   };
+
+  useEffect(() => {
+    const isOnCart = cart.some(item => item.id === product.id);
+    setOnCart(isOnCart);
+  }, [cart, product.id]);
 
   return (
     <article className={`justify-center flex flex-col items-center bg-white text-black shadow-black rounded-3xl p-5 border-1 border-black ${product.stock === 0 ? "opacity-50" : ""}`}>
