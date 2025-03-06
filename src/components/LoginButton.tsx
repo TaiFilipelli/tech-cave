@@ -11,16 +11,17 @@ export default function AuthButton() {
     const { data: session } = useSession();
     const [isHovered, setIsHovered] = useState(false);
 
+    
     if (session) {
+        console.log(session.user.image!);
         return (
             <Dropdown>
                 <DropdownTrigger>
                 <article className="hover:cursor-pointer relative flex items-center gap-2 transition-all duration-300" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
                     <Avatar src={session.user.image!} size="lg" className="transition-all duration-300" />
-                    <p className={`absolute left-0 transition-all duration-300 ease-in-out ${isHovered ? 'opacity-100 translate-x-2' : 'opacity-0 translate-x-0'}`} style={{ marginLeft: '40px' }}>
+                    <p className={`absolute left-0 transition-all duration-300 ease-in-out ${isHovered ? 'opacity-100 translate-x-6' : 'opacity-0 translate-x-0'}`} style={{ marginLeft: '40px' }}>
                         {session.user?.name}
                     </p>
-                    <div className={`absolute top-0 left-0 right-0 bottom-0 transition-all duration-300 ${isHovered ? 'w-auto' : 'w-[80px]'}`} style={{ marginLeft: '10px' }}/>
                 </article>
                 </DropdownTrigger>
                 <DropdownMenu className={`${pop.className} text-center`}>

@@ -9,10 +9,10 @@ const LoginResult = () => {
   const { data: session } = useSession();
 
   return (
-    <section className="flex flex-col items-center justify-center">
-      <h1>Bienvenido, {session?.user.name}!</h1>
-      <p>Puede realizar compras libremente por la aplicación</p>
-      <Button as={Link} href='/'>Volver atrás</Button>
+    <section className="flex flex-col items-center justify-center text-center p-20">
+      <h1 className='text-4xl font-bold mb-2'>Bienvenido, {session?.user.name}!</h1>
+      <p className='text-xl font-semibold mb-10'>Puede realizar compras libremente por la aplicación</p>
+      <Button as={Link} href='/' className='text-lg font-semibold p-4'>Volver atrás</Button>
     </section>
   )
 }
