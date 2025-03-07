@@ -25,7 +25,7 @@ export default function AuthButton() {
                 </article>
                 </DropdownTrigger>
                 <DropdownMenu className={`${pop.className} text-center`}>
-                    <DropdownItem key='logout' className="bg-red-600 text-white px-4 py-2 rounded" onPress={() => signOut()}>
+                    <DropdownItem key='logout' className="bg-red-600 text-white px-4 py-2 rounded" onPress={() => signOut({redirect: false})}>
                         Cerrar sesión
                     </DropdownItem>
                 </DropdownMenu>
