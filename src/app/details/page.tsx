@@ -18,9 +18,9 @@ export default function ProductDetails() {
     }
 
     return (
-        <main className="p-10">
+        <main className="p-20">
         <Button as={Link} href="/" className="bg-red-600 text-white font-bold text-3xl items-center text-center">←</Button>
-        <section className="bg-white text-black my-10 items-center rounded-2xl">
+        <section className="bg-white text-black mt-10 mb-16 items-center rounded-2xl">
             <article className="flex flex-wrap p-10">
                 <div className="w-1/3 flex items-center justify-center">
                     <Image src={product?.image} alt={product?.name} className="object-cover max-h-72"/>

@@ -48,7 +48,7 @@ const Cart = () => {
   }
   return (
     <>
-      <Button onPress={onOpen} className="fixed bottom-16 right-16 bg-blue-600 text-white rounded-full p-7 shadow-lg hover:bg-blue-700 transition-all">
+      <Button onPress={onOpen} className="fixed bottom-16 right-16 bg-blue-600 text-white rounded-full p-7 shadow-md hover:bg-blue-700 transition-all border-1 border-black shadow-gray-600">
         <FontAwesomeIcon icon={faCartShopping} size="2xl" />
       </Button>
 
