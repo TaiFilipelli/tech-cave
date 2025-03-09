@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { useCartStore } from "@/store/useCartStore";
 import ProductCard from "@/components/ProductCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
-
+import { faCircleNotch, faComputer, faShieldHalved, faTruckFast } from "@fortawesome/free-solid-svg-icons";
+import { Divider } from "@heroui/react";
 export default function Home() {
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -33,7 +33,7 @@ export default function Home() {
 
   return (
     <main className="m-10 text-center">
-      <h2 className="text-2xl font-bold m-5 pb-12">Tuneá a la maleducada como te parezca. Lo necesitas? Lo tenemos.</h2> 
+      <h2 className="text-2xl font-bold m-5 p-10">Tuneá a la maleducada como te parezca. Lo necesitas? Lo tenemos.</h2> 
       <section className="bg-white rounded-2xl items-center justify-center flex flex-col p-10 mb-10">
         <h1 className="font-bold text-5xl text-black mb-10">Productos</h1>
         { products.length>0 ? 
@@ -49,6 +49,25 @@ export default function Home() {
           </section>
         }
       </section>
+      <Divider className="my-5"/>
+      <section className="flex flex-row gap-4 justify-around items-center p-2">
+        <article>
+          <FontAwesomeIcon icon={faComputer} size="3x" className="mb-2"/>
+          <h1 className="text-2xl font-bold">Todo lo que necesitas</h1>
+          <p className="font-semibold">para tu PC de ensueño</p>
+        </article>
+        <article>
+          <FontAwesomeIcon icon={faShieldHalved} size="3x" className="mb-2"/>
+          <h1 className="text-2xl font-bold">Garantia oficial</h1>
+          <p className="font-semibold">en todos los productos</p>
+        </article>
+        <article>
+          <FontAwesomeIcon icon={faTruckFast} size="3x" className="mb-2"/>
+          <h1 className="text-2xl font-bold">Envios a tu casa</h1>
+          <p className="font-semibold">rápidos y seguros</p>  
+        </article>
+      </section>
+      <Divider className="my-5"/>
     </main>
   );
 }
