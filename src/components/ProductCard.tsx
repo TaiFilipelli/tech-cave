@@ -48,11 +48,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
   }, [cart, product.id]);
 
   return (
-    <article className={`justify-center flex flex-col items-center bg-white text-black shadow-black rounded-3xl p-5 border-1 border-black ${product.stock === 0 ? "opacity-50" : ""}`}>
+    <article className={`h-auto justify-between flex flex-col items-center bg-white text-black shadow-black rounded-3xl p-5 border-1 border-black ${product.stock === 0 ? "opacity-50" : ""}`}>
       <Image src={product.image} alt={product.name} className="my-10 object-cover" width={150} height={150} />
-      <h2>{product.name}</h2>
+      <h2>{product.name.length > 25 ? product.name.slice(0, 20) + "..." : product.name}</h2>
       <h3>{product.price}</h3>
-      <div className="w-full flex max-[1300px]:flex-col justify-between gap-5 max-[1300px]:gap-2 max-[1300px]:mt-4">
+      <div className="w-full flex max-[1300px]:flex-col justify-between gap-5 mt-auto max-[1300px]:gap-2">
         <Button className={`${onCart ? "bg-green-600": "bg-gray-300"} w-3/4 max-[1300px]:w-full hover:scale-105 font-bold`} onPress={handleAddToCart}>
           <FontAwesomeIcon icon={onCart ? faCheck : faCartShopping} size="xl" /> {onCart ? "Agregado" : "Agregar"}
         </Button>
