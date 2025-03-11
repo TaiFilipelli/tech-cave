@@ -4,6 +4,8 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { Button, Avatar, Dropdown, DropdownTrigger, DropdownItem, DropdownMenu } from "@heroui/react";
 import { Poppins } from "next/font/google";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 const pop = Poppins({ subsets: ["latin"], weight: "600" });
 
@@ -34,8 +36,8 @@ export default function AuthButton() {
     }
 
     return (
-        <Button onPress={() => signIn("google")} className={`${pop.className} bg-blue-500 text-white px-4 py-2 rounded`}>
-            Iniciar sesión con Google
+        <Button onPress={() => signIn("google")} className={`${pop.className} bg-blue-500 text-white px-4 py-2 rounded`} startContent={<FontAwesomeIcon icon={faGoogle} size="xl"/>}>
+            Iniciar sesión
         </Button>
     );
 }

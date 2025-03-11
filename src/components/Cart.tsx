@@ -3,6 +3,7 @@
 import { Drawer, DrawerHeader, DrawerBody, DrawerContent, DrawerFooter, Button, useDisclosure, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faTrash, faFaceFrown, faMinusCircle, faPlusCircle  } from "@fortawesome/free-solid-svg-icons";
+import {faWhatsapp} from "@fortawesome/free-brands-svg-icons";
 import React, { useEffect, useState } from "react";
 import { useCartStore } from "@/store/useCartStore";
 import { useRouter } from "next/navigation";
@@ -68,24 +69,29 @@ const Cart = () => {
   
   return (
     <>
-      <Button onPress={onOpen} className="fixed bottom-16 right-16 bg-blue-600 text-white rounded-full p-7 shadow-md hover:bg-blue-700 transition-all border-1 border-black shadow-gray-600">
+      <Button onPress={onOpen} className="fixed bottom-16 right-16 bg-blue-600 text-white rounded-full p-7 shadow-md hover:bg-blue-700 transition-all border-1 border-black shadow-gray-600 z-20">
         <FontAwesomeIcon icon={faCartShopping} size="2xl" />
       </Button>
 
       {isModalOpen && (
       <Modal isOpen={isModalOpen} onOpenChange={setIsModalOpen}>
       <ModalContent>
-        <ModalHeader>Elige un método de pago</ModalHeader>
+        <ModalHeader className="text-2xl font-bold">Finalizar compra</ModalHeader>
         <ModalBody>
-          <Button className="bg-green-500 text-white w-full" onPress={sendMessage}>
+          <h1>Seleccione el método de pago:</h1>
+          <ul className="gap-4 list-item">
+            <li className="mb-2">WhatsApp: Contacta directamente con el vendedor para transferencias o efectivo</li>
+            <li>MercadoPago: Paga con tarjeta de crédito, débito o con billeteras virtuales</li>
+          </ul>
+          <Button className="bg-green-500 text-white w-full font-semibold text-lg" startContent={<FontAwesomeIcon icon={faWhatsapp} size="xl"/>} onPress={sendMessage}>
             WhatsApp
           </Button>
-          <Button className="bg-blue-600 text-white w-full" onPress={handleMP}>
+          <Button className="bg-blue-600 text-white w-full font-semibold text-lg" onPress={handleMP}>
             MercadoPago
           </Button>
         </ModalBody>
         <ModalFooter>
-          <Button className="bg-red-600 w-full" onPress={() => setIsModalOpen(false)}>
+          <Button className="bg-red-600 w-full text-white font-semibold text-lg" onPress={() => setIsModalOpen(false)}>
             Cancelar
           </Button>
         </ModalFooter>
@@ -121,11 +127,11 @@ const Cart = () => {
             )}
           </DrawerBody>
           <DrawerFooter className="flex flex-col gap-2">
-            <Button className="bg-gray-400 font-bold text-black" onPress={clearCart}><FontAwesomeIcon icon={faTrash}/>Limpiar carro</Button>
             <div className="flex flex-row justify-between gap-2">
                 <Button className="bg-green-500 text-white font-bold w-1/2" onPress={() => setIsModalOpen(true)}>Comprar</Button>
                 <Button className="bg-red-600 text-white font-bold w-1/2" onPress={onClose}>Cerrar</Button>
             </div>
+            <Button className="bg-gray-400 font-bold text-black" onPress={clearCart}><FontAwesomeIcon icon={faTrash}/>Limpiar carro</Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
