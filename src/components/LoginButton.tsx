@@ -15,7 +15,6 @@ export default function AuthButton() {
 
     
     if (session) {
-        console.log(session.user.image!);
         return (
             <Dropdown>
                 <DropdownTrigger>
