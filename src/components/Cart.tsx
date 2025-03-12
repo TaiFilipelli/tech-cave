@@ -54,20 +54,15 @@ const Cart = () => {
   }
 
   const handleMP = async () => {
-    try {
-      localStorage.setItem("buyerEmail", session!.user!.email!.toString()||'');
-      const url = await api.createPayment({ cart: products });
-      console.log('URL devuelta:',url);
+    localStorage.setItem("buyerEmail", session!.user!.email!.toString()||'');
+    const url = await api.createPayment({ cart: products });
+    console.log('URL devuelta:',url);
 
-      if(!url){
-        throw new Error("No se recibió una url de pago");
-      }
-
-      router.push(url);
-
-    } catch (err) {
-      console.error("ERROR PROCESANDO EL PAGO:", err);
+    if(!url){
+      throw new Error("No se recibió una url de pago");
     }
+
+    router.push(url);
   };
   
   return (
