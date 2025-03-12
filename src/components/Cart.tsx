@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import { useCartStore } from "@/store/useCartStore";
 import { useRouter } from "next/navigation";
 import api from "@/app/api/api";
+import { useSession } from "next-auth/react";
 
 
 const Cart = () => {
@@ -15,6 +16,7 @@ const Cart = () => {
   const { cart, clearCart, removeFromCart, updateCartItem } = useCartStore((state) => state);
   const [products, setProducts] = useState(cart);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const {data:session} = useSession();
 
   const router = useRouter();
 
@@ -53,6 +55,7 @@ const Cart = () => {
 
   const handleMP = async () => {
     try {
+      localStorage.setItem("buyerEmail", session!.user!.email!.toString()||'');
       const url = await api.createPayment({ cart: products });
       console.log('URL devuelta:',url);
 

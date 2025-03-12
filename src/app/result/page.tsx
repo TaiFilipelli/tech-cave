@@ -22,7 +22,7 @@ const ResultPage = () => {
             status: searchParams.get("status"),
             payment_type: searchParams.get("payment_type"),
             date: new Date().toISOString(),
-            user_email: "usuario@example.com",
+            user_email: localStorage.getItem("buyerEmail"),
             items: JSON.parse(localStorage.getItem("cart") || "[]"),
         };
 
