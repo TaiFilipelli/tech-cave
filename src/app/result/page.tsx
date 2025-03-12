@@ -1,7 +1,9 @@
 "use client";
 
+import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 
 const ResultPage = () => {
     const searchParams = useSearchParams();
@@ -61,4 +63,10 @@ const ResultPage = () => {
     );
 };
 
-export default ResultPage;
+
+const ResultPageWrapper = () => {
+  <Suspense fallback={<FontAwesomeIcon icon={faCircleNotch}/>}>
+    <ResultPage/>
+  </Suspense>
+}
+export default ResultPageWrapper;
