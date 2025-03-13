@@ -1,32 +1,46 @@
-import {mp} from "@/app/api/api";
-import { Payment } from "mercadopago";
+import { CartItem } from "@/types/cart";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
-        const body: { data: { id: string } } = await req.json();
-        console.log("BODY RECIBIDO:", body);
+        const { cart } = await req.json();
 
-        if (!body?.data?.id) {
-            return new Response(JSON.stringify({ error: "Falta el ID de pago." }), {
-                status: 400,
-                headers: { "Content-Type": "application/json" },
-            });
+        if (!cart || !Array.isArray(cart)) {
+            return NextResponse.json({ error: "El carrito es inválido" }, { status: 400 });
         }
 
-        const paymentConfirm = await new Payment(mp).get({id: body.data.id});
-        console.log("ESTADO DEL PAGO:", paymentConfirm);
-
-        if(paymentConfirm.status === 'approved'){
-            return new Response(JSON.stringify({ status: paymentConfirm }), {
-                status: paymentConfirm ? 200 : 400,
-                headers: { "Content-Type": "application/json" },
-            });
-        }
-    } catch (error) {
-        console.error("ERROR EN EL ENDPOINT DE PAGO:", error);
-        return new Response(JSON.stringify({ error: error }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" },
+        const response = await fetch("https://api.mercadopago.com/checkout/preferences", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_MP_ACCESS_TOKEN!}`,
+            },
+            body: JSON.stringify({
+                items: cart.map((product: CartItem) => ({
+                    id: product.id.toString(),
+                    title: product.name,
+                    quantity: product.cantidad,
+                    currency_id: "ARS",
+                    unit_price: Number(String(product.price).replace(/[$.]/g, "")),
+                })),
+                back_urls: {
+                    success: "https://tech-cave.vercel.app/result",
+                    failure: "https://tech-cave.vercel.app/result",
+                    pending: "https://tech-cave.vercel.app/result",
+                },
+                auto_return: "approved",
+            }),
         });
+
+        if (!response.ok) {
+            throw new Error("Error en la solicitud a MercadoPago");
+        }
+
+        const data = await response.json();
+        return NextResponse.json({ url: data.init_point }, { status: 200 });
+
+    } catch (error) {
+        console.error("Error al crear la preferencia:", error);
+        return NextResponse.json({ error: "Error interno del servidor" }, { status: 500 });
     }
 }

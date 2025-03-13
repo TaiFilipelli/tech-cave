@@ -2,7 +2,10 @@ import { MercadoPagoConfig, Preference } from "mercadopago";
 import { CartItem } from "@/types/cart";
 
 export const mp = new MercadoPagoConfig({ 
-    accessToken: process.env.NEXT_PUBLIC_MP_ACCESS_TOKEN! 
+    accessToken: process.env.NEXT_PUBLIC_MP_ACCESS_TOKEN!,
+    options:{
+        
+    }
 });
 
 const api = {    

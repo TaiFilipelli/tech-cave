@@ -7,7 +7,7 @@ import {faWhatsapp} from "@fortawesome/free-brands-svg-icons";
 import React, { useEffect, useState } from "react";
 import { useCartStore } from "@/store/useCartStore";
 import { useRouter } from "next/navigation";
-import api from "@/app/api/api";
+// import api from "@/app/api/api";
 import { useSession } from "next-auth/react";
 
 
@@ -52,18 +52,31 @@ const Cart = () => {
 
     return router.push(`https://wa.me/${number}?text=${message}`)
   }
-
   const handleMP = async () => {
-    localStorage.setItem("buyerEmail", session!.user!.email!.toString()||'');
-    const url = await api.createPayment({ cart: products });
-    console.log('URL devuelta:',url);
+    try {
+        localStorage.setItem("buyerEmail", session?.user?.email || "");
 
-    if(!url){
-      throw new Error("No se recibió una url de pago");
+        const response = await fetch("/api/mercadopago/pagos", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ cart: products }),
+        });
+
+        const data = await response.json();
+
+        console.log('DATA:', data);
+        
+        if (!data.url) {
+            throw new Error("No se recibió una URL de pago");
+        }
+
+        router.push(data.url);
+
+    } catch (err) {
+        console.error("ERROR PROCESANDO EL PAGO:", err);
     }
+};
 
-    router.push(url);
-  };
   
   return (
     <>
