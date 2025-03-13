@@ -5,6 +5,7 @@ export const mp = new MercadoPagoConfig({ accessToken: process.env.NEXT_PUBLIC_M
 
 const api = {    
     async createPayment (body: {cart: CartItem[]}){
+        console.log('Entró al método createPayment');
         const preference = await new Preference(mp).create({
             body: {
                 items: body.cart.map((product: CartItem) => ({
@@ -21,8 +22,9 @@ const api = {
                 },
             },
         });
-
+        console.log('Preferencia creada:',preference);
         const url:string = preference.init_point!;
+        console.log('Deberia devolver esta url:',preference.init_point);
         return url;
     },
 };
