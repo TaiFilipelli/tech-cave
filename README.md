@@ -1,17 +1,44 @@
-# Tech's Cave: la cueva del hardware.
+# 🏆 Tech's Cave: La cueva del hardware  
 
-## ¿Qué es Tech's Cave? 🔥
+[Readme in English 🇬🇧](README_EN.md)
 
-Tech's cave es un sitio web cuyo único propósito es el de ser una modesta tiendita para venta de productos. Su desarrollo está principalmente orientada a los emprendedores pequeños.
+## 🔥 ¿Qué es Tech's Cave?  
 
-### Por qué orientado a emprendimientos? 
+**Tech's Cave** es un sitio web diseñado como una modesta tienda en línea para la venta de productos. Su desarrollo está principalmente orientado a **pequeños emprendedores** que buscan digitalizar su negocio sin costos elevados.  
 
->Este e-commerce tiene como única caracteristica especial que no cuenta con una API Rest, ni usa servidores, bases de datos o siquiera un backend dedicado aparte. Este e-commerce reemplaza todo eso con una hoja de cálculo de Google Sheets, donde una tabla de productos con varias columnas se trae directamente gracias a herramientas como axios para hacer las peticiones y Papa Parser para convertir valores csv en json. 
+## 🎯 ¿Por qué orientado a emprendimientos?  
 
-## Por qué una hoja de cálculo como base de datos?
+Este e-commerce tiene una particularidad única: no utiliza una API REST, servidores dedicados ni una base de datos tradicional.  
 
->En mi corta pero intensa experiencia desarrollando aplicaciones (más que nada, tiendas virtuales), me he encontrado siempre con el mismo problema: desarrollar una tienda virtual es un trabajo muy caro. El mero hecho de pensar en el coste de, como mínimo, dos servidores (uno para la base de datos y otro para la API, inicialmente) hacen que la migración/ampliación de un emprendimiento muy pequeño a la virtualidad sea extremadamente costosa y, por consecuencia, no rentable. Siento que esto no debería ser asi; todos aquellos que pudieron crear una marca y vender un producto original merecen tener una tienda que les ayude a crecer y sin gastar cientos de dólares en servidores. Por eso surgió Tech's Cave. Para darle fin a ese problema. Otro punto de extrema importancia es que se espera muchisimo más que los dueños de emprendimientos y tiendas tengan más conocimientos asociados a Excel o Google Sheets que a manejar querys de bases de datos. Si bien parte de nuestro trabajo supone crear una UI lo suficientemente amigable como para que los usuarios puedan manejar bases de datos sin casi darse cuenta de que están trabajando con ellas, también es importante comprender que quizá en negocios reales pequeños se trabaje con hojas de cálculo. 
+En su lugar, Tech's Cave reemplaza toda esa infraestructura con **una hoja de cálculo de Google Sheets**. Los datos de los productos se obtienen directamente gracias a herramientas como:  
 
-## Pero una simple hoja de cálculo como única base de datos no es una mala idea?
+- 🚀 **Axios** → Para hacer peticiones HTTP.  
+- 📊 **Papa Parser** → Para convertir valores CSV en JSON.  
 
->En parte, si. Es por eso que, en Tech's Cave, se usa un sistema de asincronismo de datos. Esto significa que, en principio, la aplicación está conectada a 3 bases de datos distintas: la hoja de productos de Excel, una base de datos NoSQL (MongoDB) para guardar las órdenes de compra y una última base de datos pequeña para almacenar usuarios. 
+Este enfoque simplifica la gestión y hace que la plataforma sea accesible para pequeños negocios.  
+
+## 📌 ¿Por qué usar una hoja de cálculo como base de datos?  
+
+En mi experiencia desarrollando soluciones web, y especialmente **tiendas virtuales**, siempre me encontré con el mismo problema:  
+
+💸 **El costo de desarrollo es muy alto**. 
+
+- Un e-commerce estándar requiere, **al menos, dos servidores** (uno para la API y otro para la base de datos). Esto hace que **migrar o escalar un pequeño emprendimiento sea costoso y poco rentable**. 
+
+- Tech's Cave busca erradicar este problema, facilitando la migración y ampliación digital de negocios pequeños de forma mucho más sencilla y económica.
+
+Otro punto clave es que muchos emprendedores ya están familiarizados con **Excel o Google Sheets**, pero no con bases de datos SQL o NoSQL. Es cierto: parte de nuestro trabajo es crear una UI **intuitiva**, que facilite la gestión de un e-commerce sin que los usuarios siquiera sientan que están trabajando con una base de datos.   
+
+- Sin embargo, en muchos negocios pequeños, el manejo de productos ya se hace con hojas de cálculo, por lo que este sistema encaja de manera prácticamente natural.  
+
+## ❓ ¿Pero una simple hoja de cálculo como base de datos no es un problema?  
+
+⚠️ En parte, sí. Por eso, Tech's Cave utiliza **un sistema de asincronía de datos** para mejorar la estabilidad.  
+
+En principio, la aplicación se conecta a **tres bases de datos distintas**:  
+
+1. **📋 Hoja de productos (Google Sheets)** → Principal fuente de datos. Contiene todos los productos y varios campos de utilidad (stock, precio, descripción, imagen, etc.).  
+2. **🗄️ Base de datos NoSQL (MongoDB)** → Para almacenar órdenes de compra.  
+3. **🔐 Base de datos pequeña (probablemente SQLite)** → Para gestionar usuarios (puede cambiar en el futuro).  
+
+Esta combinación permite mantener la flexibilidad de fuentes de datos y permite "modular" el sistema, de forma que podemos comprender de dónde viene un error o cada dato. 
