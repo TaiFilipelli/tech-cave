@@ -18,18 +18,18 @@ export default function ProductDetails() {
     }
 
     return (
-        <main className="p-20">
+        <main className="p-20 max-[550px]:p-5">
         <Button as={Link} href="/" className="bg-red-600 text-white font-bold text-3xl items-center text-center">←</Button>
         <section className="bg-white text-black mt-10 mb-16 items-center rounded-2xl">
-            <article className="flex flex-wrap p-10">
-                <div className="w-1/3 flex items-center justify-center">
+            <article className="flex flex-wrap max-[800px]:flex-col max-[800px]:items-center p-10 max-[400px]:px-2">
+                <div className="w-1/3 max-[800px]:w-2/3 max-[500px]:w-full flex items-center justify-center">
                     <Image src={product?.image} alt={product?.name} className="object-cover max-h-72"/>
                 </div>
                 <div className="w-2/3">
-                    <h1 className="text-4xl font-bold mb-5">{product?.name}</h1>
+                    <h1 className="text-4xl max-[500px]:text-3xl font-bold mb-5">{product?.name}</h1>
                     <p className="text-2xl font-semibold">Categoria: {product?.type}</p>
                     <h3 className="text-2xl font-semibold mt-5 text-green-600">{product?.price}</h3>
-                    <h4 className={`text-xl font-semibold text-white p-2 rounded-2xl my-5 w-[25%] text-center items-center ${product?.stock > 15 ? "bg-green-700" : product?.stock > 10 ? "bg-orange-500" : "bg-red-600"}`}>Stock {product?.stock > 15 ? "alto" : product?.stock > 10 ? "medio" : "bajo"}</h4>
+                    <h4 className={`text-xl font-semibold text-white p-2 rounded-2xl my-5 w-auto text-center items-center ${product?.stock > 15 ? "bg-green-700" : product?.stock > 10 ? "bg-orange-500" : "bg-red-600"}`}>Stock {product?.stock > 15 ? "alto" : product?.stock > 10 ? "medio" : "bajo"}</h4>
                     <p className="text-xl">Sobre este producto: {product?.description}</p>
                 </div>
             </article>
