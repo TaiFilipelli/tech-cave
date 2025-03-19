@@ -9,8 +9,14 @@ const ResultPage = () => {
     const searchParams = useSearchParams();
     const [status, setStatus] = useState<string | null>(null);
 
+    
     useEffect(() => {
+        console.log("HOLA! ENTRÓ!");
+        if(!searchParams) return;
+
         const paymentStatus = searchParams.get("status");
+        console.log('Estado del pago recibido:',paymentStatus);
+
         if (paymentStatus === "approved") {
             handleOrder();
         }
@@ -18,14 +24,20 @@ const ResultPage = () => {
     }, [searchParams]);
 
     const handleOrder = async () => {
+
+        if (typeof window === "undefined") return;
+
+        const userEmail = localStorage.getItem("buyerEmail");
+        const cart = localStorage.getItem("cart")!;
+        
         const orderData = {
             payment_id: searchParams.get("payment_id"),
             collection_id: searchParams.get("collection_id"),
             status: searchParams.get("status"),
             payment_type: searchParams.get("payment_type"),
             date: new Date().toISOString(),
-            user_email: localStorage.getItem("buyerEmail"),
-            items: JSON.parse(localStorage.getItem("cart") || "[]"),
+            user_email: userEmail,
+            items: JSON.parse(cart),
         };
 
         console.log("Registrando orden:", orderData);
@@ -36,6 +48,8 @@ const ResultPage = () => {
             body: JSON.stringify(orderData),
         });
 
+        console.log('Habemus response:', response);
+
         const data = await response.json();
         if (data.success) {
             console.log("Orden guardada con ID:", data.id);
@@ -45,16 +59,16 @@ const ResultPage = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen">
-            <h1 className="text-2xl font-bold">Estado del pago: {status}</h1>
+        <div className="flex flex-col items-center justify-center p-10">
+            <h1 className="text-2xl font-bold">Estado del pago: {status === null ? "ERROR" : status}</h1>
             {status !== null ? ( 
               status === "approved" ? (
               <p className="text-green-500">¡Pago exitoso! Registrando la orden...</p>
           ) : (
-              <p className="text-red-500">El pago no fue aprobado.</p>
+              <p className="text-red-500">Hubo un error al aprobar el pago. Inténtelo nuevamente.</p>
           ))
             : 
-              <h1>
+              <h1 className="text-2xl font-semibold">
                 Hubo un error al realizar el pago. Por favor, intentelo nuevamente.
               </h1>
             }
@@ -65,8 +79,11 @@ const ResultPage = () => {
 
 
 const ResultPageWrapper = () => {
-  <Suspense fallback={<FontAwesomeIcon icon={faCircleNotch}/>}>
-    <ResultPage/>
-  </Suspense>
-}
+
+    return(
+        <Suspense fallback={<FontAwesomeIcon icon={faCircleNotch} spin/>}>
+            <ResultPage/>
+        </Suspense>
+    );
+};
 export default ResultPageWrapper;
