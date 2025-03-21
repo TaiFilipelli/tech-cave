@@ -24,7 +24,7 @@ const LoginResult = () => {
             "Content-Type": "application/json",
           },
         });
-
+        console.log(response);
         setIsAdmin(response.ok);
       } catch (error) {
         console.error("Error verificando permisos:", error);
