@@ -56,10 +56,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
         <Button className={`${onCart ? "bg-green-600": "bg-gray-300"} w-3/4 max-[1300px]:w-full hover:scale-105 font-bold`} onPress={handleAddToCart}>
           <FontAwesomeIcon icon={onCart ? faCheck : faCartShopping} size="xl" /> {onCart ? "Agregado" : "Agregar"}
         </Button>
-        <Button className="bg-blue-600 text-white w-1/2 max-[1300px]:w-full font-bold hover:scale-105" onPress={() => { 
-          setSelectedProduct(product); 
-          router.push("/details");
-        }}>
+        <Button className="bg-blue-600 text-white w-1/2 max-[1300px]:w-full font-bold hover:scale-105" onPress={() => { setSelectedProduct(product); router.push("/details"); }}>
           Ver más
         </Button>
       </div>
