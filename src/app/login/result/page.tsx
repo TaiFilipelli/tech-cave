@@ -14,23 +14,58 @@ const LoginResult = () => {
       if (!session?.accessToken) return;
 
       const sheetId = "1O_9reXr8yzEZDllwOo_YKOtJ3HZqKJd7dkF_cWrqa1g";
-      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:A1?valueRenderOption=FORMATTED_VALUE`;
+      const range = "Hoja1!I2";
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}`;
+
+      const data = {
+        range: range,
+        majorDimension: "ROWS",
+        values: [["Prueba de escritura"]],
+      };
 
       try {
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-            "Authorization": `Bearer ${session.accessToken}`,
-            "Content-Type": "application/json",
-          },
-        });
-        console.log(response);
-        setIsAdmin(response.ok);
-      } catch (error) {
-        console.error("Error verificando permisos:", error);
-        setIsAdmin(false);
-      } finally {
+        const writeResponse = await fetch(
+          url,
+          {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${session.accessToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }
+        );
+    
+        if (!writeResponse.ok) {
+          throw new Error(`Error en la escritura: ${writeResponse.statusText}`);
+        }
+    
+        console.log("✅ Escritura exitosa. Procediendo a eliminar...");
+    
+        const clearResponse = await fetch(
+          `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}:clear`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${session.accessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+    
+        if (!clearResponse.ok) {
+          throw new Error(`Error al borrar: ${clearResponse.statusText}`);
+        }
+    
+        console.log("🧹 Celda limpiada exitosamente.");
+        setIsAdmin(true);
         setLoading(false);
+        return true;
+      } catch (error) {
+        setIsAdmin(false);
+        setLoading(false);
+        console.error(error)
+        return false;
       }
     };
 
