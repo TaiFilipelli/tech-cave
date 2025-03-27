@@ -14,7 +14,7 @@ const LoginResult = () => {
       if (!session?.accessToken) return;
 
       const sheetId = "1O_9reXr8yzEZDllwOo_YKOtJ3HZqKJd7dkF_cWrqa1g";
-      const range = "Hoja1!I2";
+      const range = "Hoja 1!I2";
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?valueInputOption=USER_ENTERED`;
 
       const data = {
