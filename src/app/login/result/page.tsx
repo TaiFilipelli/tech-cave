@@ -20,7 +20,7 @@ const LoginResult = () => {
       const data = {
         range: range,
         majorDimension: "ROWS",
-        values: [["Prueba de escritura"]],
+        values: [["Testeo de permisos, pa"]],
       };
 
       try {
