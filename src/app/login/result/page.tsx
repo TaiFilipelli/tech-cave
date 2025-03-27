@@ -39,6 +39,7 @@ const LoginResult = () => {
         if (!writeResponse.ok) {
           throw new Error(`Error en la escritura: ${writeResponse.statusText}`);
         }
+
         setIsAdmin(true);
         console.log("✅ Escritura exitosa. Procediendo a eliminar...");
     
@@ -65,7 +66,7 @@ const LoginResult = () => {
           isAdmin: isAdmin,
         }
 
-        const response = await fetch("/api/users", {
+        const response = await fetch("/src/app/api/users", {
           method: 'POST',
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(user),
