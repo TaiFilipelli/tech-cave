@@ -2,9 +2,8 @@ import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 
 export async function POST(req:Request){
-
-    console.log('Entrando al POST');
     try {
+        console.log('Entrando al POST');
         const userData = await req.json();
         const {email} = userData;
         console.log('Entró esta data:', userData);

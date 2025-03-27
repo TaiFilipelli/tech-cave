@@ -66,17 +66,19 @@ const LoginResult = () => {
           isAdmin: isAdmin,
         }
 
-        const response = await fetch("../../api/users", {
+        console.log('Datos de usuario a añadir:', user, '; entrariamos a la ruta /api/users');
+
+        const addUserResponse = await fetch("/api/users", {
           method: 'POST',
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(user),
         });
 
-        if (!response.ok) {
-          throw new Error(`Error al guardar usuario: ${response.statusText}`);
+        if (!addUserResponse.ok) {
+          throw new Error(`Error al guardar usuario: ${addUserResponse.statusText}`);
         }
 
-        console.log("Usuario guardado exitosamente:", response.status);
+        console.log("Usuario guardado exitosamente:", addUserResponse.status);
         setLoading(false);
         return true;
       } catch (error) {
