@@ -39,7 +39,7 @@ const LoginResult = () => {
         if (!writeResponse.ok) {
           throw new Error(`Error en la escritura: ${writeResponse.statusText}`);
         }
-    
+        setIsAdmin(true);
         console.log("✅ Escritura exitosa. Procediendo a eliminar...");
     
         const clearResponse = await fetch(
@@ -58,7 +58,6 @@ const LoginResult = () => {
         }
     
         console.log("🧹 Celda limpiada exitosamente.");
-        setIsAdmin(true);
         setLoading(false);
         return true;
       } catch (error) {
