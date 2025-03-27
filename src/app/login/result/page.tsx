@@ -32,7 +32,10 @@ const LoginResult = () => {
               Authorization: `Bearer ${session.accessToken}`,
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify({
+              ...data,
+              valueInputOption: "RAW",
+            }),
           }
         );
     
@@ -74,7 +77,7 @@ const LoginResult = () => {
         if (!response.ok) {
           throw new Error(`Error al guardar usuario: ${response.statusText}`);
         }
-        
+
         console.log("Usuario guardado exitosamente:", response.status);
         setLoading(false);
         return true;
