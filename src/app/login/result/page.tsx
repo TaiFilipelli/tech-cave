@@ -57,7 +57,25 @@ const LoginResult = () => {
           throw new Error(`Error al borrar: ${clearResponse.statusText}`);
         }
     
-        console.log("🧹 Celda limpiada exitosamente.");
+        console.log("🧹 Celda limpiada exitosamente. Ahora, añadiendo usuario a la db...");
+
+        const user = {
+          name: session.user.name,
+          email: session.user.email,
+          isAdmin: isAdmin,
+        }
+
+        const response = await fetch("/api/users", {
+          method: 'POST',
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(user),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error al guardar usuario: ${response.statusText}`);
+        }
+        
+        console.log("Usuario guardado exitosamente:", response.status);
         setLoading(false);
         return true;
       } catch (error) {
