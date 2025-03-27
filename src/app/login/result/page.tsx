@@ -61,7 +61,6 @@ const LoginResult = () => {
         setLoading(false);
         return true;
       } catch (error) {
-        setIsAdmin(false);
         setLoading(false);
         console.error(error)
         return false;
