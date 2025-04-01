@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Montserrat } from "next/font/google";
-import "./globals.css";
-import { Providers } from "./providers";
+import "../globals.css";
+import { Providers } from "../providers";
 import Cart from "@/components/Cart";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -20,9 +20,7 @@ export const metadata: Metadata = {
   description: "El lugar perfecto donde cumplir tus fetiches asquerosos con componentes electrónicos. Tuneá a la maleducada como te parezca, acá lo encontrás.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+export default function RootLayout({ children, }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
