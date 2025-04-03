@@ -16,7 +16,9 @@ export async function middleware(req:NextRequest){
         }
 
         try{
-            const response = await fetch(`/api/users?email=${encodeURIComponent(email!)}`,{
+            const pageUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
+            const response = await fetch(`${pageUrl}/api/users?email=${encodeURIComponent(email!)}`,{
                 method:'GET',
             });
             const data = await response.json();

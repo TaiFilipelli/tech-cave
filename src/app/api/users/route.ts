@@ -4,7 +4,6 @@ import clientPromise from "@/lib/mongodb";
 
 export async function GET(req:Request){
     try {
-
         const {searchParams} = new URL(req.url);
         const email = searchParams.get('email');
 
