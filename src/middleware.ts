@@ -11,7 +11,7 @@ export async function middleware(req:NextRequest){
         const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
         const email = token?.email;
 
-        if(email){
+        if(!email){
             return NextResponse.redirect(new URL('/404', req.url));
         }
 
@@ -28,7 +28,7 @@ export async function middleware(req:NextRequest){
             if(!data.user.isAdmin){
                 return NextResponse.redirect(new URL('/404', req.url));
             }
-            
+
             return NextResponse.next();
 
         }catch(error){
