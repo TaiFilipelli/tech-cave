@@ -20,7 +20,7 @@ const geistSans = Geist({
 
 export default function DashboardLayout({children,}: Readonly<{children: React.ReactNode;}>) {
     return(
-        <html lang="es" className="bg-gradient-to-b from-black to-violet-950 text-white p-20 h-screen">
+        <html lang="es" className="bg-gradient-to-b from-black to-violet-950 text-white h-screen">
             <body className={`${geistSans.variable} ${mont.className} antialiased`}>
                 <Providers>
                     {children}
