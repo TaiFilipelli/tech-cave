@@ -3,6 +3,9 @@ import { Geist, Montserrat } from "next/font/google";
 import "../globals.css";
 import { Providers } from "../providers";
 import React from "react";
+import api from "@/product/api";
+import { Product } from "@/product/products";
+import { ProductProvider } from "@/product/provider";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -18,12 +21,17 @@ const geistSans = Geist({
     description: "Panel de administración de Tech's Cave",
 };
 
-export default function DashboardLayout({children,}: Readonly<{children: React.ReactNode;}>) {
+export default async function DashboardLayout({children,}: Readonly<{children: React.ReactNode;}>) {
+
+    const products: Product[] = await api.list();
+
     return(
         <html lang="es" className="bg-gradient-to-b from-black to-violet-950 text-white h-screen">
             <body className={`${geistSans.variable} ${mont.className} antialiased`}>
                 <Providers>
+                    <ProductProvider products={products}>
                     {children}
+                    </ProductProvider>
                 </Providers>
             </body>
         </html>

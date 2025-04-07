@@ -5,13 +5,20 @@ import { Product } from "./products";
 const api = {
     list: async (): Promise<Product[]> => {
         try {
-            const response = await axios.get<Blob>(
+            const response = await axios.get(
                 "https://docs.google.com/spreadsheets/d/e/2PACX-1vRL66YJq850C5luiGRId3xN55F17Dzci1GNRAB6ZQe5aLT_H_jJPSQDDjTnNeviBHSmaQ3YTUFRxPZm/pub?output=csv",
-                { responseType: "blob" }
+                { responseType: typeof window === "undefined" ? "text" : "blob" }
             );
 
-            const text = await response.data.text(); // Convertir Blob a string
+            const getText = async () => {
+                if (typeof window === "undefined") {
+                  return response.data as string; //Entorno servidor: devuelve la response.data como string
+                } else {
+                  return await (response.data as Blob).text(); //Entorno cliente: convierte el fokin blob a string
+                }
+              };
 
+              const text = await getText();
             return new Promise((resolve, reject) => {
                 Papa.parse(text, {
                     header: true,
