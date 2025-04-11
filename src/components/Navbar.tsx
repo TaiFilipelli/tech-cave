@@ -3,6 +3,8 @@ import { faDragon } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AuthButton from "@/components/LoginButton";
 import { useRouter } from "next/navigation";
+import { Button } from "@heroui/react";
+import Link from "next/link";
 
 const Navbar = () => {
 
@@ -14,7 +16,8 @@ const Navbar = () => {
         <FontAwesomeIcon icon={faDragon} size="2xl"/>
         <h1 className="text-2xl font-bold"><span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">Tech`s</span> Cave</h1>
       </section>
-      <section className="flex flex-row gap-5">
+      <section className="flex flex-row gap-5 items-center">
+        <Button as={Link} href="/products" className="bg-transparent text-black font-semibold text-lg">Productos</Button>
         <AuthButton/>
       </section>
     </nav>
