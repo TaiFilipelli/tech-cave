@@ -46,7 +46,7 @@ export default function Home() {
           </article>
         )}
         <div className="overflow-x-auto relative" style={{maskImage: "linear-gradient(to right, transparent, black 5%, black 95%, transparent)", WebkitMaskImage: "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",}}>
-          <article className="flex gap-6 flex-nowrap">
+          <article className="flex gap-6 flex-nowrap justify-center">
             {featuredProducts.map((product) => (
               <ProductCard key={product.id} product={product} addToCart={addToCart}/>
             ))}
