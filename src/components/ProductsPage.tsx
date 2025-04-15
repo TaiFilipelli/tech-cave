@@ -14,7 +14,6 @@ const ProductsPage:React.FC<ProductsPageProps> = ({products}) => {
 
     return (
       <section className='items-center justify-center flex flex-col'>
-        <h1 className='font-bold text-5xl text-black mb-10'>Productos</h1>
         {products.length>0 ? 
           <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10'>
           {products.map((product)=>(
