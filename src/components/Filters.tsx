@@ -22,7 +22,7 @@ const FiltersComponent = () => {
 
   const [selectedType, setSelectedType] = React.useState<string | null>(null);
   const [selectedBrand, setSelectedBrand] = React.useState<string | null>(null);
-  const [selectedPrice, setSelectedPrice] = React.useState<number>(0);
+  const [selectedPrice, setSelectedPrice] = React.useState<number[]>([0, 5000000]);
 
   const handleClearFilters = () => {
     router.push('/products');
@@ -32,8 +32,11 @@ const FiltersComponent = () => {
 
     if (selectedType) params.set('type', selectedType);
     if (selectedBrand) params.set('brand', selectedBrand);
-    if (selectedPrice) params.set('price', selectedPrice.toString());
-
+    if (selectedPrice){
+      params.set('minPrice', selectedPrice[0].toString());
+      params.set('maxPrice', selectedPrice[1].toString());
+    }
+    
     router.push(`?${params.toString()}`);
   };
 
@@ -57,7 +60,7 @@ const FiltersComponent = () => {
         </DropdownTrigger>
         <DropdownMenu variant='flat'>
           <DropdownItem isReadOnly key={0}>
-            <Slider minValue={0} maxValue={5000000} defaultValue={[0,5000000]} label='ARS' step={100} onChange={(value) => setSelectedPrice(value)}/>
+            <Slider minValue={0} maxValue={5000000} defaultValue={[0,5000000]} value={selectedPrice} label='ARS' step={100} onChange={(value) => {if (Array.isArray(value)) {setSelectedPrice(value);}}}/>
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
