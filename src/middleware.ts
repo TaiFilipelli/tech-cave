@@ -21,6 +21,7 @@ export async function middleware(req:NextRequest){
             const response = await fetch(`${pageUrl}/api/users?email=${encodeURIComponent(email!)}`,{
                 method:'GET',
             });
+            
             const data = await response.json();
 
             if(!data.success || !data.user){
@@ -34,7 +35,7 @@ export async function middleware(req:NextRequest){
             return NextResponse.next();
 
         }catch(error){
-            return NextResponse.json({success: false, error: error}, {status:500});
+            return NextResponse.json({success: false, error: `No se pudo conectar con la API:${error}`}, {status: 500});
         }
 
     }
