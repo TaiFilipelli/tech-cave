@@ -36,7 +36,7 @@ const AddPage = () => {
       const nextId = Number(lastProduct.id) + 1;
       console.log("TOKEN DE SESIÓN:", session?.accessToken);
   
-      const response = await fetch('/api/addUser', {
+      const response = await fetch('/api/addProduct', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session?.accessToken}`},
         body: JSON.stringify({

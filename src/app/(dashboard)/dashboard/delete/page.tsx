@@ -2,14 +2,46 @@
 import React from 'react'
 import { useProducts } from '@/product/provider'
 import { Product } from '@/product/products'
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Image } from '@heroui/react'
+import { addToast, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Image } from '@heroui/react'
+import { useSession } from 'next-auth/react'
 
 const DeletePage = () => {
 
   const products:Product[] = useProducts();
+  const { data: session } = useSession();
 
   const [selectedProduct, setSelectedProduct] = React.useState< Product | null>(null)
 
+  const handleDelete = async () => {
+    if (!selectedProduct || !session?.accessToken) { 
+      addToast({ title: "Error al eliminar producto", description: 'No hay producto seleccionado o no hay sesión válida', color: "warning"});
+      return;
+    }
+  
+    try {
+      const response = await fetch('/api/deleteProduct', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          accessToken: session.accessToken,
+          productId: selectedProduct.id
+        })
+      });
+  
+      const result = await response.json();
+  
+      if (!response.ok) {
+        addToast({ title:'Error al eliminar producto', description:result.error, color: "danger"});
+      }
+  
+      addToast({ title: "Producto eliminado", description: 'El producto ha sido eliminado correctamente', color: "success" });
+      setSelectedProduct(null);
+
+    } catch (error) {
+      addToast({ title: "Error al eliminar producto", description: error instanceof Error ? error.message : 'Error al eliminar producto',color: "warning" });
+    }
+  };
+  
   return (
     <main className='flex flex-col items-center justify-center p-20'>
       <h1 className='font-bold text-3xl'>Borrar producto existente</h1>
@@ -47,7 +79,7 @@ const DeletePage = () => {
       {selectedProduct && (
       <article className='w-1/2 flex flex-col items-center justify-center bg-black rounded-xl p-2'>
           <h2 className='text-xl mb-4'>Desea eliminar el producto seleccionado?</h2>
-          <Button disabled className='text-lg'>Eliminar producto</Button>
+          <Button disabled={!selectedProduct} className='text-lg' onPress={handleDelete}>Eliminar producto</Button> 
       </article>
     )}
     </main>
