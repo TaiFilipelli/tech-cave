@@ -70,7 +70,7 @@ export default function Home() {
         </div>
       </section>
       <Divider className="my-5"/>
-      <section className="flex flex-row gap-4 justify-around items-center p-2">
+      <section className="flex flex-row max-[510px]:flex-col gap-4 justify-around items-center p-2">
         <article>
           <FontAwesomeIcon icon={faComputer} size="3x" className="mb-2"/>
           <h1 className="text-2xl font-bold">Todo lo que necesitas</h1>
