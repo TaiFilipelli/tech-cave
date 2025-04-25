@@ -1,6 +1,5 @@
 'use client';
 import { Product } from "@/product/products";
-import api from "@/product/api";
 import { useEffect, useState } from "react";
 import { useCartStore } from "@/store/useCartStore";
 import ProductCard from "@/components/ProductCard";
@@ -10,6 +9,7 @@ import { Divider } from "@heroui/react";
 import Image from "next/image";
 import { categories } from "@/data/categoriesData";
 import { useRouter } from "next/navigation";
+import { useProducts } from "@/product/provider";
 export default function Home() {
 
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
@@ -18,25 +18,12 @@ export default function Home() {
 
   const router = useRouter();
 
+  const products = useProducts();
+
   useEffect(() => {
-    const fetchProducts = async() => {
-      try{
-        const apiProducts = await api.list();
-
-        const featured = [...apiProducts].sort(()=>0.5-Math.random());
-        setFeaturedProducts(featured.slice(0,5));
-      }
-      catch(err){
-        console.error('ERROR FETCHING PRODUCTS:', err);
-      }
-    };
-
-    fetchProducts();
-
-    const interval = setInterval(fetchProducts, 3600000); // 1 hour
-    return () => clearInterval(interval);
-
-  }, []);
+    const featured = [...products].sort(()=>0.5-Math.random());
+    setFeaturedProducts(featured.slice(0,5));
+  }, [products]);
 
   return (
     <main className="m-10 text-center">

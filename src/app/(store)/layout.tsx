@@ -5,6 +5,9 @@ import { Providers } from "../providers";
 import Cart from "@/components/Cart";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { ProductProvider } from "@/product/provider";
+import api from "@/product/api";
+import { Product } from "@/product/products";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,17 +23,21 @@ export const metadata: Metadata = {
   description: "El lugar perfecto donde cumplir tus fetiches asquerosos con componentes electrónicos. Tuneá a la maleducada como te parezca, acá lo encontrás.",
 };
 
-export default function RootLayout({ children, }: Readonly<{
+export default async function RootLayout({ children, }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const products: Product[] = await api.list();
+
   return (
     <html lang="en" className="bg-gray-200">
       <body className={`${geistSans.variable} ${mont.className} antialiased`}>
         <Providers>
-          <Navbar/>
-          {children}
-          <Cart/>
-          <Footer/>
+          <ProductProvider products={products}>
+            <Navbar/>
+            {children}
+            <Cart/>
+            <Footer/>
+          </ProductProvider>
         </Providers>
       </body>
     </html>

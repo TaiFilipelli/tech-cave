@@ -2,48 +2,45 @@
 
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import api from '@/product/api'
 import ProductsPage from '@/components/ProductsPage'
 import FiltersComponent from '@/components/Filters'
 import { Product } from '@/product/products'
+import { useProducts } from '@/product/provider'
 
 const ClientProductsList = () => {
-  const searchParams = useSearchParams()
-  const [products, setProducts] = useState<Product[]>([])
+  const allProducts = useProducts();
+  const searchParams = useSearchParams();
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>(allProducts);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      let products = await api.list()
+    const type = searchParams.get('type');
+    const minPrice = searchParams.get('minPrice');
+    const maxPrice = searchParams.get('maxPrice');
 
-      const type = searchParams.get('type')
-      const minPrice = searchParams.get('minPrice')
-      const maxPrice = searchParams.get('maxPrice')
+    let result = [...allProducts];
 
-      if (type) {
-        products = products.filter(p => p.type === type)
-      }
-
-      if (minPrice || maxPrice) {
-        const min = minPrice ? parseInt(minPrice) : 0
-        const max = maxPrice ? parseInt(maxPrice) : Infinity
-        products = products.filter(p => {
-          const price = Number(p.price)
-          return price >= min && price <= max
-        })
-      }
-
-      setProducts(products)
+    if (type) {
+      result = result.filter(p => p.type === type);
     }
 
-    fetchProducts()
-  }, [searchParams.toString()])
+    if (minPrice || maxPrice) {
+      const min = minPrice ? parseInt(minPrice) : 0;
+      const max = maxPrice ? parseInt(maxPrice) : Infinity;
+      result = result.filter(p => {
+        const price = Number(p.price);
+        return price >= min && price <= max;
+      });
+    }
+
+    setFilteredProducts(result);
+  }, [searchParams.toString(), allProducts]);
 
   return (
     <>
       <FiltersComponent />
-      <ProductsPage products={products} />
+      <ProductsPage products={filteredProducts} />
     </>
-  )
-}
+  );
+};
 
-export default ClientProductsList
+export default ClientProductsList;
