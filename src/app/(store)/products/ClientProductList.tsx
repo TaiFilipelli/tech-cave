@@ -16,6 +16,7 @@ const ClientProductsList = () => {
     const type = searchParams.get('type');
     const minPrice = searchParams.get('minPrice');
     const maxPrice = searchParams.get('maxPrice');
+    const brand = searchParams.get('brand');
 
     let result = [...allProducts];
 
@@ -23,16 +24,23 @@ const ClientProductsList = () => {
       result = result.filter(p => p.type === type);
     }
 
+    if(brand){
+      result = result.filter(p => p.brand === brand);
+    }
+    
     if (minPrice || maxPrice) {
       const min = minPrice ? parseInt(minPrice) : 0;
       const max = maxPrice ? parseInt(maxPrice) : Infinity;
-      result = result.filter(p => {
-        const price = Number(p.price);
-        return price >= min && price <= max;
-      });
+    
+      if (!(min === 0 && max === 0)) {
+        result = result.filter(p => {
+          const cleanPrice = Number(p.price.replace('$', '').replace(/\./g, ''));
+          return cleanPrice >= min && cleanPrice <= max;
+        });
+      }
     }
-
     setFilteredProducts(result);
+
   }, [searchParams.toString(), allProducts]);
 
   return (
