@@ -34,8 +34,8 @@ const ClientProductsList = () => {
     
       if (!(min === 0 && max === 0)) {
         result = result.filter(p => {
-          const cleanPrice = Number(p.price.replace('$', '').replace(/\./g, ''));
-          return cleanPrice >= min && cleanPrice <= max;
+          const numericPrice = parseInt(p.price.toString());
+          return numericPrice >= min && numericPrice <= max;
         });
       }
     }
