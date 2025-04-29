@@ -29,15 +29,10 @@ const ClientProductsList = () => {
     }
     
     if (minPrice || maxPrice) {
-      const min = minPrice ? parseInt(minPrice) : 0;
-      const max = maxPrice ? parseInt(maxPrice) : Infinity;
-    
-      if (!(min === 0 && max === 0)) {
-        result = result.filter(p => {
-          const numericPrice = parseInt(p.price.toString());
-          return numericPrice >= min && numericPrice <= max;
-        });
-      }
+      const min = minPrice ? Number(minPrice) : 0;
+      const max = maxPrice ? Number(maxPrice) : Infinity;
+  
+      result = result.filter(p => Number(p.price.toString().replace(/[^0-9.,]/g, '').replace(',', '.')) >= min && Number(p.price.toString().replace(/[^0-9.,]/g, '').replace(',', '.')) <= max);
     }
     setFilteredProducts(result);
 

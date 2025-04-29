@@ -25,6 +25,9 @@ const FiltersComponent = () => {
   const [selectedPrice, setSelectedPrice] = React.useState<number[]>([0, 5000000]);
 
   const handleClearFilters = () => {
+    setSelectedType(null);
+    setSelectedBrand(null);
+    setSelectedPrice([0, 5000000]);
     router.push('/products');
   }
   const handleApplyFilters = () => {

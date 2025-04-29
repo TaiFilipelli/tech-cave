@@ -3,7 +3,7 @@ import React from 'react'
 import ProductCard from './ProductCard'
 import { useCartStore } from '@/store/useCartStore'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faFaceSadTear } from '@fortawesome/free-solid-svg-icons';
 
 interface ProductsPageProps {
   products: Product[];
@@ -22,8 +22,8 @@ const ProductsPage:React.FC<ProductsPageProps> = ({products}) => {
           </section>
         :
           <section className='flex flex-col gap-4 m-10'>
-            <h1 className='text-xl font-semibold text-black mb-4'>Preparando productos...</h1>
-            <FontAwesomeIcon icon={faCircleNotch} spin size="2xl"/>
+            <h1 className='text-xl font-semibold text-black mb-4'>No hay productos disponibles.</h1>
+            <FontAwesomeIcon icon={faFaceSadTear} size="2xl"/>
           </section>
       }
       </section>
