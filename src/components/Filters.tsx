@@ -10,7 +10,7 @@ const FiltersComponent = () => {
 
   const types:string[] = [
     'Procesador', 'Placa de Video', 'Placa Madre', 'Memoria RAM', 'Almacenamiento SSD', 
-    'Almacenamiento HDD', 'Fuente de Alimentación', 'Otros'
+    'Almacenamiento HDD', 'Fuente de Alimentacion', 'Otros'
   ];
 
   const brands:string[] = [
