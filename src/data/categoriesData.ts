@@ -5,7 +5,7 @@ export interface Category{
 }
 
 export const categories: Category[] = [
-    { name: 'Motherboards', img: '/stockMothers.jpg', type: 'Placa Madre' },
+    { name: 'Motherboards', img: '/stockMothers.jpg', type: 'Placa madre' },
     { name: 'Procesadores', img: '/stockCPUs.jpg', type: 'Procesador' },
     { name: 'Memoria RAM', img: '/stockRAM.jpg', type: 'Memoria RAM' },
     { name: 'Almacenamiento SSD', img: '/stockSSD.jpg', type: 'Almacenamiento SSD' },
