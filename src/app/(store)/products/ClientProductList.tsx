@@ -13,7 +13,9 @@ const ClientProductsList = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(allProducts);
 
   useEffect(() => {
-    const type = searchParams.get('type');
+
+    const typeRaw = searchParams.get('type');
+    const type = typeRaw ? decodeURIComponent(typeRaw.replace(/\+/g, ' ')) : null;
     const minPrice = searchParams.get('minPrice');
     const maxPrice = searchParams.get('maxPrice');
     const brand = searchParams.get('brand');
@@ -22,6 +24,7 @@ const ClientProductsList = () => {
 
     if (type) {
       result = result.filter(p => p.type === type);
+      console.log('Filtered by type:', type, result);
     }
 
     if(brand){
@@ -34,6 +37,7 @@ const ClientProductsList = () => {
   
       result = result.filter(p => Number(p.price.toString().replace(/[^0-9.,]/g, '').replace(',', '.')) >= min && Number(p.price.toString().replace(/[^0-9.,]/g, '').replace(',', '.')) <= max);
     }
+    console.log('Filtered products:', result);
     setFilteredProducts(result);
 
   }, [searchParams.toString(), allProducts]);

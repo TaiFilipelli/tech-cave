@@ -9,7 +9,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 const FiltersComponent = () => {
 
   const types:string[] = [
-    'Procesador', 'Placa de Video', 'Placa Madre', 'Memoria RAM', 'Almacenamiento SSD', 
+    'Procesador', 'Placa de Video', 'Placa madre', 'Memoria RAM', 'Almacenamiento SSD', 
     'Almacenamiento HDD', 'Fuente de Alimentacion', 'Otros'
   ];
 
