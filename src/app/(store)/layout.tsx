@@ -21,6 +21,10 @@ const mont = Montserrat({
 export const metadata: Metadata = {
   title: "Tech's Cave",
   description: "El lugar perfecto donde cumplir tus fetiches asquerosos con componentes electrónicos. Tuneá a la maleducada como te parezca, acá lo encontrás.",
+  icons:{
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+  }
 };
 
 export default async function RootLayout({ children, }: Readonly<{
