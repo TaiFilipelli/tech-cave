@@ -33,15 +33,22 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {categories.map((category, index) =>(
             <article className="relative w-full h-40 rounded-xl overflow-hidden shadow-lg group transition-transform hover:scale-105 hover:cursor-pointer" key={index} onClick={() => {router.push(`/products?type=${category.type}`)}}>
-              <Image src={category.img} alt={category.name} fill className="object-cover brightness-75"/> 
-              <span className="absolute inset-0 flex text-white font-semibold text-xl z-10">{category.name}</span>
+              <Image src={category.img} alt={category.name} fill className="object-cover brightness-50"/> 
+              <span className="absolute inset-0 flex text-white font-semibold text-xl z-10 p-5">{category.name}</span>
           </article>
           ))}
         </div>
       </section>
-      <section className="mx-10">
-        <h3 className="text-4xl font-bold mb-5">Productos <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">destacados</span>
-        </h3> 
+      <Divider className="mb-5"/>
+      <section className="flex flex-col justify-between items-center text-center p-2">
+        <h3 className="text-4xl font-bold mb-5">Las mejores <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">marcas</span></h3>
+        <article>
+          <h1>Acá iran logos de marcas</h1>
+        </article>
+      </section>
+      <Divider className="mb-5"/>
+      <section className="mx-10 p-2">
+        <h3 className="text-4xl font-bold mb-5">Productos <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">destacados</span></h3> 
         { featuredProducts.length === 0 && (
           <article className="flex flex-col gap-4 m-10">
             <h1 className="text-xl font-semibold text-black mb-4">Preparando productos...</h1>
