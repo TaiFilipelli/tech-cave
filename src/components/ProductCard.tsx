@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Button, Image, addToast } from "@heroui/react";
+import { Button, Image, addToast, Card, CardBody, CardFooter } from "@heroui/react";
 import { Product } from "@/product/products";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faCheck } from "@fortawesome/free-solid-svg-icons";
@@ -48,19 +48,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
   }, [cart, product.id]);
 
   return (
-    <article className={`h-auto justify-between flex flex-col items-center bg-white text-black shadow-black rounded-3xl p-5 border-1 border-black ${product.stock === 0 ? "opacity-50" : ""}`}>
-      <Image src={product.image} alt={product.name} className="my-10 object-cover" width={150} height={150} />
-      <h2>{product.name.length > 25 ? product.name.slice(0, 20) + "..." : product.name}</h2>
-      <h3>{product.price}</h3>
-      <div className="w-full flex max-[1300px]:flex-col justify-between gap-5 mt-auto max-[1300px]:gap-2">
-        <Button className={`${onCart ? "bg-green-600": "bg-gray-300"} w-3/4 max-[1300px]:w-full hover:scale-105 font-bold`} onPress={handleAddToCart}>
-          <FontAwesomeIcon icon={onCart ? faCheck : faCartShopping} size="xl" /> {onCart ? "Agregado" : "Agregar"}
-        </Button>
-        <Button className="bg-blue-600 text-white w-1/2 max-[1300px]:w-full font-bold hover:scale-105" onPress={() => { setSelectedProduct(product); router.push("/details"); }}>
-          Ver más
-        </Button>
-      </div>
-    </article>
+    <Card isPressable onPress={() => { setSelectedProduct(product); router.push("/details");}} className={`group h-auto justify-between flex flex-col items-center bg-white text-black rounded-3xl border-1 border-black hover:border-violet-600 transition-all duration-400 ${product.stock === 0 ? "opacity-50" : ""}`}>
+      <CardBody className="overflow-hidden p-0 max-h-full max-w-fit">
+        <Image src={product.image} alt={product.name} className="my-10 object-cover transition-transform duration-500" width="100%" height="13rem"/> 
+      </CardBody>
+      <CardFooter className="flex flex-col gap-2 z-10 text-small items-start border-t-1 border-black">
+        <h3 className="text-violet-500">{product.type}</h3>
+        <h3 className="transition-colors duration-300 group-hover:text-violet-600 font-semibold text-medium">{product.name.length > 25 ? product.name.slice(0, 20) + "..." : product.name}</h3>
+        <article className="flex flex-row gap-2 justify-between items-center w-full">
+          <h3 className="font-semibold text-lg">{product.price}</h3>
+          <Button className={`${onCart ? "bg-green-600": "bg-gray-300"} w-1/2 max-[1300px]:w-full hover:scale-105 font-bold`} onPress={handleAddToCart}>
+            <FontAwesomeIcon icon={onCart ? faCheck : faCartShopping} size="xl" /> {onCart ? "Agregado" : "Agregar"}
+          </Button>
+        </article>
+      </CardFooter>
+    </Card>
   );
 };
 

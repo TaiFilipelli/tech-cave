@@ -35,7 +35,7 @@ export default function AuthButton() {
     }
 
     return (
-        <Button onPress={() => signIn("google")} className={`${pop.className} bg-blue-500 text-white px-4 py-2 rounded`} startContent={<FontAwesomeIcon icon={faGoogle} size="xl"/>}>
+        <Button onPress={() => signIn("google")} className={`${pop.className} bg-violet-500 text-white px-4 py-2 rounded`} startContent={<FontAwesomeIcon icon={faGoogle} size="xl"/>}>
             Iniciar sesión
         </Button>
     );

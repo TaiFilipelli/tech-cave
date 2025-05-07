@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   title: "Tech's Cave",
   description: "El lugar perfecto donde cumplir tus fetiches asquerosos con componentes electrónicos. Tuneá a la maleducada como te parezca, acá lo encontrás.",
   icons:{
-    icon: "/logo.png",
+    icon: "/logo_dragon_solo.png",
     shortcut: "/logo.png",
   }
 };
@@ -33,7 +33,7 @@ export default async function RootLayout({ children, }: Readonly<{
   const products: Product[] = await api.list();
 
   return (
-    <html lang="en" className="bg-gray-200">
+    <html lang="en" className="bg-gray-200" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${mont.className} antialiased`}>
         <Providers>
           <ProductProvider products={products}>

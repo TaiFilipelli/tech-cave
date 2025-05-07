@@ -88,7 +88,7 @@ const Cart = () => {
   
   return (
     <>
-      <Button onPress={onOpen} className="fixed bottom-16 right-16 bg-blue-600 text-white rounded-full p-7 shadow-md hover:bg-blue-700 transition-all border-1 border-black shadow-gray-600 z-20">
+      <Button onPress={onOpen} className="fixed bottom-16 right-16 bg-violet-600 text-white rounded-full p-7 shadow-md hover:bg-blue-700 transition-all border-1 border-black shadow-gray-600 z-20">
         <FontAwesomeIcon icon={faCartShopping} size="2xl" />
       </Button>
 
@@ -115,7 +115,7 @@ const Cart = () => {
             <FontAwesomeIcon icon={faUserXmark} size="2xl" className="animate-appearance-in"/>
             <h1 className="text-2xl font-bold">Inicia sesión para continuar</h1>
             <p className="text-gray-700 ">Para poder comprar, debes iniciar sesión.</p>
-            <Button onPress={() => signIn("google")} startContent={<FontAwesomeIcon icon={faGoogle} size="xl"/>} className="bg-blue-600 text-white w-full font-semibold text-lg p-6">Iniciar sesión</Button>
+            <Button onPress={() => signIn("google")} startContent={<FontAwesomeIcon icon={faGoogle} size="xl"/>} className="bg-violet-600 text-white w-full font-semibold text-lg p-6">Iniciar sesión</Button>
           </ModalBody>
         }
 

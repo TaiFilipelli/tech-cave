@@ -10,6 +10,7 @@ import Image from "next/image";
 import { categories } from "@/data/categoriesData";
 import { useRouter } from "next/navigation";
 import { useProducts } from "@/product/provider";
+import HeroSection from "@/components/HeroSection";
 export default function Home() {
 
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
@@ -26,8 +27,8 @@ export default function Home() {
   }, [products]);
 
   return (
-    <main className="m-10 text-center">
-      <h2 className="text-2xl font-bold m-5 p-5">Tuneá a la maleducada como te parezca.</h2>
+    <main className="flex min-h-screen flex-col">
+      <HeroSection/>
       <section className="flex flex-col text-left p-10">
         <h3 className='text-3xl font-bold my-5'>Lo necesitas? Lo tenemos</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -47,7 +48,7 @@ export default function Home() {
         </article>
       </section>
       <Divider className="mb-5"/>
-      <section className="mx-10 p-2">
+      <section className="mx-10 p-2 text-center">
         <h3 className="text-4xl font-bold mb-5">Productos <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">destacados</span></h3> 
         { featuredProducts.length === 0 && (
           <article className="flex flex-col gap-4 m-10">
@@ -55,7 +56,7 @@ export default function Home() {
             <FontAwesomeIcon icon={faCircleNotch} spin size="2xl"/>
           </article>
         )}
-        <div className="overflow-x-auto relative">
+        <div className="">
           <article className="flex gap-6 flex-nowrap justify-center">
             {featuredProducts.map((product) => (
               <ProductCard key={product.id} product={product} addToCart={addToCart}/>
@@ -64,7 +65,7 @@ export default function Home() {
         </div>
       </section>
       <Divider className="my-5"/>
-      <section className="flex flex-row max-[510px]:flex-col gap-4 justify-around items-center p-2">
+      <section className="flex flex-row max-[510px]:flex-col gap-4 justify-around items-center text-center p-2">
         <article>
           <FontAwesomeIcon icon={faComputer} size="3x" className="mb-2"/>
           <h1 className="text-2xl font-bold">Todo lo que necesitas</h1>
