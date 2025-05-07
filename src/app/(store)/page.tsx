@@ -48,7 +48,7 @@ export default function Home() {
         </article>
       </section>
       <Divider className="mb-5"/>
-      <section className="mx-10 p-2 text-center">
+      <section className="mx-5 p-2 text-center">
         <h3 className="text-4xl font-bold mb-5">Productos <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">destacados</span></h3> 
         { featuredProducts.length === 0 && (
           <article className="flex flex-col gap-4 m-10">
@@ -56,10 +56,12 @@ export default function Home() {
             <FontAwesomeIcon icon={faCircleNotch} spin size="2xl"/>
           </article>
         )}
-        <div className="">
-          <article className="flex gap-6 flex-nowrap justify-center">
+        <div className="overflow-x-auto w-full">
+          <article className="flex gap-6 flex-nowrap px-4 justify-center">
             {featuredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} addToCart={addToCart}/>
+              <div key={product.id} className="min-w-[250px]">
+               <ProductCard product={product} addToCart={addToCart} />
+              </div>
             ))}
           </article>
         </div>
