@@ -55,18 +55,15 @@ const Cart = () => {
   const sendMessage = () => {
       let message:string = "Hola! Deseo comprar estos componentes:%0A";
       const number:string = "3364181788";
-      let subtotal:number = 0;
 
       products.forEach((product) => {
         message += `${product.cantidad}x ${product.name} - ${product.price}%0A`;
-        subtotal +=  Number(product.price.toString().replace(/[^0-9.,]/g, '').replace(',', '.')) * product.cantidad;
       });
 
       message += `Total: $${subtotal}`;
       console.log(subtotal);
 
-    // return router.push(`https://wa.me/${number}?text=${message}`)
-    return console.log('A este numero:', number, 'con el mensaje:', message, 'le llega este subtotal:', subtotal);
+    return router.push(`https://wa.me/${number}?text=${message}`)
   }
   const handleMP = async () => {
     try {
