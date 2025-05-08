@@ -17,12 +17,19 @@ const Cart = () => {
   const [products, setProducts] = useState(cart);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
+  const [subtotal, setSubtotal] = useState(0);
   const {data:session} = useSession();
 
   const router = useRouter();
 
   useEffect(() => {
     setProducts(cart);
+    const newSubtotal = cart.reduce((acc, product) => {
+      const price = Number(product.price.toString().replace(/[^0-9]/g, ''));
+      return acc + price * product.cantidad;
+    }, 0);
+  
+    setSubtotal(newSubtotal);
   }, [cart]);
 
   const increaseQuantity = (id: number, cantidad: number) => {
@@ -52,13 +59,14 @@ const Cart = () => {
 
       products.forEach((product) => {
         message += `${product.cantidad}x ${product.name} - ${product.price}%0A`;
-        subtotal += product.price * product.cantidad;
+        subtotal +=  Number(product.price.toString().replace(/[^0-9.,]/g, '').replace(',', '.')) * product.cantidad;
       });
 
       message += `Total: $${subtotal}`;
       console.log(subtotal);
 
-    return router.push(`https://wa.me/${number}?text=${message}`)
+    // return router.push(`https://wa.me/${number}?text=${message}`)
+    return console.log('A este numero:', number, 'con el mensaje:', message, 'le llega este subtotal:', subtotal);
   }
   const handleMP = async () => {
     try {
@@ -85,6 +93,11 @@ const Cart = () => {
     }
 };
 
+  const formattedSubtotal = new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+    minimumFractionDigits: 2,
+  }).format(subtotal);
   
   return (
     <>
@@ -156,6 +169,7 @@ const Cart = () => {
             )}
           </DrawerBody>
           <DrawerFooter className="flex flex-col gap-2">
+            <h1 className="my-4 font-semibold text-2xl">Subtotal: {formattedSubtotal}</h1>
             <div className="flex flex-row justify-between gap-2">
                 <Button className="bg-green-500 text-white font-bold w-1/2" onPress={handleBuy}>Comprar</Button>
                 <Button className="bg-red-600 text-white font-bold w-1/2" onPress={onClose}>Cerrar</Button>

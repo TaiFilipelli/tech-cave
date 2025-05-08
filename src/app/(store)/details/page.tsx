@@ -18,7 +18,7 @@ export default function ProductDetails() {
     }
 
     return (
-        <main className="p-20 max-[550px]:p-5">
+        <main className="p-20 max-[550px]:p-5 mt-16">
         <Button as={Link} href="/" className="bg-red-600 text-white font-bold text-3xl items-center text-center">←</Button>
         <section className="bg-white text-black mt-10 mb-16 items-center rounded-2xl border-1 border-black">
             <article className="flex flex-wrap max-[1000px]:flex-col max-[800px]:items-center p-10 max-[400px]:px-2">

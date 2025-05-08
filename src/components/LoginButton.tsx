@@ -6,10 +6,12 @@ import { Poppins } from "next/font/google";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 const pop = Poppins({ subsets: ["latin"], weight: "600" });
 
 export default function AuthButton() {
+
     const { data: session } = useSession();
     const [isHovered, setIsHovered] = useState(false);
 
@@ -26,7 +28,7 @@ export default function AuthButton() {
                 </article>
                 </DropdownTrigger>
                 <DropdownMenu className={`${pop.className} text-center`}>
-                    <DropdownItem key='logout' className="bg-red-600 text-white px-4 py-2 rounded" onPress={() => signOut({redirect: false})}>
+                    <DropdownItem key='logout' className="bg-red-600 text-white px-4 py-2 rounded" startContent={<FontAwesomeIcon icon={faArrowRightFromBracket}/>} onPress={() => signOut({redirect: false})}>
                         Cerrar sesión
                     </DropdownItem>
                 </DropdownMenu>

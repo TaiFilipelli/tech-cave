@@ -93,7 +93,7 @@ const LoginResult = () => {
   }, [session]);
 
   return (
-    <section className="flex flex-col items-center justify-center text-center p-20">
+    <section className="flex flex-col items-center justify-center text-center p-20 mt-16">
       <h1 className='text-4xl font-bold mb-2'>Bienvenido, {session?.user?.name}!</h1>
       <p className='text-xl font-semibold mb-4'>Puede realizar compras libremente por la aplicación</p>
 
