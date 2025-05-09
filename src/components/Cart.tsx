@@ -18,6 +18,7 @@ const Cart = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
   const [subtotal, setSubtotal] = useState(0);
+  const [count, setCount] = useState(0);
   const {data:session} = useSession();
 
   const router = useRouter();
@@ -28,7 +29,8 @@ const Cart = () => {
       const price = Number(product.price.toString().replace(/[^0-9]/g, ''));
       return acc + price * product.cantidad;
     }, 0);
-  
+    
+    setCount(cart.length);
     setSubtotal(newSubtotal);
   }, [cart]);
 
@@ -51,6 +53,11 @@ const Cart = () => {
     setIsModalOpen(true);
   }
 
+  const formattedSubtotal = new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+    minimumFractionDigits: 2,
+  }).format(subtotal);
   
   const sendMessage = () => {
       let message:string = "Hola! Deseo comprar estos componentes:%0A";
@@ -60,7 +67,7 @@ const Cart = () => {
         message += `${product.cantidad}x ${product.name} - ${product.price}%0A`;
       });
 
-      message += `Total: $${subtotal}`;
+      message += `Total: $${formattedSubtotal}`;
       console.log(subtotal);
 
     return router.push(`https://wa.me/${number}?text=${message}`)
@@ -90,18 +97,18 @@ const Cart = () => {
     }
 };
 
-  const formattedSubtotal = new Intl.NumberFormat('es-AR', {
-    style: 'currency',
-    currency: 'ARS',
-    minimumFractionDigits: 2,
-  }).format(subtotal);
-  
   return (
     <>
+    <div>
+      {count > 0 && (
+        <span className="fixed bottom-[6.5rem] right-16 bg-white text-black border-1 border-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center z-30">
+        {count}
+        </span>
+      )}
       <Button onPress={onOpen} className="fixed bottom-16 right-16 bg-violet-600 text-white rounded-full p-7 shadow-md hover:bg-blue-700 transition-all border-1 border-black shadow-gray-600 z-20">
         <FontAwesomeIcon icon={faCartShopping} size="2xl" />
       </Button>
-
+    </div>
       {isModalOpen && (
       <Modal isOpen={isModalOpen} onOpenChange={setIsModalOpen}>
       <ModalContent>

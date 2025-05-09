@@ -5,7 +5,6 @@ import { Product } from "@/product/products";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
-import { useProductStore } from "@/store/productsStore";
 import { useCartStore } from "@/store/useCartStore";
 
 interface CartItem {
@@ -23,7 +22,6 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
   const [onCart, setOnCart] = useState(false);
   const router = useRouter();
-  const setSelectedProduct = useProductStore((state) => state.setSelectedProduct);
   const cart = useCartStore((state) => state.cart);
 
   const handleAddToCart = () => {
@@ -48,7 +46,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
   }, [cart, product.id]);
 
   return (
-    <Card isPressable onPress={() => { setSelectedProduct(product); router.push("/details");}} className={`group h-auto justify-between flex flex-col items-center bg-white text-black rounded-3xl border-1 border-black hover:border-violet-600 transition-all duration-400 ${product.stock === 0 ? "opacity-50" : ""}`}>
+    <Card isPressable onPress={() => { router.push(`/details?name=${encodeURIComponent(product.name)}`);}} className={`group h-auto justify-between flex flex-col items-center bg-white text-black rounded-3xl border-1 border-black hover:border-violet-600 transition-all duration-400 ${product.stock === 0 ? "opacity-50" : ""}`}>
       <CardBody className="overflow-hidden p-0 max-h-full max-w-fit">
         <Image src={product.image} alt={product.name} className="my-10 object-cover transition-transform duration-500" width="100%" height="13rem"/> 
       </CardBody>
