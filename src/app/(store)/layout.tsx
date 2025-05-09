@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   title: "Tech's Cave",
   description: "El lugar perfecto donde cumplir tus fetiches asquerosos con componentes electrónicos. Tuneá a la maleducada como te parezca, acá lo encontrás.",
   icons:{
-    icon: "/logo_dragon_solo.png",
+    icon: "/logo.png",
     shortcut: "/logo.png",
   }
 };
