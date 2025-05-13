@@ -19,7 +19,7 @@ export default function HeroSection(){
             <p className='mt-5 text-xl'>Sea tu herramienta de trabajo, tu espacio seguro, tu hobby o tu amante.  <br />Tu PC merece dar un paso más. Acá encontras todo lo que necesitas</p>
             <div className='flex flex-wrap gap-4 justify-center mt-5'>
                 <Button className='bg-[#7c3aed] text-white text-lg p-6' startContent={<FontAwesomeIcon icon={faComputer} size='2xl'/>} onPress={()=> router.push('/products')}>Ver Componentes</Button>
-                <Button className='bg-transparent border-1 border-[#7c3aed] text-[#7c3aed] text-lg p-6' startContent={<FontAwesomeIcon icon={faPeopleGroup}/>} onPress={()=>router.push('/about')}>Sobre Nosotros</Button>
+                <Button className='bg-transparent border-1 border-[#7c3aed] text-[#7c3aed] text-lg p-6' startContent={<FontAwesomeIcon icon={faPeopleGroup}/>} onPress={()=>router.push('/#about')}>Sobre Nosotros</Button>
             </div>
             <div className='absolute bottom-5'>
                 <FontAwesomeIcon icon={faArrowDown} bounce size='2xl' color='#7c3aed'/>

@@ -85,6 +85,10 @@ export default function Home() {
         </article>
       </section>
       <Divider className="my-5"/>
+      <section id="about" className="flex flex-col text-center p-2">
+        <h3 className="text-4xl font-bold mb-5">Quiénes <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">somos?</span></h3>
+
+      </section>
     </main>
   );
 }
