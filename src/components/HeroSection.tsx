@@ -12,7 +12,7 @@ export default function HeroSection(){
         <div className="absolute inset-0 z-0">
             <ParticleBackground />
         </div>
-        <section className="relative z-10 flex flex-col text-center items-center justify-center h-full">
+        <section className="relative z-10 flex flex-col text-center items-center justify-center h-full" style={{animation: 'fadeIn 1s ease-in-out'}}>
             <span className="inline-block px-4 py-1.5 rounded-full bg-purple-500/20 text-purple-600 text-sm font-medium mb-4">Bienvenido a {`Tech's Cave`}</span>
             <span className='block text-6xl font-bold'>Lleva tu PC</span>
             <span className='block text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-yellow-500'>al siguiente nivel</span>
