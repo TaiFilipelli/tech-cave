@@ -3,28 +3,40 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button } from '@heroui/react'
 import React, { useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import { motion, useScroll, useTransform } from 'framer-motion'
 
 export default function HeroSection(){
 
+  const containerRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  })
+
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
+  const y = useTransform(scrollYProgress, [0, 0.5], [0, -50])
+
+
   const router = useRouter();
+
   return (
     <div className="relative h-screen w-full overflow-hidden">
         <div className="absolute inset-0 z-0">
             <ParticleBackground />
         </div>
-        <section className="relative z-10 flex flex-col text-center items-center justify-center h-full" style={{animation: 'fadeIn 1s ease-in-out'}}>
-            <span className="inline-block px-4 py-1.5 rounded-full bg-purple-500/20 text-purple-600 text-sm font-medium mb-4">Bienvenido a {`Tech's Cave`}</span>
-            <span className='block text-6xl font-bold'>Lleva tu PC</span>
-            <span className='block text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-yellow-500'>al siguiente nivel</span>
-            <p className='mt-5 text-xl'>Sea tu herramienta de trabajo, tu espacio seguro, tu hobby o tu amante.  <br />Tu PC merece dar un paso más. Acá encontras todo lo que necesitas</p>
-            <div className='flex flex-wrap gap-4 justify-center mt-5'>
+        <motion.section className="relative z-10 flex flex-col text-center items-center justify-center h-full" ref={containerRef} style={{ opacity, y }}>
+            <motion.span className="inline-block px-4 py-1.5 rounded-full bg-purple-500/20 text-purple-600 text-sm font-medium mb-4 opacity-0 animate-fade-up animation-delay-400">Bienvenido a {`Tech's Cave`}</motion.span>
+            <motion.span className='block text-6xl font-bold opacity-0 animate-fade-up animation-delay-600'>Lleva tu PC</motion.span>
+            <motion.span className='block text-6xl font-bold opacity-0 bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-yellow-500 animate-fade-up animation-delay-600'>al siguiente nivel</motion.span>
+            <motion.p className='mt-5 text-xl opacity-0 animate-fade-up animation-delay-700'>Sea tu herramienta de trabajo, tu espacio seguro, tu hobby o tu amante.  <br />Tu PC merece dar un paso más. Acá encontras todo lo que necesitas</motion.p>
+            <motion.div className='flex flex-wrap gap-4 justify-center mt-5 opacity-0 animate-fade-up animation-delay-800'>
                 <Button className='bg-[#7c3aed] text-white text-lg p-6' startContent={<FontAwesomeIcon icon={faComputer} size='2xl'/>} onPress={()=> router.push('/products')}>Ver Componentes</Button>
                 <Button className='bg-transparent border-1 border-[#7c3aed] text-[#7c3aed] text-lg p-6' startContent={<FontAwesomeIcon icon={faPeopleGroup}/>} onPress={()=>router.push('/#about')}>Sobre Nosotros</Button>
-            </div>
-            <div className='absolute bottom-5'>
+            </motion.div>
+            <motion.div className='absolute bottom-5'>
                 <FontAwesomeIcon icon={faArrowDown} bounce size='2xl' color='#7c3aed'/>
-            </div>
-        </section>
+            </motion.div>
+        </motion.section>
   </div>
   )
 }
