@@ -37,11 +37,14 @@ const LoginResult = () => {
             body: JSON.stringify(data),
           }
         );
+
+        let hasPermissions = false;
     
         if (!writeResponse.ok) {
           throw new Error(`Error en la escritura: ${writeResponse.statusText}`);
         }else {
           setIsAdmin(true);
+          hasPermissions = true;
         }
 
         console.log("✅ Escritura exitosa. Añadiendo usuario a la base de datos...");
@@ -50,13 +53,14 @@ const LoginResult = () => {
         const user = {
           name: session.user.name,
           email: session.user.email,
-          isAdmin: isAdmin,
+          isAdmin: hasPermissions,
         }
         
         const addUserResponse = await fetch("/api/users", {
           method: 'POST',
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(user),
+          credentials:'include',
         });
         
         if (!addUserResponse.ok) {

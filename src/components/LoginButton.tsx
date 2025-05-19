@@ -6,15 +6,17 @@ import { Poppins } from "next/font/google";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket, faUserTie } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation";
 
 const pop = Poppins({ subsets: ["latin"], weight: "600" });
 
-export default function AuthButton() {
+export default function AuthButton({isAdmin}:{isAdmin:boolean}) {
 
     const { data: session } = useSession();
     const [isHovered, setIsHovered] = useState(false);
 
+    const router = useRouter();
     
     if (session) {
         return (
@@ -28,6 +30,11 @@ export default function AuthButton() {
                 </article>
                 </DropdownTrigger>
                 <DropdownMenu className={`${pop.className} text-center`}>
+                {isAdmin ? (
+                    <DropdownItem key='admin' className="text-white px-4 py-2 rounded bg-gradient-to-r from-black to-violet-500 hover:bg-black hover:text-white" onPress={() => router.push('/dashboard')} startContent={<FontAwesomeIcon icon={faUserTie}/>}>
+                        Dashboard
+                    </DropdownItem>
+                ):null}
                     <DropdownItem key='logout' className="bg-red-600 text-white px-4 py-2 rounded" startContent={<FontAwesomeIcon icon={faArrowRightFromBracket}/>} onPress={() => signOut({redirect: false})}>
                         Cerrar sesión
                     </DropdownItem>

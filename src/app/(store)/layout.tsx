@@ -8,6 +8,8 @@ import Footer from "@/components/Footer";
 import { ProductProvider } from "@/product/provider";
 import api from "@/product/api";
 import { Product } from "@/product/products";
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,7 +22,7 @@ const mont = Montserrat({
 
 export const metadata: Metadata = {
   title: "Tech's Cave",
-  description: "El lugar perfecto donde cumplir tus fetiches asquerosos con componentes electrónicos. Tuneá a la maleducada como te parezca, acá lo encontrás.",
+  description: "El lugar perfecto donde llevar tu equipo al próximo nivel. Componentes electrónicos de alta gama con el mejor precio.",
   icons:{
     icon: "/logo.png",
     shortcut: "/logo.png",
@@ -32,12 +34,28 @@ export default async function RootLayout({ children, }: Readonly<{
 }>) {
   const products: Product[] = await api.list();
 
+  const cookieStore = await cookies();
+  const token = cookieStore.get("userToken")?.value;
+
+  let isAdmin = false;
+
+ if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
+        isAdmin?: boolean;
+      };
+      isAdmin = decoded.isAdmin === true;
+    } catch (err) {
+      console.error("Error al verificar token:", err);
+    }
+  }
+
   return (
     <html lang="en" className="bg-gray-200" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${mont.className} antialiased`}>
         <Providers>
           <ProductProvider products={products}>
-            <Navbar/>
+            <Navbar isAdmin={isAdmin}/>
             {children}
             <Cart/>
             <Footer/>

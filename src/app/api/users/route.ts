@@ -1,31 +1,8 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
+import jwt from "jsonwebtoken";
 
-
-export async function GET(req:Request){
-    try {
-        const {searchParams} = new URL(req.url);
-        const email = searchParams.get('email');
-
-        if(!email){
-            return NextResponse.json({ success: false, error: "Email is required" }, { status: 400 });
-        }
-
-        const client = await clientPromise;
-        const db = client.db(process.env.MONGODB_DB);
-        const usersCollection = db.collection("users");
-
-        const user = await usersCollection.findOne({ email });
-
-        if(!user){
-            return NextResponse.json({ success: false, error: "No user found" }, { status: 404 });
-        }
-
-        return NextResponse.json({success:true, user});
-    }catch(error){
-        return NextResponse.json({ success: false, error: error }, { status: 500 });
-    }
-}
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export async function POST(req:Request){
     try {
@@ -37,18 +14,30 @@ export async function POST(req:Request){
         const client = await clientPromise;
         const db = client.db(process.env.MONGODB_DB);
         const usersCollection = db.collection("users");
+        
+        const tokenPayload = {
+            email: userData.email,
+            isAdmin: userData.isAdmin,
+        };
+
+        const token =  jwt.sign(tokenPayload, JWT_SECRET!, { expiresIn: "7d" });
 
         console.log('Entramos a la búsqueda de usuario por email');
 
         const existingUser = await usersCollection.findOne({ email });
         console.log('Ya se buscó usuario:', existingUser);
         if (existingUser) {
-            return NextResponse.json({ success: false, error: "El usuario ya existe" });
+             const response = NextResponse.json({ success: false, error: "El usuario ya existe" });
+            response.cookies.set({name: 'userToken', value: token, httpOnly: true, path: '/', secure: process.env.NODE_ENV === 'production', sameSite: 'lax'});
+            return response;
         }
 
         const result = await usersCollection.insertOne(userData);
-        return NextResponse.json({ success: true, id: result.insertedId });
 
+       const response = NextResponse.json({ success: true, id: result.insertedId });
+        response.cookies.set({name: 'userToken', value: token, httpOnly: true, path: '/', secure: process.env.NODE_ENV === 'production', sameSite: 'lax'});
+
+       return response;
     } catch (error) {
         return NextResponse.json({ success: false, error: error }, { status: 500 });
     }

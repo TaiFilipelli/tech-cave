@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@heroui/react";
 import Link from "next/link";
 
-const Navbar = () => {
+const Navbar = ({isAdmin}:{isAdmin:boolean}) => {
 
   const router = useRouter();
 
@@ -18,7 +18,7 @@ const Navbar = () => {
       </section>
       <section className="flex flex-col sm:flex-row gap-1 sm:gap-5 items-center">
         <Button as={Link} href="/products" className="bg-transparent text-black font-semibold text-lg">Productos</Button>
-        <AuthButton/>
+        <AuthButton isAdmin={isAdmin}/>
       </section>
     </nav>
   )
