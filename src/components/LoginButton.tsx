@@ -16,6 +16,11 @@ export default function AuthButton({isAdmin}:{isAdmin:boolean}) {
     const { data: session } = useSession();
     const [isHovered, setIsHovered] = useState(false);
 
+    const handleSignOut = async() => {
+        await fetch("/api/logout", { method: "POST" });
+        signOut({ redirect: false });
+    }
+
     const router = useRouter();
     
     if (session) {
@@ -35,7 +40,7 @@ export default function AuthButton({isAdmin}:{isAdmin:boolean}) {
                         Dashboard
                     </DropdownItem>
                 ):null}
-                    <DropdownItem key='logout' className="bg-red-600 text-white px-4 py-2 rounded" startContent={<FontAwesomeIcon icon={faArrowRightFromBracket}/>} onPress={() => signOut({redirect: false})}>
+                    <DropdownItem key='logout' className="bg-red-600 text-white px-4 py-2 rounded" startContent={<FontAwesomeIcon icon={faArrowRightFromBracket}/>} onPress={handleSignOut}>
                         Cerrar sesión
                     </DropdownItem>
                 </DropdownMenu>
