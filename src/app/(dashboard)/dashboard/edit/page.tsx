@@ -15,12 +15,7 @@ const EditPage = () => {
   const [selectedProduct, setSelectedProduct] = React.useState<Product>();
   const [newPrice, setNewPrice] = React.useState<number>(0);
   const [newStock, setNewStock] = React.useState<number>(0);
-
-  // const handleChanges = () => {
-  //   const productIndex = products.findIndex(p => p.id === selectedProduct?.id);
-  //   if (productIndex === -1) throw new Error("Producto no encontrado en la lista");
-  // }
-
+  
   const handleChanges = async () => {
     if (!selectedProduct) return;
   

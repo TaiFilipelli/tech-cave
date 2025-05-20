@@ -76,15 +76,16 @@ const AddPage = () => {
   }
 
   return (
-    <section className='flex flex-col items-center justify-center p-20'>
+    <section className='flex flex-col items-center justify-center px-20 py-16 max-[640px]:p-10'>
       <h1 className='font-bold text-3xl'>Agregar producto</h1>
       <h2 className='font-semibold text-xl my-5'>Complete TODOS los campos a continuación</h2>
       <section className='flex flex-col items-center justify-center w-full bg-black rounded-2xl p-5 gap-4 my-4'>
-      <Input type="text" label='Nombre del producto' labelPlacement='outside' placeholder='Ej: Placa de Video NVIDIA 5090' value={name} isRequired onChange={(e) => setName(e.target.value)} className='w-1/2'/>
-      <Input type="number" label='Precio' labelPlacement='outside' isRequired value={price.toString()} onChange={(e) => setPrice(Number(e.target.value))} className='w-1/2' />
-      <Input type="text" label='Descripción' labelPlacement='outside' placeholder='Ej: Este es un producto único...' isRequired value={description} onChange={(e) => setDescription(e.target.value)} className='w-1/2'/>
-      <Input type="number" label='Stock disponible' labelPlacement='outside' isRequired value={stock.toString()} onChange={(e) => setStock(Number(e.target.value))} className='w-1/2'/>
-      <Input type="text" label='URL imagen' labelPlacement='outside' placeholder='Ej: https://imagen_stock.com' isRequired value={img} onChange={(e) => setImg(e.target.value)} className='w-1/2'/> 
+      <Input type="text" label='Nombre del producto' labelPlacement='outside' placeholder='Ej: Placa de Video NVIDIA 5090' value={name} isRequired onChange={(e) => setName(e.target.value)} className='w-1/2 max-[640px]:w-2/3'/>
+      <Input type="number" label='Precio' labelPlacement='outside' isRequired value={price.toString()} onChange={(e) => setPrice(Number(e.target.value))} className='w-1/2 max-[640px]:w-2/3'/>
+      <Input type="text" label='Descripción' labelPlacement='outside' placeholder='Ej: Este es un producto único...' isRequired value={description} onChange={(e) => setDescription(e.target.value)} className='w-1/2 max-[640px]:w-2/3'/>
+      <Input type="number" label='Stock disponible' labelPlacement='outside' isRequired value={stock.toString()} onChange={(e) => setStock(Number(e.target.value))} className='w-1/2 max-[640px]:w-2/3'/>
+      <Input type="text" label='URL imagen' labelPlacement='outside' placeholder='Ej: https://imagen_stock.com' isRequired value={img} onChange={(e) => setImg(e.target.value)} className='w-1/2 max-[640px]:w-2/3'/>
+      <div className='w-full flex flex-col gap-4 items-center'>
       <Dropdown>
         <DropdownTrigger className='w-1/2 mt-2'>
           <Button className='font-semibold text-md'>{type ? type : 'Tipo'}</Button>
@@ -109,6 +110,7 @@ const AddPage = () => {
           ))}
         </DropdownMenu>
       </Dropdown>
+      </div>
       </section>
       <Button onPress={handleChanges} className='bg-gradient-to-br from-blue-600 to-violet-600 text-white font-semibold text-xl p-6 border-2 border-black '>Agregar producto</Button>
       <Link href={`/dashboard`} className='text-white text-lg my-4 hover:underline'>Volver atrás</Link>
