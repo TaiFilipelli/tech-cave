@@ -24,7 +24,7 @@ export default function HeroSection(){
         <div className="absolute inset-0 z-0">
             <ParticleBackground />
         </div>
-        <motion.section className="relative z-10 flex flex-col text-center items-center justify-center h-full" ref={containerRef} style={{ opacity, y }}>
+        <motion.section className="relative z-10 flex flex-col text-center items-center justify-center h-full max-[385px]:mt-5" ref={containerRef} style={{ opacity, y }}>
             <motion.span className="inline-block px-4 py-1.5 rounded-full bg-purple-500/20 text-purple-600 text-sm font-medium mb-4 opacity-0 animate-fade-up animation-delay-400">Bienvenido a {`Tech's Cave`}</motion.span>
             <motion.span className='block text-6xl font-bold opacity-0 animate-fade-up animation-delay-600'>Lleva tu PC</motion.span>
             <motion.span className='block text-6xl font-bold opacity-0 bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-yellow-500 animate-fade-up animation-delay-600'>al siguiente nivel</motion.span>

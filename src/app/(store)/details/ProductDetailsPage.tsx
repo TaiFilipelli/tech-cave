@@ -47,14 +47,14 @@ export default function ProductDetailsClient() {
   };
 
   return (
-    <main className="p-20 max-[640px]:p-5 max-[640px]:mt-[6.5rem]">
+    <main className="p-20 max-[640px]:p-5 mt-4 max-[640px]:mt-[7.5rem]">
       <Button as={Link} href="/" className="bg-red-600 text-white font-bold text-3xl items-center text-center">←</Button>
       <section className="bg-white text-black mt-10 mb-16 items-center rounded-2xl border-1 border-black">
         <article className="flex flex-wrap max-[1000px]:flex-col max-[800px]:items-center p-10 max-[400px]:px-2">
           <div className="w-1/3 max-[800px]:w-2/3 max-[500px]:w-full flex items-center justify-center ">
             <Image src={product.image} alt={product.name} className="object-cover max-h-72"/>
           </div>
-          <div className="w-2/3">
+          <div className="w-2/3 max-[450px]:w-full">
             <p className="text-xl text-violet-600">{product.brand}</p>
             <h1 className="text-4xl max-[500px]:text-3xl font-bold my-3">{product.name}</h1>
             <p className="text-2xl text-violet-600 font-semibold">{product.type}</p>
@@ -65,9 +65,9 @@ export default function ProductDetailsClient() {
             <h4 className={`text-lg font-semibold ${product.stock > 15 ? "text-green-700" : product.stock > 10 ? "text-orange-500" : "text-red-600"}`}>
               Stock {product.stock > 15 ? "alto" : product.stock > 10 ? "medio" : "bajo"}, {product.stock} disponibles
             </h4>
+          </div>
             <p className="text-xl font-bold mt-5">Sobre este producto:</p>
             <p>{product.description}</p>
-          </div>
         </article>
       </section>
     </main>
