@@ -19,6 +19,10 @@ const geistSans = Geist({
   export const metadata: Metadata = {
     title: "Tech's Cave Dashboard",
     description: "Panel de administración de Tech's Cave",
+    icons:{
+        icon:"/logo_dragon_admin.png",
+        shortcut:"/logo_dragon_admin.png",
+    }
 };
 
 export default async function DashboardLayout({children,}: Readonly<{children: React.ReactNode;}>) {
