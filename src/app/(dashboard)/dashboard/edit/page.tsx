@@ -70,7 +70,7 @@ const EditPage = () => {
       <p className='font-medium text-lg mb-5'>Edite precio y stock de cualquier producto</p>
       <Dropdown>
         <DropdownTrigger>
-          <Button className='bg-gray-400 text-black p-2 rounded-md'>{selectedProduct ? selectedProduct.name : 'Seleccionar producto'}</Button>
+          <Button className='bg-gray-400 text-black p-2 rounded-md'>{selectedProduct ? selectedProduct.name.slice(0, 20) + "..." : 'Seleccionar producto'}</Button>
         </DropdownTrigger>
         <DropdownMenu>
           {products.map((product) => (
@@ -80,15 +80,19 @@ const EditPage = () => {
           ))}
         </DropdownMenu>
       </Dropdown>
-      <section className='flex flex-col items-center justify-center p-5 gap-2'>
-          <Input label='Cambiar precio' labelPlacement='outside' onChange={(e) => setNewPrice(Number(e.target.value))}/>
-          <Input label='Cambiar stock' labelPlacement='outside' onChange={(e) => setNewStock(Number(e.target.value))}/>
-      </section>
-      <p>Lista de cambios:</p>
-      <ul className='mb-2 list-disc'>
-        <li className={`${newPrice==0 ? 'opacity-0' : 'opacity-100'}`}>Precio: {newPrice}</li>
-        <li className={`${newStock==0 ? 'opacity-0' : 'opacity-100'}`}>Stock: {newStock}</li>
-      </ul>
+      <article className='flex flex-wrap gap-4'>
+        <section className='flex flex-col items-center justify-center p-5 bg-black rounded-xl my-5'>
+            <Input label='Cambiar precio' labelPlacement='outside' onChange={(e) => setNewPrice(Number(e.target.value))}/>
+            <Input label='Cambiar stock' labelPlacement='outside' onChange={(e) => setNewStock(Number(e.target.value))}/>
+        </section>
+        <div className='flex flex-col items-center my-5'>
+          <p className='text-lg '>Lista de cambios:</p>
+          <ul className='mb-2 list-disc'>
+            <li className={`${newPrice==0 ? 'opacity-0' : 'opacity-100'}`}>Precio: {newPrice}</li>
+            <li className={`${newStock==0 ? 'opacity-0' : 'opacity-100'}`}>Stock: {newStock}</li>
+          </ul>
+        </div>
+      </article>
       <Button disabled={ !selectedProduct || !newPrice || !newStock } className='bg-blue-600 text-white' onPress={handleChanges}>Guardar cambios</Button>
       <Link href={`/dashboard`} className='text-white text-lg my-4 hover:underline'>Volver atrás</Link>
     </section>

@@ -82,7 +82,7 @@ const DeletePage = () => {
       {selectedProduct && (
       <article className='w-1/2 flex flex-col items-center justify-center bg-black rounded-xl p-2'>
           <h2 className='text-xl mb-4'>Desea eliminar el producto seleccionado?</h2>
-          <Button disabled={!selectedProduct} className='text-lg bg-red-600 text-white' startContent={<FontAwesomeIcon icon={faTrashCan}/>} onPress={handleDelete}>Eliminar producto</Button> 
+          <Button disabled={!selectedProduct} className='text-lg bg-gradient-to-br from-red-400 to-red-600 text-white' startContent={<FontAwesomeIcon icon={faTrashCan}/>} onPress={handleDelete}>Eliminar producto</Button> 
       </article>
     )}
     <Link href={'/dashboard'} className='hover:underline text-xl my-5'>Volver atrás</Link> 
