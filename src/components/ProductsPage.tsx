@@ -31,7 +31,7 @@ const ProductsPage:React.FC<ProductsPageProps> = ({products}) => {
           </section>
 
           <div className='mt-10'>
-            <Pagination page={currentPage} total={totalPages} onChange={setCurrentPage} variant='light' showControls showShadow classNames={{cursor: 'bg-gradient-to-br from-red-600 to-yellow-500'}}/>
+            <Pagination page={currentPage} total={totalPages} onChange={setCurrentPage} variant='light' showControls showShadow classNames={{cursor: 'bg-gradient-to-br from-violet-600 to-violet-400'}}/>
           </div>
         </>
       ) : (
