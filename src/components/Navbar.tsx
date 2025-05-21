@@ -39,11 +39,11 @@ const Navbar = ({isAdmin}:{isAdmin:boolean}) => {
         <h1 className="text-2xl font-bold"><span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">{`Tech's`}</span> Cave</h1>
       </section>
        <section className="hidden sm:flex flex-row gap-5 items-center">
-        <Button as={Link} href="/products" className="bg-transparent text-black dark:text-white font-semibold text-lg">Productos</Button>
-        <AuthButton isAdmin={isAdmin} />
         <button onClick={toggleDarkMode} className="text-black dark:text-white">
           <FontAwesomeIcon icon={darkMode ? faSun : faMoon} size="lg" />
         </button>
+        <Button as={Link} href="/products" className="bg-transparent text-black dark:text-white font-semibold text-lg">Productos</Button>
+        <AuthButton isAdmin={isAdmin} />
       </section>
 
       <button className="sm:hidden text-black dark:text-white z-50" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
@@ -51,11 +51,11 @@ const Navbar = ({isAdmin}:{isAdmin:boolean}) => {
       </button>
 
       <section className={clsx("absolute top-0 right-0 h-screen w-2/3 bg-white dark:bg-gray-900 p-5 transition-transform duration-300 sm:hidden flex flex-col items-start gap-6 z-40",mobileMenuOpen ? "translate-x-0" : "translate-x-full")}>
-        <Button as={Link} href="/products" className="bg-transparent text-black dark:text-white font-semibold text-lg" onPress={() => setMobileMenuOpen(false)}>Productos</Button>
-        <AuthButton isAdmin={isAdmin} />
         <button onClick={toggleDarkMode} className="text-black dark:text-white">
           <FontAwesomeIcon icon={darkMode ? faSun : faMoon} size="xl" />
         </button>
+        <Button as={Link} href="/products" className="bg-transparent text-black dark:text-white font-semibold text-lg" onPress={() => setMobileMenuOpen(false)}>Productos</Button>
+        <AuthButton isAdmin={isAdmin} />
       </section>
     </nav>
   );
