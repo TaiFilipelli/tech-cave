@@ -37,7 +37,6 @@ const ClientProductsList = () => {
   
       result = result.filter(p => Number(p.price.toString().replace(/[^0-9.,]/g, '').replace(',', '.')) >= min && Number(p.price.toString().replace(/[^0-9.,]/g, '').replace(',', '.')) <= max);
     }
-    console.log('Filtered products:', result);
     setFilteredProducts(result);
 
   }, [searchParams.toString(), allProducts]);

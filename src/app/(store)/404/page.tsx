@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 const ErrorPage = () => {
   return (
-    <section className='flex flex-col items-center justify-center p-20 h-[70vh] mt-16'>
+    <section className='flex flex-col items-center justify-center p-20 h-[80vh] mt-16'>
       <FontAwesomeIcon icon={faXmark} className='text-9xl' beat/>
       <h1 className='font-bold text-3xl'>404 - Página no encontrada</h1>
       <p className='font-semibold text-xl m-5'>Nada que ver acá, pa. Volvé tranqui</p>

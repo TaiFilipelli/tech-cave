@@ -2,7 +2,7 @@
 
 import { Drawer, DrawerHeader, DrawerBody, DrawerContent, DrawerFooter, Button, useDisclosure, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faTrash, faFaceFrown, faMinusCircle, faPlusCircle, faUserXmark,   } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faTrash, faFaceFrown, faMinusCircle, faPlusCircle, faUserXmark, faMoneyBillWave } from "@fortawesome/free-solid-svg-icons";
 import {faWhatsapp, faGoogle} from "@fortawesome/free-brands-svg-icons";
 import React, { useEffect, useState } from "react";
 import { useCartStore } from "@/store/useCartStore";
@@ -154,14 +154,14 @@ const Cart = () => {
                   <div className="flex flex-row justify-between items-center">
                     <header>
                         <h1 className="font-semibold">{product.name}</h1>
-                        <p className="text-gray-700">{product.price}</p>
+                        <p className="text-gray-700 dark:text-gray-200">{product.price}</p>
                     </header>
-                    <Button onPress={()=> removeFromCart(product.id)} className="bg-red-600 text-white font-bold"><FontAwesomeIcon icon={faTrash}/></Button>
+                    <Button onPress={()=> removeFromCart(product.id)} className="bg-red-600 text-white font-bold rounded-full"><FontAwesomeIcon icon={faTrash}/></Button>
                   </div>
                   <div className="flex flex-row gap-5 mt-2 items-center">
-                    <Button onPress={()=>decreaseQuantity(product.id, product.cantidad)} className="bg-transparent border-1 hover:bg-slate-100"><FontAwesomeIcon icon={faMinusCircle} size="lg"/></Button>
+                    <Button onPress={()=>decreaseQuantity(product.id, product.cantidad)} className="bg-transparent border-1 hover:bg-slate-100 dark:hover:bg-slate-700"><FontAwesomeIcon icon={faMinusCircle} size="lg"/></Button>
                     <p>x{product.cantidad}</p>
-                    <Button onPress={()=>increaseQuantity(product.id, product.cantidad)} className="bg-transparent border-1 hover:bg-slate-100"><FontAwesomeIcon icon={faPlusCircle} size="lg"/></Button>
+                    <Button onPress={()=>increaseQuantity(product.id, product.cantidad)} className="bg-transparent border-1 hover:bg-slate-100 dark:hover:bg-slate-700"><FontAwesomeIcon icon={faPlusCircle} size="lg"/></Button>
                   </div>
                 </article>
               ))
@@ -175,7 +175,7 @@ const Cart = () => {
           <DrawerFooter className="flex flex-col gap-2">
             <h1 className="my-4 font-semibold text-2xl">Subtotal: {formattedSubtotal}</h1>
             <div className="flex flex-row justify-between gap-2">
-                <Button className="bg-green-500 text-white font-bold w-1/2" onPress={handleBuy}>Comprar</Button>
+                <Button className="bg-green-500 text-white font-bold w-1/2" onPress={handleBuy} startContent={<FontAwesomeIcon icon={faMoneyBillWave}/>}>Comprar</Button>
                 <Button className="bg-red-600 text-white font-bold w-1/2" onPress={onClose}>Cerrar</Button>
             </div>
             <Button className="bg-gray-400 font-bold text-black" onPress={clearCart}><FontAwesomeIcon icon={faTrash}/>Limpiar carro</Button>

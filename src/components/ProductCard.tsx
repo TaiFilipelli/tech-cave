@@ -46,7 +46,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
   }, [cart, product.id]);
 
   return (
-    <Card isPressable onPress={() => { router.push(`/details?name=${encodeURIComponent(product.name)}`);}} className={`group h-auto justify-between flex flex-col items-center bg-white text-black rounded-3xl border-1 border-black hover:border-violet-600 transition-all duration-400 ${product.stock === 0 ? "opacity-50" : ""}`}>
+    <Card isPressable onPress={() => { router.push(`/details?name=${encodeURIComponent(product.name)}`);}} className={`group h-auto justify-between flex flex-col items-center bg-white text-black dark:bg-black dark:text-white rounded-3xl border-1 border-black dark:border-white hover:border-violet-600 transition-all duration-400 ${product.stock === 0 ? "opacity-50" : ""}`}>
       <CardBody className="overflow-hidden p-0 max-h-full max-w-fit">
         <Image src={product.image} alt={product.name} className="my-10 object-cover transition-transform duration-500" width="100%" height="13rem"/> 
       </CardBody>
@@ -55,8 +55,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
         <h3 className="transition-colors duration-300 group-hover:text-violet-600 font-semibold text-medium">{product.name.length > 25 ? product.name.slice(0, 20) + "..." : product.name}</h3>
         <article className="flex flex-row gap-2 justify-between items-center w-full">
           <h3 className="font-semibold text-lg">{product.price}</h3>
-          <Button className={`${onCart ? "bg-green-600": "bg-gray-300"} w-1/2 max-[1300px]:w-full hover:scale-105 font-bold`} onPress={handleAddToCart}>
-            <FontAwesomeIcon icon={onCart ? faCheck : faCartShopping} size="xl" /> {onCart ? "Agregado" : "Agregar"}
+          <Button className={`${onCart ? "bg-green-600": "bg-gray-300 dark:bg-violet-500"} w-1/2 max-[1300px]:w-full hover:scale-105 font-bold dark:text-black`} onPress={handleAddToCart}>
+            <FontAwesomeIcon icon={onCart ? faCheck : faCartShopping} size="xl" className="" /> {onCart ? "Agregado" : "Agregar"}
           </Button>
         </article>
       </CardFooter>

@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col">
       <HeroSection/>
-      <section className="flex flex-col text-left p-10">
+      <section className="flex flex-col text-left p-10 dark:bg-black dark:text-white">
         <h3 className='text-3xl font-bold my-5 opacity-0 animate-fade-up animation-delay-400'>Lo necesitas? Lo tenemos</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {categories.map((category, index) =>{

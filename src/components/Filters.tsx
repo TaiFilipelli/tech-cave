@@ -44,7 +44,7 @@ const FiltersComponent = () => {
   };
 
   return (
-    <nav className="flex flex-row max-[1250px]:flex-col max-[1250px]:gap-5 w-[50%] max-[550px]:w-[70%] max-[350px]:w-full bg-gray-400 p-5 my-2 rounded-xl shadow-lg mb-10 justify-around">
+    <nav className="flex flex-row max-[1250px]:flex-col max-[1250px]:gap-5 w-[50%] max-[550px]:w-[70%] max-[350px]:w-full bg-gray-400 dark:bg-white p-5 my-2 rounded-xl shadow-lg mb-10 justify-around">
       <Dropdown>
         <DropdownTrigger>
           <Button className='font-semibold text-md'>{selectedType ? selectedType : 'Categorias'}</Button>
