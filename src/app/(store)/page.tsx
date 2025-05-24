@@ -91,14 +91,14 @@ export default function Home() {
       <section id="about" className="flex flex-col text-center p-2 bg-gradient-to-b from-gray-200 to-gray-400 dark:from-black dark:to-gray-900">
         <h3 className="text-5xl font-bold mb-5 tracking-tighter">Qué es <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">{`Tech's`} Cave?</span></h3>
         <h4 className="text-xl font-semibold">2 años llevando calidad e innovación a los escritorios.</h4>
-        <section className="flex flex-row gap-4 justify-between my-20">
-            <article className="flex flex-col justify-start text-left p-5 w-1/2">
+        <section className="flex flex-row max-[650px]:flex-col gap-4 justify-between max-[650px]:justify-center my-20">
+            <article className="flex flex-col justify-start text-left p-5 w-1/2 max-[650px]:w-full">
               <h2 className="text-3xl font-semibold space-y-4 mb-5">Quiénes somos?</h2>
               <p className="text-lg my-2">Simple: un grupo pequeño de emprendedores con el objetivo de llevar lo mejor de la industria a una comunidad cada dia más grande.</p>
               <p className="text-lg my-2">Nuestro objetivo? Seguir creciendo, mejorando y expandiendo nuestros horizontes para proveerte con lo mejor de lo mejor a cada vez más clientes... sin olvidarnos de vos.</p>
               <p className="text-lg my-2">Nuestro compromiso sobrepasa el de simplemente {`"vender"`} productos. Queremos construir una comunidad de apasionados para compartir nuestro amor por la tecnologia de punta.</p>
             </article>
-            <article className="flex flex-col items-center p-10 w-1/2 bg-gradient-to-br from-purple-300/20 to-purple-600/20 dark:from-purple-900/20 dark:to-black/20 rounded-2xl border-2 border-purple-900/20 shadow-lg">
+            <article className="flex flex-col items-center p-10 w-1/2 max-[650px]:w-full bg-gradient-to-br from-purple-300/20 to-purple-600/20 dark:from-purple-900/20 dark:to-black/20 rounded-2xl border-2 border-purple-900/20 shadow-lg">
               <div className="rounded-full bg-gradient-to-br from-red-600 to-yellow-500 p-5 w-20 h-20 justify-center items-center flex mb-5 text-white dark:text-black">
                 <FontAwesomeIcon icon={faBox} fontFamily="regular" size="3x"/>
               </div>
