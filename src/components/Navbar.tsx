@@ -52,7 +52,7 @@ const Navbar = ({isAdmin}:{isAdmin:boolean}) => {
       </button>
 
       <section className={clsx("absolute top-0 right-0 h-screen w-2/3 bg-white dark:bg-gray-900 p-5 transition-transform duration-300 sm:hidden flex flex-col items-center text-center gap-6 z-40",mobileMenuOpen ? "translate-x-0" : "translate-x-full")}>
-        <Image src={'/logo_completo.png'} alt="Logo" width={200}/>
+        <Image src={'/logo_completo.png'} alt="Logo" width={200} height={200}/>
         <button onClick={toggleDarkMode} className="text-black dark:text-white">
           <FontAwesomeIcon icon={darkMode ? faSun : faMoon} size="xl" />
         </button>

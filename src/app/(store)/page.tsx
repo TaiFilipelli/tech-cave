@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useCartStore } from "@/store/useCartStore";
 import ProductCard from "@/components/ProductCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleNotch, faComputer, faShieldHalved, faTruckFast } from "@fortawesome/free-solid-svg-icons";
+import { faCircleNotch, faComputer, faShieldHalved, faTruckFast, faBox } from "@fortawesome/free-solid-svg-icons";
 import { Divider } from "@heroui/react";
 import Image from "next/image";
 import { categories } from "@/data/categoriesData";
@@ -50,7 +50,7 @@ export default function Home() {
       </section>
       <Divider className="mb-5"/>
         <BrandsStrip/>
-      <Divider className="mb-5"/>
+      <Divider className="my-5"/>
       <section className="mx-5 p-2 text-center">
         <h3 className="text-4xl font-bold mb-5">Productos <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">destacados</span></h3> 
         { featuredProducts.length === 0 && (
@@ -88,9 +88,34 @@ export default function Home() {
         </article>
       </section>
       <Divider className="my-5"/>
-      <section id="about" className="flex flex-col text-center p-2">
-        <h3 className="text-4xl font-bold mb-5">Quiénes <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">somos?</span></h3>
-
+      <section id="about" className="flex flex-col text-center p-2 bg-gradient-to-b from-gray-200 to-gray-400 dark:from-black dark:to-gray-900">
+        <h3 className="text-5xl font-bold mb-5 tracking-tighter">Qué es <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">{`Tech's`} Cave?</span></h3>
+        <h4 className="text-xl font-semibold">2 años llevando calidad e innovación a los escritorios.</h4>
+        <section className="flex flex-row gap-4 justify-between my-20">
+            <article className="flex flex-col justify-start text-left p-5 w-1/2">
+              <h2 className="text-3xl font-semibold space-y-4 mb-5">Quiénes somos?</h2>
+              <p className="text-lg my-2">Simple: un grupo pequeño de emprendedores con el objetivo de llevar lo mejor de la industria a una comunidad cada dia más grande.</p>
+              <p className="text-lg my-2">Nuestro objetivo? Seguir creciendo, mejorando y expandiendo nuestros horizontes para proveerte con lo mejor de lo mejor a cada vez más clientes... sin olvidarnos de vos.</p>
+              <p className="text-lg my-2">Nuestro compromiso sobrepasa el de simplemente {`"vender"`} productos. Queremos construir una comunidad de apasionados para compartir nuestro amor por la tecnologia de punta.</p>
+            </article>
+            <article className="flex flex-col items-center p-10 w-1/2 bg-gradient-to-br from-purple-300/20 to-purple-600/20 dark:from-purple-900/20 dark:to-black/20 rounded-2xl border-2 border-purple-900/20 shadow-lg">
+              <div className="rounded-full bg-gradient-to-br from-red-600 to-yellow-500 p-5 w-20 h-20 justify-center items-center flex mb-5 text-white dark:text-black">
+                <FontAwesomeIcon icon={faBox} fontFamily="regular" size="3x"/>
+              </div>
+              <h2 className="text-xl font-bold space-y-4 mb-2">{`Tech's Cave`}</h2>
+              <h3 className="text-lg">Desde 2023</h3>
+              <div className="w-full flex flex-wrap justify-around items-center mt-5">
+                <legend  className="flex flex-col items-center p-2">
+                  <h3 className="font-bold text-2xl text-violet-600">+50k</h3>
+                  <p className="text-sm">componentes vendidos</p>
+                </legend>
+                <legend className="flex flex-col items-center p-2">
+                  <h3 className="font-bold text-2xl text-violet-600">+50k</h3>
+                  <p className="text-sm">componentes vendidos</p>
+                </legend>
+              </div>
+            </article>
+        </section>
       </section>
     </main>
   );
