@@ -6,10 +6,8 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 export async function POST(req:Request){
     try {
-        console.log('Entrando al POST');
         const userData = await req.json();
         const {email} = userData;
-        console.log('Entró esta data:', userData);
 
         const client = await clientPromise;
         const db = client.db(process.env.MONGODB_DB);
