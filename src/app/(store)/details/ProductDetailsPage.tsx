@@ -47,7 +47,7 @@ export default function ProductDetailsClient() {
   };
 
   return (
-    <main className="p-20 max-[640px]:p-5 mt-5 max-[640px]:mt-[7.5rem]">
+    <main className="pt-32 pb-14 px-20 max-[640px]:p-5 max-[640px]:mt-[7.5rem]"> 
       <Button as={Link} href="/products" className="bg-transparent border-1 border-red-600 text-red-600 font-bold text-3xl items-center text-center">←</Button>
       <section className="bg-white dark:bg-gray-800 text-black dark:text-white mt-10 mb-16 items-center rounded-2xl border-1 border-black">
         <article className="flex flex-wrap max-[1000px]:flex-col max-[800px]:items-center p-10 max-[400px]:px-2">

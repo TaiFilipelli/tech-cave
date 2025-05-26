@@ -29,7 +29,7 @@ export default function AuthButton({isAdmin}:{isAdmin:boolean}) {
                 <DropdownTrigger>
                 <article className="hover:cursor-pointer relative flex items-center gap-2 transition-all duration-300" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
                     <Avatar src={session.user.image!} size="lg" className="transition-all duration-300" />
-                    <p className={`absolute left-0 transition-all duration-300 ease-in-out ${isHovered ? 'opacity-100 translate-x-6' : 'opacity-0 translate-x-0'}`} style={{ marginLeft: '40px' }}>
+                    <p className={`absolute left-0 transition-all duration-300 ease-in-out text-black dark:text-white ${isHovered ? 'opacity-100 translate-x-6' : 'opacity-0 translate-x-0'}`} style={{ marginLeft: '40px' }}>
                         {session.user?.name}
                     </p>
                 </article>
