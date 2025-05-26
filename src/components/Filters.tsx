@@ -44,10 +44,10 @@ const FiltersComponent = () => {
   };
 
   return (
-    <nav className="flex flex-row max-[1250px]:flex-col max-[1250px]:gap-5 w-[50%] max-[550px]:w-[70%] max-[350px]:w-full bg-gray-400 dark:bg-white p-5 my-2 rounded-xl shadow-lg mb-10 justify-around">
+    <nav className="flex flex-row max-[1250px]:flex-col max-[1250px]:gap-5 w-[50%] max-[550px]:w-[70%] max-[350px]:w-full bg-gray-400 p-5 my-2 rounded-xl shadow-lg mb-10 justify-around">
       <Dropdown>
         <DropdownTrigger>
-          <Button className='font-semibold text-md'>{selectedType ? selectedType : 'Categorias'}</Button>
+          <Button className='font-semibold text-md dark:bg-white dark:text-black'>{selectedType ? selectedType : 'Categorias'}</Button>
         </DropdownTrigger>
         <DropdownMenu selectionMode='single' disallowEmptySelection variant='flat'>
           {types.map((type, index) => (
@@ -59,7 +59,7 @@ const FiltersComponent = () => {
       </Dropdown>
       <Dropdown>
         <DropdownTrigger>
-          <Button className='font-semibold text-md'>Precio</Button>
+          <Button className='font-semibold text-md dark:bg-white dark:text-black'>{selectedPrice[0] ? `$${selectedPrice[0]}-$${selectedPrice[1]}` : 'Precio'}</Button>
         </DropdownTrigger>
         <DropdownMenu variant='flat'>
           <DropdownItem isReadOnly key={0}>
@@ -69,7 +69,7 @@ const FiltersComponent = () => {
       </Dropdown>
       <Dropdown>
         <DropdownTrigger>
-          <Button className='font-semibold text-md'>{selectedBrand ? selectedBrand : 'Marcas'}</Button>
+          <Button className='font-semibold text-md dark:bg-white dark:text-black'>{selectedBrand ? selectedBrand : 'Marcas'}</Button>
         </DropdownTrigger>
         <DropdownMenu selectionMode='single' disallowEmptySelection variant='flat'>
           {brands.map((brand, index) => (
@@ -80,7 +80,7 @@ const FiltersComponent = () => {
         </DropdownMenu>
       </Dropdown>
       <article className='flex flex-row max-[440px]:flex-col gap-2'>
-        <Button onPress={handleApplyFilters} className='text-lg font-semibold bg-blue-600 text-white px-6'>Filtrar</Button>
+        <Button onPress={handleApplyFilters} className='text-lg font-semibold bg-violet-600 text-white px-6'>Filtrar</Button>
         <Button onPress={handleClearFilters} className='bg-red-600 text-white font-semibold' startContent={<FontAwesomeIcon icon={faTrash}/>}>Limpiar</Button>
       </article>
     </nav>
