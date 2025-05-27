@@ -2,6 +2,8 @@
 
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button } from "@heroui/react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
 
@@ -11,7 +13,6 @@ const ResultPage = () => {
 
     
     useEffect(() => {
-        console.log("HOLA! ENTRÓ!");
         if(!searchParams) return;
 
         const paymentStatus = searchParams.get("status");
@@ -59,8 +60,8 @@ const ResultPage = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center p-10">
-            <h1 className="text-2xl font-bold">Estado del pago: {status === null ? "ERROR" : status}</h1>
+        <div className="flex flex-col h-[81vh] items-center justify-center p-10">
+            <h1 className="text-3xl font-bold mb-5">Estado del pago: {status === null ? "ERROR" : status}</h1>
             {status !== null ? ( 
               status === "approved" ? (
               <p className="text-green-500">¡Pago exitoso! Registrando la orden...</p>
@@ -68,11 +69,11 @@ const ResultPage = () => {
               <p className="text-red-500">Hubo un error al aprobar el pago. Inténtelo nuevamente.</p>
           ))
             : 
-              <h1 className="text-2xl font-semibold">
-                Hubo un error al realizar el pago. Por favor, intentelo nuevamente.
+              <h1 className="text-2xl">
+                No se realizó el pago. Por favor, intentelo nuevamente.
               </h1>
             }
-           
+           <Button as={Link} href="/" className="bg-red-600 text-white text-lg p-6 mt-20">Volver atrás</Button>
         </div>
     );
 };
