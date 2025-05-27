@@ -38,7 +38,6 @@ Otro punto clave es que muchos emprendedores ya están familiarizados con **Exce
 En principio, la aplicación se conecta a **tres bases de datos distintas**:  
 
 1. **📋 Hoja de productos (Google Sheets)** → Principal fuente de datos. Contiene todos los productos y varios campos de utilidad (stock, precio, descripción, imagen, etc.).  
-2. **🗄️ Base de datos NoSQL (MongoDB)** → Para almacenar órdenes de compra.  
-3. **🔐 Base de datos pequeña (probablemente SQLite)** → Para gestionar usuarios (puede cambiar en el futuro).  
+2. **🗄️ Base de datos NoSQL (MongoDB)** → Para almacenar órdenes de compra y usuarios.
 
 Esta combinación permite mantener la flexibilidad de fuentes de datos y permite "modular" el sistema, de forma que podemos comprender de dónde viene un error o cada dato. 

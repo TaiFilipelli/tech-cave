@@ -37,8 +37,6 @@ Another key point is that many entrepreneurs are already familiar with **Excel o
 In principle, the application is connected to **three different databases**:  
 
 1. **📋 Product sheet (Google Sheets)** → main data source. It contains all products and several utility fields (stock, price, description, image, etc.).  
-2. **🗄️ NOSQL database (Mongodb)** → to store purchase orders.  
-3.
-**🔐 Small database (probably SQLite)** → to manage users (you can change in the future).  
+2. **🗄️ NOSQL database (Mongodb)** → to store purchase orders and users.  
 
 This combination allows to maintain the flexibility of data sources and allows the system to be "modular", so that we can understand where an error or data comes from.
