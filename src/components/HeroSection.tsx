@@ -27,7 +27,7 @@ export default function HeroSection(){
         <motion.section className="relative z-10 flex flex-col text-center items-center justify-center h-full max-[385px]:mt-5" ref={containerRef} style={{ opacity, y }}>
             <motion.span className="inline-block px-4 py-1.5 rounded-full bg-purple-500/20 text-purple-600 text-sm font-medium mb-4 opacity-0 animate-fade-up animation-delay-400">Bienvenido a {`Tech's Cave`}</motion.span>
             <motion.span className='block text-6xl font-bold opacity-0 animate-fade-up animation-delay-600'>Lleva tu PC</motion.span>
-            <motion.span className='block text-6xl font-bold opacity-0 bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-yellow-500 animate-fade-up animation-delay-600'>al siguiente nivel</motion.span>
+            <motion.span className='block text-6xl font-bold opacity-0 bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-yellow-500 animate-fade-up animation-delay-600 p-1'>al siguiente nivel</motion.span>
             <motion.p className='mt-5 text-xl opacity-0 animate-fade-up animation-delay-700'>Sea tu herramienta de trabajo, tu espacio seguro, tu hobby o tu amante.  <br />Tu PC merece dar un paso más. Acá encontras todo lo que necesitas</motion.p>
             <motion.div className='flex flex-wrap gap-4 justify-center mt-5 opacity-0 animate-fade-up animation-delay-800'>
                 <Button className='bg-[#7c3aed] text-white text-lg p-6' startContent={<FontAwesomeIcon icon={faComputer} size='2xl'/>} onPress={()=> router.push('/products')}>Ver Componentes</Button>

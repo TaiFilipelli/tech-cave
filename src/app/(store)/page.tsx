@@ -110,8 +110,8 @@ export default function Home() {
                   <p className="text-sm">componentes vendidos</p>
                 </legend>
                 <legend className="flex flex-col items-center p-2">
-                  <h3 className="font-bold text-2xl text-violet-600">+50k</h3>
-                  <p className="text-sm">componentes vendidos</p>
+                  <h3 className="font-bold text-2xl text-violet-600">24/7</h3>
+                  <p className="text-sm">soporte completo</p>
                 </legend>
               </div>
             </article>

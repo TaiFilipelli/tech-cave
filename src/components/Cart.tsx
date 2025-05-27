@@ -7,7 +7,6 @@ import {faWhatsapp, faGoogle} from "@fortawesome/free-brands-svg-icons";
 import React, { useEffect, useState } from "react";
 import { useCartStore } from "@/store/useCartStore";
 import { useRouter } from "next/navigation";
-// import api from "@/app/api/api";
 import { useSession, signIn } from "next-auth/react";
 
 
@@ -67,7 +66,7 @@ const Cart = () => {
         message += `${product.cantidad}x ${product.name} - ${product.price}%0A`;
       });
 
-      message += `Total: $${formattedSubtotal}`;
+      message += `Total: ${formattedSubtotal}`;
       console.log(subtotal);
 
     return router.push(`https://wa.me/${number}?text=${message}`)
