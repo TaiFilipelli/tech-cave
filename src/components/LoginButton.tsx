@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession, signIn, signOut } from "next-auth/react";
-import { Button, Avatar, Dropdown, DropdownTrigger, DropdownItem, DropdownMenu } from "@heroui/react";
+import { Button, Avatar, Dropdown, DropdownTrigger, DropdownItem, DropdownMenu, Modal, ModalBody, ModalContent, ModalHeader, ModalFooter, useDisclosure } from "@heroui/react";
 import { Poppins } from "next/font/google";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,16 +15,19 @@ export default function AuthButton({isAdmin}:{isAdmin:boolean}) {
 
     const { data: session } = useSession();
     const [isHovered, setIsHovered] = useState(false);
+    const { isOpen, onOpen, onClose} = useDisclosure();
 
     const handleSignOut = async() => {
         await fetch("/api/logout", { method: "POST" });
         signOut({ redirect: false });
+        onClose();
     }
 
     const router = useRouter();
     
     if (session) {
         return (
+            <>
             <Dropdown>
                 <DropdownTrigger>
                 <article className="hover:cursor-pointer relative flex items-center gap-2 transition-all duration-300" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
@@ -40,11 +43,22 @@ export default function AuthButton({isAdmin}:{isAdmin:boolean}) {
                         Dashboard
                     </DropdownItem>
                 ):null}
-                    <DropdownItem key='logout' className="bg-red-600 text-white px-4 py-2 rounded" startContent={<FontAwesomeIcon icon={faArrowRightFromBracket}/>} onPress={handleSignOut}>
+                    <DropdownItem key='logout' className="bg-red-600 text-white px-4 py-2 rounded" startContent={<FontAwesomeIcon icon={faArrowRightFromBracket}/>} onPress={onOpen}>
                         Cerrar sesión
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalContent>
+                    <ModalHeader className="text-lg font-semibold">Confirmar cierre de sesión</ModalHeader>
+                    <ModalBody>¿Estás seguro de que querés cerrar sesión?</ModalBody>
+                    <ModalFooter>
+                        <Button variant="light" onPress={onClose}>Cancelar</Button>
+                        <Button className="bg-red-600 text-white" onPress={handleSignOut}>Cerrar sesión</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+            </>
         );
     }
 
