@@ -2,7 +2,7 @@
 import { addToast, Button, Image } from "@heroui/react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { faCartArrowDown, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useCartStore } from "@/store/useCartStore";
 import { useSearchParams } from "next/navigation";
@@ -11,9 +11,8 @@ import { Product } from "@/product/products";
 
 export default function ProductDetailsClient() {
   
-    
     const [isOnCart, setIsOnCart] = useState(false);
-    const { addToCart } = useCartStore((state) => state);
+    const { addToCart, removeFromCart } = useCartStore((state) => state);
     const productName = useSearchParams().get("name");
 
     const products = useProducts();
@@ -46,6 +45,19 @@ export default function ProductDetailsClient() {
     });
   };
 
+  const handleRemoveCart = () => {
+    setIsOnCart(false);
+
+    removeFromCart(product!.id);
+
+    addToast({
+      title: "Producto eliminado del carrito",
+      timeout: 2000,
+      shouldShowTimeoutProgess: true,
+      color: "foreground",
+    });
+  };
+
   return (
     <main className="pt-32 pb-14 px-20 max-[640px]:p-5 max-[640px]:mt-[7.5rem]"> 
       <Button as={Link} href="/products" className="bg-transparent border-1 border-red-600 text-red-600 font-bold text-3xl items-center text-center">←</Button>
@@ -59,9 +71,14 @@ export default function ProductDetailsClient() {
             <h1 className="text-4xl max-[500px]:text-3xl font-bold my-3">{product.name}</h1>
             <p className="text-2xl text-violet-600 dark:text-violet-400 font-semibold">{product.type}</p>
             <h3 className="text-4xl font-semibold mt-5 text-green-600">{product.price}</h3>
-            <Button startContent={<FontAwesomeIcon icon={faCartArrowDown}/>} className={`w-1/2 max-[1000px]:w-2/3 max-[650px]:w-full text-xl text-white font-semibold rounded-2xl my-5 ${isOnCart ? "bg-green-600" : "bg-violet-500"}`} onPress={handleAddToCart} isDisabled={isOnCart}>
-              {isOnCart ? "Agregado" : "Agregar"}
-            </Button>
+            <div className="flex flex-wrap gap-2">
+              <Button startContent={<FontAwesomeIcon icon={faCartArrowDown}/>} className={`w-1/2 max-[1000px]:w-2/3 max-[650px]:w-full text-xl text-white font-semibold rounded-2xl my-5 ${isOnCart ? "bg-green-600" : "bg-violet-500"}`} onPress={handleAddToCart} isDisabled={isOnCart}>
+                {isOnCart ? "Agregado" : "Agregar"}
+              </Button>
+              <Button startContent={<FontAwesomeIcon icon={faTrash}/>} className={`w-auto max-[650px]:w-full text-xl text-white font-semibold rounded-2xl my-5 bg-red-600`} onPress={handleRemoveCart} isDisabled={!isOnCart}>
+                {isOnCart ? "Eliminar del carrito" : ""}
+              </Button>
+            </div>
             <h4 className={`text-lg font-semibold ${product.stock > 15 ? "text-green-700" : product.stock > 10 ? "text-orange-500" : "text-red-600"}`}>
               Stock {product.stock > 15 ? "alto" : product.stock > 10 ? "medio" : "bajo"}, {product.stock} disponibles
             </h4>
