@@ -51,7 +51,7 @@ const FiltersComponent = () => {
         </DropdownTrigger>
         <DropdownMenu selectionMode='single' disallowEmptySelection variant='flat'>
           {types.map((type, index) => (
-            <DropdownItem key={index} onPress={() => setSelectedType(type)}>
+            <DropdownItem key={index} onPress={() => setSelectedType(type)} showDivider>
               {type}
             </DropdownItem>
           ))}
@@ -73,7 +73,7 @@ const FiltersComponent = () => {
         </DropdownTrigger>
         <DropdownMenu selectionMode='single' disallowEmptySelection variant='flat'>
           {brands.map((brand, index) => (
-            <DropdownItem key={index} onPress={()=> setSelectedBrand(brand)}>
+            <DropdownItem key={index} onPress={()=> setSelectedBrand(brand)} showDivider>
               {brand}
             </DropdownItem>
           ))}

@@ -51,13 +51,13 @@ const DeletePage = () => {
       <section className='flex flex-row items-center gap-4 w-2/3 my-10'>
         <article className='bg-black rounded-xl p-6 w-1/2'>
         <h2 className='font-semibold text-xl my-4'>Seleccione el producto que desea borrar</h2>
-        <Dropdown>
+        <Dropdown type='listbox' shouldBlockScroll={false} className='overflow-y-scroll'>
           <DropdownTrigger>
             <Button className='text-lg'>{selectedProduct ?  selectedProduct.name.slice(0, 20) + "..." : 'Seleccione un producto'}</Button>
           </DropdownTrigger>
           <DropdownMenu className='text-black'>
             {products.map((product)=>(
-              <DropdownItem key={product.id} onPress={() => setSelectedProduct(product)} className='text-lg'>
+              <DropdownItem key={product.id} onPress={() => setSelectedProduct(product)} className='text-lg' showDivider>
                 {product.name}
               </DropdownItem>
             ))}
