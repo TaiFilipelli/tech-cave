@@ -1,15 +1,16 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { Button } from '@heroui/react';
-import Link from 'next/link';
+import { Button, Modal, ModalBody, ModalContent, ModalHeader } from '@heroui/react';
 import { useSession } from 'next-auth/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { useRouter } from 'next/router';
 
 const LoginResult = () => {
   const { data: session } = useSession();
-  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const router = useRouter();
 
   useEffect(() => {
     const checkGoogleSheetsPermissions = async () => {
@@ -43,7 +44,6 @@ const LoginResult = () => {
         if (!writeResponse.ok) {
           throw new Error(`Error en la escritura: ${writeResponse.statusText}`);
         }else {
-          setIsAdmin(true);
           hasPermissions = true;
         }
 
@@ -99,25 +99,31 @@ const LoginResult = () => {
     }
   }, [session]);
 
-  return (
-    <section className="h-[80vh] flex flex-col items-center justify-center text-center p-20 mt-16">
-      {loading ? (
-        <>
-          <FontAwesomeIcon icon={faCircleNotch} spin size='2xl'/>
-          <p className='text-lg font-semibold'>Espere un momento, por favor...</p>
-        </>
-      ) : (
-        <>
-        <h1 className='text-4xl font-bold mb-2'>Bienvenido, {session?.user?.name}!</h1>
-        <p className='text-xl font-semibold mb-4'>Puede realizar compras libremente por la aplicación</p>
-        <p className={`text-lg font-semibold ${isAdmin ? 'text-green-600' : 'text-red-600'}`}>
-          {isAdmin ? "Tienes permisos de escritura en Google Sheets" : "No tienes permisos de escritura"}
-        </p>
-        </>
-      )}
+ return (
+    <main className='h-[80vh]'>
+      <Modal isOpen={loading} hideCloseButton isKeyboardDismissDisabled={false} isDismissable={false} backdrop="opaque" classNames={{ backdrop: "bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20"}}>
+        <ModalContent>
+          <ModalHeader className="flex flex-col items-center justify-center text-center">
+            <FontAwesomeIcon icon={faCircleNotch} spin size="3x" className="text-violet-500 mb-2"/>
+          </ModalHeader>
+          <ModalBody className="text-center">
+            <p className="text-lg font-semibold mb-4">Espere un momento, por favor...</p>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
 
-      <Button as={Link} href='/' className='text-lg font-semibold p-4 mt-6'>Volver atrás</Button>
-    </section>
+      {!loading && (
+        <section className="h-full flex flex-col items-center justify-center text-center p-20 mt-16">
+          <h1 className="text-4xl font-bold mb-2">Bienvenido, {session?.user?.name}!</h1>
+          <p className="text-xl font-semibold mb-4">
+            Puede realizar compras libremente por la aplicación
+          </p>
+          <Button onPress={() => router.push('/')} className="text-lg font-semibold p-4 mt-6">
+            Volver atrás
+          </Button>
+        </section>
+      )}
+    </main>
   );
 };
 

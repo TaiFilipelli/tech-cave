@@ -165,17 +165,17 @@ const Cart = () => {
                 </article>
               ))
             ) : (
-                <section className="items-center justify-center text-center flex flex-col p-5">
+                <section className="items-center justify-center text-center flex flex-col p-5 h-full">
                     <p className="text-center text-3xl font-bold mb-5">Tu carrito está vacío.</p>
-                    <FontAwesomeIcon icon={faFaceFrown} size="2xl"/>
+                    <FontAwesomeIcon icon={faFaceFrown} size="4x"/>
                 </section>
             )}
           </DrawerBody>
           <DrawerFooter className="flex flex-col gap-2">
             <h1 className="my-4 font-semibold text-2xl">Subtotal: {formattedSubtotal}</h1>
             <div className="flex flex-row justify-between gap-2">
-                <Button className="bg-green-500 text-white font-bold w-1/2" onPress={handleBuy} startContent={<FontAwesomeIcon icon={faMoneyBillWave}/>}>Comprar</Button>
-                <Button className="bg-red-600 text-white font-bold w-1/2" onPress={onClose}>Cerrar</Button>
+                <Button className="bg-green-500 text-white dark:text-black font-bold w-1/2" onPress={handleBuy} startContent={<FontAwesomeIcon icon={faMoneyBillWave}/>}>Comprar</Button>
+                <Button className="bg-red-600 text-white dark:text-black font-bold w-1/2" onPress={onClose}>Cerrar</Button>
             </div>
             <Button className="bg-gray-400 font-bold text-black" onPress={clearCart}><FontAwesomeIcon icon={faTrash}/>Limpiar carro</Button>
           </DrawerFooter>
