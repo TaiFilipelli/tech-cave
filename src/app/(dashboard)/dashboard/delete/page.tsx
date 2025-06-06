@@ -2,7 +2,7 @@
 import React from 'react'
 import { useProducts } from '@/product/provider'
 import { Product } from '@/product/products'
-import { addToast, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Image } from '@heroui/react'
+import { addToast, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@heroui/react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -13,7 +13,8 @@ const DeletePage = () => {
   const products:Product[] = useProducts();
   const { data: session } = useSession();
 
-  const [selectedProduct, setSelectedProduct] = React.useState< Product | null>(null)
+  const [selectedProduct, setSelectedProduct] = React.useState< Product | null>(null);
+  const [isDeleting, setIsDeleting] = React.useState<boolean>(false);
 
   const handleDelete = async () => {
     if (!selectedProduct || !session?.accessToken) { 
@@ -51,7 +52,7 @@ const DeletePage = () => {
       <section className='flex flex-row items-center gap-4 w-2/3 my-10'>
         <article className='bg-black rounded-xl p-6 w-1/2'>
         <h2 className='font-semibold text-xl my-4'>Seleccione el producto que desea borrar</h2>
-        <Dropdown type='listbox' shouldBlockScroll={false} className='overflow-y-scroll'>
+        <Dropdown type='listbox' shouldBlockScroll={false} className='overflow-y-scroll h-[70dvh]'>
           <DropdownTrigger>
             <Button className='text-lg'>{selectedProduct ?  selectedProduct.name.slice(0, 20) + "..." : 'Seleccione un producto'}</Button>
           </DropdownTrigger>
@@ -69,7 +70,7 @@ const DeletePage = () => {
           {selectedProduct ? 
           <>
             <h3>{selectedProduct?.name}</h3>
-            <Image src={selectedProduct!.image} alt={selectedProduct!.name} width={300} height={300}/>
+            <Image src={selectedProduct!.image} alt={selectedProduct!.name} width={200} height={200}/>
             <p className='text-lg'>Tipo de producto: {selectedProduct?.type}</p>
             <p className='text-lg'>Marca: {selectedProduct?.brand}</p>
             <p className='text-lg'>Precio: ${selectedProduct?.price}</p>
@@ -82,10 +83,22 @@ const DeletePage = () => {
       {selectedProduct && (
       <article className='w-1/2 flex flex-col items-center justify-center bg-black rounded-xl p-2'>
           <h2 className='text-xl mb-4'>Desea eliminar el producto seleccionado?</h2>
-          <Button disabled={!selectedProduct} className='text-lg bg-gradient-to-br from-red-400 to-red-600 text-white' startContent={<FontAwesomeIcon icon={faTrashCan}/>} onPress={handleDelete}>Eliminar producto</Button> 
+          <Button disabled={!selectedProduct} className='text-lg bg-gradient-to-br from-red-400 to-red-600 text-white' startContent={<FontAwesomeIcon icon={faTrashCan}/>} onPress={()=>setIsDeleting(true)}>Eliminar producto</Button> 
       </article>
     )}
-    <Link href={'/dashboard'} className='hover:underline text-xl my-5'>Volver atrás</Link> 
+    <Link href={'/dashboard'} className='hover:underline text-xl my-5'>Volver atrás</Link>
+     <Modal isOpen={isDeleting} onClose={() => setIsDeleting(false)} isDismissable={false} className='bg-gray-700' backdrop='opaque' classNames={{backdrop: 'bg-gradient-to-t from-red-900 to-zinc-900/10 backdrop-opacity-20'}}>
+        <ModalContent>
+          <ModalHeader className="text-xl font-semibold">¿Confirmar eliminación?</ModalHeader>
+          <ModalBody>
+            <p>¿Estás seguro que deseas eliminar <strong>{selectedProduct?.name}</strong> para siempre?</p>
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="ghost" color='danger' className='text-white' onPress={() => setIsDeleting(false)}>Cancelar</Button>
+            <Button variant='shadow' color='secondary' className='text-white font-semibold' onPress={() => { handleDelete(); setIsDeleting(false); }}>Confirmar</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </main>
   )
 }

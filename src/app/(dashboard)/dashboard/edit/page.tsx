@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { useProducts } from '@/product/provider'
-import { Button, Dropdown, DropdownTrigger, DropdownItem, DropdownMenu, Input, addToast } from '@heroui/react';
+import { Button, Dropdown, DropdownTrigger, DropdownItem, DropdownMenu, Input, addToast, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@heroui/react';
 import { Product } from '@/product/products';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -15,6 +15,7 @@ const EditPage = () => {
   const [selectedProduct, setSelectedProduct] = React.useState<Product>();
   const [newPrice, setNewPrice] = React.useState<number>(0);
   const [newStock, setNewStock] = React.useState<number>(0);
+  const [isConfirming, setIsConfirming] = React.useState<boolean>(false);
   
   const handleChanges = async () => {
     if (!selectedProduct) return;
@@ -58,6 +59,7 @@ const EditPage = () => {
       addToast({title: "Producto actualizado con éxito", color: "success"});
       setNewPrice(0);
       setNewStock(0);
+      setSelectedProduct(undefined);
     } catch (err) {
       console.error("Error actualizando el producto:", err);
       addToast({title: "Error al actualizar producto", description:'Inténtelo más tarde', color: "danger"});
@@ -93,8 +95,20 @@ const EditPage = () => {
           </ul>
         </div>
       </article>
-      <Button disabled={ !selectedProduct || !newPrice || !newStock } className='bg-blue-600 text-white' onPress={handleChanges}>Guardar cambios</Button>
+      <Button disabled={ !selectedProduct || !newPrice || !newStock } className='bg-violet-600 text-white text-lg font-semibold p-6 hover:cursor-pointer' onPress={()=> setIsConfirming(true)}>Guardar cambios</Button>
       <Link href={`/dashboard`} className='text-white text-lg my-4 hover:underline'>Volver atrás</Link>
+      <Modal isOpen={isConfirming} onClose={() => setIsConfirming(false)} isDismissable={false} className='bg-gray-700' backdrop='opaque' classNames={{ backdrop: 'bg-gradient-to-t from-violet-900 to-zinc-900/10 backdrop-opacity-20'}}>
+        <ModalContent>
+          <ModalHeader className="text-xl font-semibold">¿Confirmar cambios?</ModalHeader>
+          <ModalBody>
+            <p>¿Estás seguro que querés guardar estos cambios en <strong>{selectedProduct?.name}</strong>?</p>
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="ghost" color='danger' className='text-white' onPress={() => setIsConfirming(false)}>Cancelar</Button>
+            <Button variant='shadow' color='secondary' className='text-white font-semibold' onPress={() => { handleChanges(); setIsConfirming(false); }}>Confirmar</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </section>
   )
 }

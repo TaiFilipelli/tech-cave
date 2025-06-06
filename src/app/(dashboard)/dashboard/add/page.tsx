@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { useProducts } from '@/product/provider'
-import { addToast, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input } from '@heroui/react'
+import { addToast, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@heroui/react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 
@@ -16,6 +16,8 @@ const AddPage = () => {
   const [brand, setBrand] = React.useState<string>('');
   const [img, setImg] = React.useState<string>('');
   const [stock, setStock] = React.useState<number>(0);
+
+  const [isConfirming, setIsConfirming] = React.useState<boolean>(false);
 
   const types:string[] = [
     'Procesador', 'Placa de Video', 'Placa Madre', 'Memoria RAM', 'Almacenamiento SSD', 
@@ -79,7 +81,7 @@ const AddPage = () => {
     <section className='flex flex-col items-center justify-center px-20 py-16 max-[640px]:p-10'>
       <h1 className='font-bold text-3xl'>Agregar producto</h1>
       <h2 className='font-semibold text-xl my-5'>Complete TODOS los campos a continuación</h2>
-      <section className='flex flex-col items-center justify-center w-full bg-black rounded-2xl p-5 gap-4 my-4'>
+      <section className='flex flex-col items-center justify-center w-[60dvw] max-[600px]:w-[90dvw] bg-black rounded-2xl p-5 gap-4 my-4'>
       <Input type="text" label='Nombre del producto' labelPlacement='outside' placeholder='Ej: Placa de Video NVIDIA 5090' value={name} isRequired onChange={(e) => setName(e.target.value)} className='w-1/2 max-[640px]:w-2/3'/>
       <Input type="number" label='Precio' labelPlacement='outside' isRequired value={price.toString()} onChange={(e) => setPrice(Number(e.target.value))} className='w-1/2 max-[640px]:w-2/3'/>
       <Input type="text" label='Descripción' labelPlacement='outside' placeholder='Ej: Este es un producto único...' isRequired value={description} onChange={(e) => setDescription(e.target.value)} className='w-1/2 max-[640px]:w-2/3'/>
@@ -112,8 +114,28 @@ const AddPage = () => {
       </Dropdown>
       </div>
       </section>
-      <Button onPress={handleChanges} className='bg-gradient-to-br from-blue-600 to-violet-600 text-white font-semibold text-xl p-6 border-2 border-black '>Agregar producto</Button>
+      <Button onPress={() => setIsConfirming(true)} className='bg-gradient-to-br from-blue-600 to-violet-600 text-white font-semibold text-xl p-6 border-2 border-black '>Agregar producto</Button>
       <Link href={`/dashboard`} className='text-white text-lg my-4 hover:underline'>Volver atrás</Link>
+      <Modal isOpen={isConfirming} onClose={() => setIsConfirming(false)} isDismissable={false} className='bg-gray-700 py-2 px-4' backdrop='blur'>
+        <ModalContent>
+          <ModalHeader className="text-xl font-semibold">¿Confirmar cambios?</ModalHeader>
+          <ModalBody>
+            <p>¿Estás seguro que querés guardar este producto?</p>
+            <ul className='list-disc text-lg gap-2'>
+              <li>{name}</li>
+              <li>Tipo: {type}</li>
+              <li>${price.toString()}</li>
+              <li>{description}</li>
+              <li>Marca {brand}</li>
+              <li>{stock.toString()} unidades</li>
+            </ul>
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="ghost" color='danger' className='text-white' onPress={() => setIsConfirming(false)}>Cancelar</Button>
+            <Button variant='shadow' color='secondary' className='text-white font-semibold' onPress={() => { handleChanges(); setIsConfirming(false); }}>Confirmar</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </section>
   )
 }
