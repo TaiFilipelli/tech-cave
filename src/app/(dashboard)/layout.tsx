@@ -6,7 +6,7 @@ import React from "react";
 import api from "@/product/api";
 import { Product } from "@/product/products";
 import { ProductProvider } from "@/product/provider";
-import { getCachedOrders } from "../api/orders/route";
+import { getCachedOrders } from "@/orders/api";
 import { OrderProvider } from "@/orders/provider";
 
 const geistSans = Geist({
