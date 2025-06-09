@@ -6,6 +6,8 @@ import React from "react";
 import api from "@/product/api";
 import { Product } from "@/product/products";
 import { ProductProvider } from "@/product/provider";
+import { getCachedOrders } from "../api/orders/route";
+import { OrderProvider } from "@/orders/provider";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -28,13 +30,16 @@ const geistSans = Geist({
 export default async function DashboardLayout({children,}: Readonly<{children: React.ReactNode;}>) {
 
     const products: Product[] = await api.list();
+    const orders = await getCachedOrders();
 
     return(
         <html lang="es" className="bg-gradient-to-b from-black to-violet-950 text-white h-screen">
             <body className={`${geistSans.variable} ${mont.className} antialiased`}>
                 <Providers>
                     <ProductProvider products={products}>
-                    {children}
+                        <OrderProvider orders={orders}>
+                            {children}
+                        </OrderProvider>
                     </ProductProvider>
                 </Providers>
             </body>

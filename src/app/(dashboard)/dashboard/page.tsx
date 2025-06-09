@@ -4,10 +4,14 @@ import Link from 'next/link'
 import { Button } from '@heroui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { useOrders } from '@/orders/provider'
 
 const DashboardPage = () => {
 
   const [greeting, setGreeting] = useState('Hola')
+
+  const orders = useOrders();
+  console.log(orders)
 
   useEffect(() => {
     const hour = new Date().getHours()
@@ -28,6 +32,20 @@ const DashboardPage = () => {
         <Button as={Link} href='/dashboard/add' className='bg-gradient-to-br from-pink-600 to-yellow-600 text-white font-semibold w-1/3 max-[760px]:w-2/3 max-[500px]:w-full' startContent={<FontAwesomeIcon icon={faPlus} size='lg'/>}>Agregar producto</Button>
         <Button as={Link} href='/dashboard/edit' className='bg-gradient-to-br from-pink-600 to-yellow-600 text-white font-semibold w-1/3 max-[760px]:w-2/3 max-[500px]:w-full' startContent={<FontAwesomeIcon icon={faPencil} size='lg'/>}>Editar producto</Button>
         <Button as={Link} href='/dashboard/delete' className='bg-gradient-to-br from-pink-600 to-yellow-600 text-white font-semibold w-1/3 max-[760px]:w-2/3 max-[500px]:w-full' startContent={<FontAwesomeIcon icon={faTrash} size='lg'/>}>Eliminar producto</Button>
+      </div>
+      <div className='bg-black rounded-2xl p-5 mt-10 w-full'>
+        <h2 className='font-semibold text-xl mb-5'>Últimos pedidos</h2>
+        {orders.length > 0 ? (
+          <ul className='list-disc pl-5'>
+            {orders.slice(0, 5).map((order, index) => (
+              <li key={index} className='mb-2 text-white'>
+                Pedido #{order.payment_id} - Estado: {order.status} - Fecha: {new Date(order.date).toLocaleDateString()}, {new Date(order.date).toLocaleTimeString()}hs - Email del comprador: {order.user_email}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className='text-gray-400'>No hay pedidos recientes.</p>
+        )}
       </div>
       <Link href={'/'} className='underline text-white text-lg my-5'>Volver atrás</Link>
     </section>
