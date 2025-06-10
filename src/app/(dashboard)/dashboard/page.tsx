@@ -28,8 +28,6 @@ const DashboardPage = () => {
     color: string
   } 
 
-  console.log(orders);
-
  const getStatusData = (orders: Order[]): StatusData[] => {
   const statusMap: Record<string, number> = {};
 
@@ -48,6 +46,7 @@ const DashboardPage = () => {
 
   const statusData = getStatusData(orders || []);
   // HASTA ACÁ LA LÓGICA DE LOS ESTADOS DE PEDIDOS PARA PIECHART.
+
   interface LineChartData {
   year: string;
   orders: number;
