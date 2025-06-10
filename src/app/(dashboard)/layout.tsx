@@ -33,7 +33,7 @@ export default async function DashboardLayout({children,}: Readonly<{children: R
     const orders = await getCachedOrders();
 
     return(
-        <html lang="es" className="bg-gradient-to-b from-black to-violet-950 text-white h-screen">
+        <html lang="es" className="bg-gradient-to-b from-black to-violet-950 text-white h-screen" suppressHydrationWarning>
             <body className={`${geistSans.variable} ${mont.className} antialiased`}>
                 <Providers>
                     <ProductProvider products={products}>
