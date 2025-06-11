@@ -11,4 +11,5 @@ export interface OrderItem{
     name: string,
     price: string,
     quantity: number,
+    type:string,
 }

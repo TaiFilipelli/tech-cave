@@ -1,18 +1,22 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Button } from '@heroui/react'
+import { /*Avatar*/ Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useOrders } from '@/orders/provider'
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, LineChart, Line, XAxis, YAxis, CartesianGrid, } from 'recharts'
 import { Order } from '@/orders/order'
+import { Product } from '@/product/products'
+import { useProducts } from '@/product/provider'
+// import { useSession } from 'next-auth/react'
 
 const DashboardPage = () => {
 
   const [greeting, setGreeting] = useState('Hola');
-  // const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
   const orders:Order[] = useOrders();
+  const products:Product[] = useProducts();
+  // const { data: session } = useSession();
 
   type OrderStatus = 'approved' | 'pending' | 'rejected'
 
@@ -45,22 +49,34 @@ const DashboardPage = () => {
 }
 
   const statusData = getStatusData(orders || []);
-  // HASTA ACÁ LA LÓGICA DE LOS ESTADOS DE PEDIDOS PARA PIECHART.
+  // LOGICA PARA PIECHART DE ESTADOS DE PEDIDOS.
+  // HASTA ACÁ LA LÓGICA DE LOS PIECHART.
 
   interface LineChartData {
-  year: string;
+  month: string;
   orders: number;
 }
 
-const getOrdersPerYear = (orders:Order[]): LineChartData[] => {
-  const yearCount: Record<string, number> = {};
+const getOrdersPerMonth = (orders: Order[]): LineChartData[] => {
+  const monthCount: Record<string, number> = {};
 
-  orders.forEach(order => { const year = new Date(order.date).getFullYear().toString(); yearCount[year] = (yearCount[year] || 0) + 1;});
+  orders.forEach(order => {
+    const date = new Date(order.date);
+    const year = date.getFullYear();
 
-  return Object.entries(yearCount).map(([year, orders]) => ({ year, orders })).sort((a, b) => Number(a.year) - Number(b.year));
+    if (year === 2025) { 
+      const monthKey = `${year}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+      monthCount[monthKey] = (monthCount[monthKey] || 0) + 1;
+    }
+  });
+
+  return Object.entries(monthCount)
+    .map(([month, orders]) => ({ month, orders }))
+    .sort((a, b) => a.month.localeCompare(b.month));
 };
 
-const lineData = getOrdersPerYear(orders || []);
+
+const lineData = getOrdersPerMonth(orders || []);
 
   useEffect(() => {
     const hour = new Date().getHours()
@@ -75,26 +91,26 @@ const lineData = getOrdersPerYear(orders || []);
 
   return (
   <section className='flex flex-col items-center justify-center p-10'>
-    <h1 className='font-bold text-3xl mb-3'>{greeting}, admin!</h1>
-    <p className='text-lg text-center'>Bienvenido al panel de administración de {`Tech's Cave`}. Aquí puedes administrar los productos de la tienda.</p>
-    
-    <section className='flex flex-row w-full p-5 mt-2 gap-5 rounded-2xl'>
-      <aside className='w-full flex flex-col gap-5'>
-      <article className='flex flex-col bg-black p-5 gap-5 w-full rounded-xl'>
-        <Button as={Link} href='/dashboard/add' className='bg-gradient-to-br from-pink-600 to-yellow-600 text-white font-semibold w-full' startContent={<FontAwesomeIcon icon={faPlus} size='lg'/>}>
-          Agregar producto
-        </Button>
-        <Button as={Link} href='/dashboard/edit' className='bg-gradient-to-br from-pink-600 to-yellow-600 text-white font-semibold w-full' startContent={<FontAwesomeIcon icon={faPencil} size='lg'/>}>
-          Editar producto
-        </Button>
-        <Button as={Link} href='/dashboard/delete' className='bg-gradient-to-br from-pink-600 to-yellow-600 text-white font-semibold w-full' startContent={<FontAwesomeIcon icon={faTrash} size='lg'/>}>
-          Eliminar producto
-        </Button>
-      </article>
-      <article className='bg-black p-5 gap-5 w-full rounded-xl'>
+    <section className='flex flex-col w-full p-5 mt-2 gap-5 rounded-2xl'>
+      <aside className='w-full flex flex-row gap-5'>
+        <article className='bg-black p-5 rounded-xl flex flex-col justify-center gap-5 w-1/2'>
+          <div className='flex flex-row text-center gap-2 justify-center items-center'>
+            {/* <Avatar src={session!.user.image!} size='lg'/> */}
+            <h2 className='font-bold text-2xl mb-3'>{greeting}, admin!</h2>
+          </div>
+          <section className='flex flex-row gap-5 justify-between items-center text-center'>
+            <div className='w-full flex flex-wrap'>
+              <article className='text-xl'><span className='text-2xl font-bold'>{orders.length}</span> pedidos totales</article>
+            </div>
+            <div className='w-full flex flex-wrap'>
+              <article className='text-xl'><span className='text-2xl font-bold'>{orders.length}</span> pedidos totales</article>
+            </div>
+          </section>
+        </article>
+      <article className='bg-black p-5 gap-5 w-[25%] rounded-xl'>
       <div className="mt-4 rounded-2xl">
         <h3 className="text-center font-medium mb-3 text-2xl">Estados de Pedidos</h3>
-        <div className="h-64">
+        <div className="h-[14rem]">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie data={statusData} cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={2} dataKey="value">
@@ -110,15 +126,15 @@ const lineData = getOrdersPerYear(orders || []);
       </div>
       </article>
       </aside>
-      <aside className='w-full flex flex-col gap-2'>
-      <article className='w-full flex items-center justify-center bg-black p-5 rounded-xl'>
+      <aside className='w-full flex flex-row gap-2'>
+        <article className='w-full flex items-center justify-center bg-black p-5 rounded-xl'>
         <div className="bg-gray-900 p-5 w-full rounded-xl">
-          <h3 className="text-center font-medium mb-3 text-white text-xl">Órdenes por Año</h3>
+          <h3 className="text-center font-medium mb-3 text-white text-xl">Órdenes por Mes</h3>
           <div style={{ width: '100%', height: 300 }}>
             <ResponsiveContainer>
               <LineChart data={lineData}>
                 <CartesianGrid stroke="#444" strokeDasharray="3 3" />
-                <XAxis dataKey="year" stroke="#ccc" />
+                <XAxis dataKey="month" stroke="#ccc"/>
                 <YAxis stroke="#ccc" allowDecimals={false} />
                 <Tooltip />
                 <Line type="monotone" dataKey="orders" stroke="#0088FE" strokeWidth={3} />
@@ -127,9 +143,66 @@ const lineData = getOrdersPerYear(orders || []);
           </div>
        </div>
       </article>
+      </aside>
+      <aside className='w-full flex flex-row gap-2'>
+        <article className='flex flex-col bg-black p-5 gap-5 w-1/2 h-[50rem] rounded-xl'>
+        <header className='w-full flex justify-between items-center'>
+          <h2 className='text-xl font-semibold'>Inventario</h2>
+          <Dropdown className='bg-black border-white border'>
+            <DropdownTrigger>
+              <Button variant="shadow" className='bg-white shadow-purple-950 text-black font-semibold text-lg' startContent={<FontAwesomeIcon icon={faPencil}/>}>Modificar</Button>
+            </DropdownTrigger>
+            <DropdownMenu className='bg-black'>
+              <DropdownItem key='add'>
+                <Button as={Link} href='/dashboard/add' className='bg-gradient-to-br from-pink-600 to-yellow-600 text-white font-semibold w-full' startContent={<FontAwesomeIcon icon={faPlus} size='lg'/>}>
+                  Agregar producto
+                </Button>
+              </DropdownItem>
+              <DropdownItem key='edit'>
+                <Button as={Link} href='/dashboard/edit' className='bg-gradient-to-br from-pink-600 to-yellow-600 text-white font-semibold w-full' startContent={<FontAwesomeIcon icon={faPencil} size='lg'/>}>
+                  Editar producto
+                </Button>
+              </DropdownItem>
+              <DropdownItem key='delete'>
+                <Button as={Link} href='/dashboard/delete' className='bg-gradient-to-br from-pink-600 to-yellow-600 text-white font-semibold w-full' startContent={<FontAwesomeIcon icon={faTrash} size='lg'/>}>
+                  Eliminar producto
+                </Button>
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </header>
+          {products?.length > 0 ? (
+            <div className="overflow-x-scroll overflow-y-scroll">
+              <table className="min-w-full divide-y divide-gray-700 bg-gray-900 rounded-xl">
+                <thead>
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Nombre</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Categoria</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Precio</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Marca</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Stock</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-700">
+                  {products.map((product, index) => (
+                    <tr key={index}>
+                      <td className="px-4 py-3 whitespace-nowrap">{product.name}</td>
+                      <td className="px-4 py-3 whitespace-nowrap">{product.type}</td>
+                      <td className="px-4 py-3 whitespace-nowrap">{product.price}</td>
+                      <td className="px-4 py-3 whitespace-nowrap">{product.brand}</td>
+                      <td className="px-4 py-3 whitespace-nowrap">{product.stock}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className='text-gray-400'>No cargan los productos. Verifique la hoja de cálculo.</p>
+          )}
+      </article>
       <article className='w-full bg-black p-5 rounded-xl'>
+        <h2 className='font-semibold text-xl mb-5'>Últimos pedidos</h2>
         <div className='bg-gray-900 rounded-xl p-5'>
-          <h2 className='font-semibold text-xl mb-5'>Últimos pedidos</h2>
           {orders?.length > 0 ? (
             <div className="overflow-x-auto overflow-y-scroll">
               <table className="min-w-full divide-y divide-gray-700">
@@ -143,8 +216,8 @@ const lineData = getOrdersPerYear(orders || []);
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-700">
-                  {orders.slice(0, 5).map((order) => (
-                    <tr key={order.payment_id}>
+                  {orders.slice(0, 10).map((order, index) => (
+                    <tr key={index}>
                       <td className="px-4 py-3 whitespace-nowrap">#{order.payment_id}</td>
                       <td className="px-4 py-3 whitespace-nowrap">
                         <span className={`px-2 py-1 text-xs rounded-full ${

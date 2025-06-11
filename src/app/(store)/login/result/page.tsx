@@ -4,7 +4,7 @@ import { Button, Modal, ModalBody, ModalContent, ModalHeader } from '@heroui/rea
 import { useSession } from 'next-auth/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const LoginResult = () => {
   const { data: session } = useSession();
