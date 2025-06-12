@@ -12,6 +12,8 @@ interface CartItem {
   name: string;
   price: number;
   cantidad: number;
+  type: string;
+  brand: string;
 }
 
 interface ProductCardProps {
@@ -30,6 +32,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
       name: product.name,
       price: product.price,
       cantidad: 1,
+      type: product.type,
+      brand: product.brand,
     });
     setOnCart(true);
     addToast({

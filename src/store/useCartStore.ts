@@ -5,6 +5,8 @@ interface CartItem {
   name: string;
   price: number;
   cantidad: number;
+  type: string;
+  brand: string;
 }
 
 interface CartStore {

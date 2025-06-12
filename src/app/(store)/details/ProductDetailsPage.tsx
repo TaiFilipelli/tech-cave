@@ -35,6 +35,8 @@ export default function ProductDetailsClient() {
       name: product!.name,
       price: product!.price,
       cantidad: 1,
+      type: product!.type,
+      brand: product!.brand,
     });
 
     addToast({
