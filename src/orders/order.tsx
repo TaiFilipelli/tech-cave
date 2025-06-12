@@ -10,6 +10,6 @@ export interface OrderItem{
     id: string,
     name: string,
     price: string,
-    quantity: number,
+    cantidad: number,
     type:string,
 }

@@ -50,7 +50,46 @@ const DashboardPage = () => {
 
   const statusData = getStatusData(orders || []);
   // LOGICA PARA PIECHART DE ESTADOS DE PEDIDOS.
-  // HASTA ACÁ LA LÓGICA DE LOS PIECHART.
+
+  type TypeData = {
+  name: string
+  value: number
+  color: string
+}
+
+const TYPE_COLORS: Record<string, string> = {
+  'Procesador':'#6366F1', 
+  'Motherboard':'#F59E0B', 
+  'Memoria RAM':'#10B981', 
+  'SSD/HDD':'#EF4444',
+  'Placa de Video':'#8B5CF6', 
+  'Fuente de Alimentacion':'#3B82F6',
+  'Otros':'#F43F5E'
+}
+
+const getTypeData = (orders: Order[]): TypeData[] => {
+  const typeCount: Record<string, number> = {}
+
+orders.forEach(order => {
+    order.items.forEach(item => {
+      const type = item.type || 'Otros';
+      const quantity = item.cantidad || 0;
+
+      typeCount[type] = (typeCount[type] || 0) + quantity;
+    });
+  });
+
+
+  return Object.entries(typeCount).map(([name, value]) => ({
+    name,
+    value,
+    color: TYPE_COLORS[name] || '#999999'
+  }));
+}
+
+ const typeData = getTypeData(orders || []);
+
+  // HASTA ACÁ LA LÓGICA DE LOS PIECHART (STATUS Y TIPO DE PRODUCTOS EN PEDIDOS).
 
   interface LineChartData {
   month: string;
@@ -125,9 +164,43 @@ const lineData = getOrdersPerMonth(orders || []);
         </div>
       </div>
       </article>
+      <article className='bg-black p-5 gap-5 w-[25%] rounded-xl'>
+      <div className="mt-4 rounded-2xl">
+        <h3 className="text-center font-medium mb-3 text-2xl">Categorias más vendidas</h3>
+        <div className="h-[16rem]">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie data={typeData} cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={2} dataKey="value">
+                {typeData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color}/>
+                ))}
+              </Pie>
+              <Legend layout="horizontal" verticalAlign="bottom" align="center" formatter={(value) => (<span className="text-sm text-gray-300">{value}</span>)}/>
+              <Tooltip  formatter={(value, name) => { const label = typeof name === 'string' ? name : name.toString(); return [value, label.charAt(0).toUpperCase() + label.slice(1)];}}/>
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+      </article>
       </aside>
       <aside className='w-full flex flex-row gap-2'>
-        <article className='w-full flex items-center justify-center bg-black p-5 rounded-xl'>
+        <article className='flex items-center justify-center bg-black p-5 rounded-xl w-1/2'>
+        <div className="bg-gray-900 p-5 w-full rounded-xl">
+          <h3 className="text-center font-medium mb-3 text-white text-xl">Órdenes por Mes</h3>
+          <div style={{ width: '100%', height: 300 }}>
+            <ResponsiveContainer>
+              <LineChart data={lineData}>
+                <CartesianGrid stroke="#444" strokeDasharray="3 3" />
+                <XAxis dataKey="month" stroke="#ccc"/>
+                <YAxis stroke="#ccc" allowDecimals={false} />
+                <Tooltip />
+                <Line type="monotone" dataKey="orders" stroke="#0088FE" strokeWidth={3} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+       </div>
+      </article>
+      <article className='flex items-center justify-center bg-black p-5 rounded-xl w-1/2'>
         <div className="bg-gray-900 p-5 w-full rounded-xl">
           <h3 className="text-center font-medium mb-3 text-white text-xl">Órdenes por Mes</h3>
           <div style={{ width: '100%', height: 300 }}>
@@ -188,7 +261,7 @@ const lineData = getOrdersPerMonth(orders || []);
                     <tr key={index}>
                       <td className="px-4 py-3 whitespace-nowrap">{product.name}</td>
                       <td className="px-4 py-3 whitespace-nowrap">{product.type}</td>
-                      <td className="px-4 py-3 whitespace-nowrap">{product.price}</td>
+                      <td className="px-4 py-3 whitespace-nowrap">${Number(product.price.toString().replace(/[^0-9,]/g, '').replace(/\./g, '').replace(',', '.'))}</td>
                       <td className="px-4 py-3 whitespace-nowrap">{product.brand}</td>
                       <td className="px-4 py-3 whitespace-nowrap">{product.stock}</td>
                     </tr>
@@ -231,7 +304,7 @@ const lineData = getOrdersPerMonth(orders || []);
                         {new Date(order.date).toLocaleDateString()}, {new Date(order.date).toLocaleTimeString()}
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap">
-                        ${order.items.reduce((total, item) => total + (Number(item.price.toString().replace(/[^0-9.,]/g, '').replace(',', '.')) * item.quantity), 0).toFixed(2)}
+                        ${order.items.reduce((total, item) => total + (Number(item.price.toString().replace(/[^0-9,]/g, '').replace(/\./g, '').replace(',', '.')) * item.cantidad), 0)}
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap">{order.user_email}</td>
                     </tr>
