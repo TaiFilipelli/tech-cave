@@ -23,8 +23,8 @@ export default function Home() {
   const products = useProducts();
 
   useEffect(() => {
-    const featured = [...products].sort(()=>0.5-Math.random());
-    setFeaturedProducts(featured.slice(0,5));
+    const featured = [...products].sort(()=>0.9-Math.random());
+    setFeaturedProducts(featured.slice(0,9));
   }, [products]);
 
   return (
@@ -59,8 +59,8 @@ export default function Home() {
             <FontAwesomeIcon icon={faCircleNotch} spin size="2xl"/>
           </article>
         )}
-        <div className="overflow-x-auto w-full">
-          <article className="flex gap-6 flex-nowrap px-4 justify-center">
+        <div className="overflow-x-auto scrollbar-thin py-2 w-full">
+          <article className="flex gap-6 flex-nowrap px-4">
             {featuredProducts.map((product) => (
               <div key={product.id} className="min-w-[250px]">
                <ProductCard product={product} addToCart={addToCart} />

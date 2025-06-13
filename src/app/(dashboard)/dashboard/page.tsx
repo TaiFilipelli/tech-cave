@@ -5,7 +5,7 @@ import { /*Avatar*/ Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigge
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useOrders } from '@/orders/provider'
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, LineChart, Line, XAxis, YAxis, CartesianGrid, } from 'recharts'
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, LineChart, Line, XAxis, YAxis, CartesianGrid, AreaChart, Area } from 'recharts'
 import { Order } from '@/orders/order'
 import { Product } from '@/product/products'
 import { useProducts } from '@/product/provider'
@@ -114,8 +114,37 @@ const getOrdersPerMonth = (orders: Order[]): LineChartData[] => {
     .sort((a, b) => a.month.localeCompare(b.month));
 };
 
+  const lineData = getOrdersPerMonth(orders || []);
+  // LÓGICA PARA EL GRÁFICO DE LÍNEA DE PEDIDOS POR MES.	
+  const getRevenuePerMonth = (orders: Order[]) => {
+  const revenueMap: Record<string, number> = {};
 
-const lineData = getOrdersPerMonth(orders || []);
+  orders.forEach(order => {
+    if (order.status !== "approved") return;
+
+    const month = order.date.slice(0, 7);
+
+    order.items.forEach(item => {
+      const priceNumber = parseFloat(
+        item.price.replace(/[^0-9.-]+/g, "").replace(",", "")
+      );
+      const total = priceNumber * item.cantidad;
+
+      revenueMap[month] = (revenueMap[month] || 0) + total;
+    });
+  });
+
+  const result = Object.entries(revenueMap)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([month, total]) => ({
+      month,
+      total: total,
+    }));
+
+  return result;
+}
+
+  const revenueData = getRevenuePerMonth(orders || []);
 
   useEffect(() => {
     const hour = new Date().getHours()
@@ -202,16 +231,16 @@ const lineData = getOrdersPerMonth(orders || []);
       </article>
       <article className='flex items-center justify-center bg-black p-5 rounded-xl w-1/2'>
         <div className="bg-gray-900 p-5 w-full rounded-xl">
-          <h3 className="text-center font-medium mb-3 text-white text-xl">Órdenes por Mes</h3>
+          <h3 className="text-center font-medium mb-3 text-white text-xl">Ingresos por mes</h3>
           <div style={{ width: '100%', height: 300 }}>
             <ResponsiveContainer>
-              <LineChart data={lineData}>
+              <AreaChart data={revenueData}>
                 <CartesianGrid stroke="#444" strokeDasharray="3 3" />
                 <XAxis dataKey="month" stroke="#ccc"/>
-                <YAxis stroke="#ccc" allowDecimals={false} />
+                <YAxis stroke="#ccc" allowDecimals={true} />
                 <Tooltip />
-                <Line type="monotone" dataKey="orders" stroke="#0088FE" strokeWidth={3} />
-              </LineChart>
+                <Area type="monotone" dataKey="total" stroke="#00C49F" fillOpacity={0.3} fill="#00C49F" />
+              </AreaChart>
             </ResponsiveContainer>
           </div>
        </div>
@@ -245,7 +274,7 @@ const lineData = getOrdersPerMonth(orders || []);
           </Dropdown>
         </header>
           {products?.length > 0 ? (
-            <div className="overflow-x-scroll overflow-y-scroll">
+            <div className="overflow-x-scroll overflow-y-scroll scrollbar-thin">
               <table className="min-w-full divide-y divide-gray-700 bg-gray-900 rounded-xl">
                 <thead>
                   <tr>
@@ -277,7 +306,7 @@ const lineData = getOrdersPerMonth(orders || []);
         <h2 className='font-semibold text-xl mb-5'>Últimos pedidos</h2>
         <div className='bg-gray-900 rounded-xl p-5'>
           {orders?.length > 0 ? (
-            <div className="overflow-x-auto overflow-y-scroll">
+            <div className="overflow-x-auto overflow-y-scroll scrollbar-thin">
               <table className="min-w-full divide-y divide-gray-700">
                 <thead>
                   <tr>

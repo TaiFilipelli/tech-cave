@@ -13,7 +13,7 @@ export default function BrandsStrip(){
     ]
 
   return (
-    <section className="flex flex-col justify-between items-center text-center py-5 dark:bg-gray-600 dark:text-black">
+    <section className="flex flex-col justify-between items-center text-center pt-5 dark:bg-gray-600 dark:text-black">
         <h3 className="text-4xl font-bold mb-5">Las mejores <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">marcas</span></h3>
         <div className="relative overflow-hidden w-full max-w-[80rem] h-[190px] bg-transparent mask-gradient">
             <ul className="flex animate-marquee whitespace-nowrap gap-8 px-8">
