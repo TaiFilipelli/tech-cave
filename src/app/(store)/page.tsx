@@ -59,7 +59,7 @@ export default function Home() {
             <FontAwesomeIcon icon={faCircleNotch} spin size="2xl"/>
           </article>
         )}
-        <div className="overflow-x-auto scrollbar-thin py-2 w-full">
+        <div className="overflow-x-auto scrollbar-thin py-2 w-full" style={{ WebkitMaskImage: "linear-gradient(to right, black 90%, transparent)", maskImage: "linear-gradient(to right, black 95%, transparent)",}}>
           <article className="flex gap-6 flex-nowrap px-4">
             {featuredProducts.map((product) => (
               <div key={product.id} className="min-w-[250px]">
@@ -91,7 +91,7 @@ export default function Home() {
       <section id="about" className="flex flex-col text-center p-2 bg-gradient-to-b from-gray-200 to-gray-400 dark:from-black dark:to-gray-900">
         <h3 className="text-5xl font-bold mb-5 tracking-tighter">Qué es <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">{`Tech's`} Cave?</span></h3>
         <h4 className="text-xl font-semibold">2 años llevando calidad e innovación a los escritorios.</h4>
-        <section className="flex flex-row max-[650px]:flex-col gap-4 justify-between max-[650px]:justify-center my-20">
+        <section className="flex flex-row max-[650px]:flex-col gap-4 justify-between max-[650px]:justify-center my-20 max-[650px]:my-5">
             <article className="flex flex-col justify-start text-left p-5 w-1/2 max-[650px]:w-full">
               <h2 className="text-3xl font-semibold space-y-4 mb-5">Quiénes somos?</h2>
               <p className="text-lg my-2">Simple: un grupo pequeño de emprendedores con el objetivo de llevar lo mejor de la industria a una comunidad cada dia más grande.</p>
