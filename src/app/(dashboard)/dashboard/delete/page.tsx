@@ -14,14 +14,26 @@ const DeletePage = () => {
   const { data: session } = useSession();
 
   const [selectedProduct, setSelectedProduct] = React.useState< Product | null>(null);
+  const [selectedType, setSelectedType] = React.useState<string>('');
+  const [filteredProducts, setFilteredProducts] = React.useState<Product[]>([]);
   const [isDeleting, setIsDeleting] = React.useState<boolean>(false);
 
+  const uniqueTypes = [...new Set(products.map((p) => p.type))];
+
+  React.useEffect(() => {
+    if (selectedType) {
+      setFilteredProducts(products.filter((p) => p.type === selectedType));
+    }
+  }, [selectedType, products]);
+
   const handleDelete = async () => {
-    if (!selectedProduct || !session?.accessToken) { 
+    if (!selectedProduct || !session?.accessToken) {
+
       addToast({ title: "Error al eliminar producto", description: 'No hay producto seleccionado o no hay sesión válida', color: "warning"});
       return;
     }
-  
+
+
     try {
       const response = await fetch('/api/deleteProduct', {
         method: 'POST',
@@ -47,25 +59,36 @@ const DeletePage = () => {
   };
   
   return (
-    <main className='flex flex-col items-center justify-center px-20'>
+    <main className='flex flex-col items-center justify-center px-20 h-[100dvh]'>
       <h1 className='font-bold text-3xl mt-10'>Borrar producto existente</h1>
-      <section className='flex flex-row items-center gap-4 w-2/3 my-10'>
-        <article className='bg-black rounded-xl p-6 w-1/2'>
-        <h2 className='font-semibold text-xl my-4'>Seleccione el producto que desea borrar</h2>
-        <Dropdown type='listbox' shouldBlockScroll={false} className='overflow-y-scroll h-[70dvh]'>
-          <DropdownTrigger>
-            <Button className='text-lg'>{selectedProduct ?  selectedProduct.name.slice(0, 20) + "..." : 'Seleccione un producto'}</Button>
-          </DropdownTrigger>
-          <DropdownMenu className='text-black'>
-            {products.map((product)=>(
-              <DropdownItem key={product.id} onPress={() => setSelectedProduct(product)} className='text-lg' showDivider>
-                {product.name}
-              </DropdownItem>
-            ))}
-          </DropdownMenu>
-        </Dropdown>
+      <section className='flex flex-row max-[850px]:flex-col min-[850px]:items-center gap-4 w-2/3 max-[850px]:w-full my-10 max-[850px]:my-0'>
+        <article className='bg-black rounded-xl p-6 w-1/2 max-[850px]:w-full'>
+          <h2 className='font-semibold text-xl my-4'>Seleccione el producto que desea borrar</h2>
+            <div className='flex flex-wrap gap-4 mb-6'>
+                <Dropdown>
+                  <DropdownTrigger>
+                    <Button>{selectedType || 'Seleccionar tipo de producto'}</Button>
+                  </DropdownTrigger>
+                  <DropdownMenu>
+                    {uniqueTypes.map((type) => (
+                      <DropdownItem key={type} onPress={() => setSelectedType(type)} className='text-black' showDivider>{type}</DropdownItem>
+                    ))}
+                  </DropdownMenu>
+                </Dropdown>
+        
+                <Dropdown isDisabled={!selectedType}>
+                  <DropdownTrigger>
+                    <Button>{selectedProduct ? selectedProduct.name.slice(0, 20) + "..." : 'Seleccionar producto'}</Button>
+                  </DropdownTrigger>
+                  <DropdownMenu>
+                    {filteredProducts.map((product) => (
+                      <DropdownItem key={product.id} onPress={() => setSelectedProduct(product)} className='text-black' showDivider>{product.name.slice(0, 30) + "..."}</DropdownItem>
+                    ))}
+                  </DropdownMenu>
+                </Dropdown>
+              </div>
         </article>
-        <article className='bg-black rounded-xl p-6 w-1/2 items-center h-full'>
+        <article className='bg-black rounded-xl p-6 mb-5 w-1/2 max-[850px]:w-full items-center'>
           <h3 className='font-semibold text-2xl my-4'>Producto seleccionado</h3>
           {selectedProduct ? 
           <>

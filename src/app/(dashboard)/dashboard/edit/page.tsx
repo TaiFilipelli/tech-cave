@@ -92,10 +92,10 @@ const EditPage = () => {
   }
 
   return (
-    <section className='flex flex-col items-center justify-center p-20 h-[100vh]'>
+    <section className='flex flex-col items-center justify-center p-20 max-[450px]:p-5 h-[100dvh]'>
       <h1 className='font-bold text-3xl mb-2'>Editar producto existente</h1>
       <p className='font-medium text-lg mb-5'>Edite precio y stock de cualquier producto</p>
-      <div className='flex gap-4 mb-6'>
+      <div className='flex flex-wrap gap-4 mb-6'>
         <Dropdown>
           <DropdownTrigger>
             <Button>{selectedType || 'Seleccionar tipo de producto'}</Button>
@@ -109,17 +109,17 @@ const EditPage = () => {
 
         <Dropdown isDisabled={!selectedType}>
           <DropdownTrigger>
-            <Button>{selectedProduct ? selectedProduct.name : 'Seleccionar producto'}</Button>
+            <Button>{selectedProduct ? selectedProduct.name.slice(0, 20) + "..." : 'Seleccionar producto'}</Button>
           </DropdownTrigger>
           <DropdownMenu>
             {filteredProducts.map((product) => (
-              <DropdownItem key={product.id} onPress={() => setSelectedProduct(product)} className='text-black' showDivider>{product.name}</DropdownItem>
+              <DropdownItem key={product.id} onPress={() => setSelectedProduct(product)} className='text-black' showDivider>{product.name.slice(0, 30) + "..."}</DropdownItem>
             ))}
           </DropdownMenu>
         </Dropdown>
       </div>
       {selectedProduct && (
-        <form className='grid grid-cols-1 md:grid-cols-2 gap-4 bg-black p-6 rounded-xl mb-6'>
+        <form className='grid grid-cols-1 md:grid-cols-2 gap-4 bg-black p-6 rounded-xl mb-6 max-[450px]:w-full'>
           <Input label='Nombre' value={formState.name} onChange={(e) => setFormState({ ...formState, name: e.target.value })} />
           <Input label='Precio' type='number' value={Number(formState.price.toString().replace(/[^0-9,]/g, '').replace(/\./g, '').replace(',', '.')).toString()} onChange={(e) => setFormState({ ...formState, price: + e.target.value })} />
           <Input label='Descripción' value={formState.description} onChange={(e) => setFormState({ ...formState, description: e.target.value })} />
