@@ -51,7 +51,7 @@ export default function AuthButton({isAdmin}:{isAdmin:boolean}) {
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalContent>
                     <ModalHeader className="text-lg font-semibold">Confirmar cierre de sesión</ModalHeader>
-                    <ModalBody>¿Estás seguro de que querés cerrar sesión?</ModalBody>
+                    <ModalBody>¿Estás seguro que querés cerrar sesión?</ModalBody>
                     <ModalFooter>
                         <Button variant="light" onPress={onClose}>Cancelar</Button>
                         <Button className="bg-red-600 text-white" onPress={handleSignOut}>Cerrar sesión</Button>
