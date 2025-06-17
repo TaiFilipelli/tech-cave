@@ -9,14 +9,39 @@ import Link from 'next/link';
 const EditPage = () => {
 
   const { data: session } = useSession();
-
   const products = useProducts();
 
+  const [selectedType, setSelectedType] = React.useState<string>('');
+  const [filteredProducts, setFilteredProducts] = React.useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = React.useState<Product>();
-  const [newPrice, setNewPrice] = React.useState<number>(0);
-  const [newStock, setNewStock] = React.useState<number>(0);
-  const [isConfirming, setIsConfirming] = React.useState<boolean>(false);
-  
+  const [formState, setFormState] = React.useState({
+    name: '',
+    price: 0,
+    description: '',
+    brand: '',
+    stock: 0,
+  });
+  const [isConfirming, setIsConfirming] = React.useState(false);
+
+  const uniqueTypes = [...new Set(products.map((p) => p.type))];
+
+  React.useEffect(() => {
+    if (selectedType) {
+      setFilteredProducts(products.filter((p) => p.type === selectedType));
+    }
+  }, [selectedType, products]);
+
+  React.useEffect(() => {
+    if (selectedProduct) {
+      setFormState({
+        name: selectedProduct.name,
+        price: selectedProduct.price,
+        description: selectedProduct.description,
+        brand: selectedProduct.brand,
+        stock: selectedProduct.stock,
+      });
+    }
+  }, [selectedProduct]);
   const handleChanges = async () => {
     if (!selectedProduct) return;
   
@@ -30,7 +55,7 @@ const EditPage = () => {
       // +2 porque la hoja empieza en la fila 1 (donde están las cabeceras de las columnas) y después datos desde la fila 2
       const rowToEdit = productIndex + 2;
   
-      const range = `Productos!D${rowToEdit}:G${rowToEdit}`;
+      const range = `Productos!B${rowToEdit}:G${rowToEdit}`;
       const sheetId = "1O_9reXr8yzEZDllwOo_YKOtJ3HZqKJd7dkF_cWrqa1g";
       const accessToken = session?.accessToken;
   
@@ -39,7 +64,7 @@ const EditPage = () => {
       const body = {
         range,
         majorDimension: "ROWS",
-        values: [[newPrice, newStock]]
+        values: [[formState.name, selectedProduct.type, formState.price, formState.description, formState.brand, formState.stock]],
       };
   
       const res = await fetch(updateUrl, {
@@ -56,10 +81,10 @@ const EditPage = () => {
         throw new Error(errorData.error?.message || "Error al actualizar producto");
       }
   
-      addToast({title: "Producto actualizado con éxito", color: "success"});
-      setNewPrice(0);
-      setNewStock(0);
+      addToast({title: "Producto actualizado con éxito", color: "success", timeout: 4000});
+      setFormState({ name: '', price: 0, description: '', brand: '', stock: 0 });
       setSelectedProduct(undefined);
+      setSelectedType('');
     } catch (err) {
       console.error("Error actualizando el producto:", err);
       addToast({title: "Error al actualizar producto", description:'Inténtelo más tarde', color: "danger"});
@@ -67,35 +92,42 @@ const EditPage = () => {
   }
 
   return (
-    <section className='flex flex-col items-center justify-center p-20'>
+    <section className='flex flex-col items-center justify-center p-20 h-[100vh]'>
       <h1 className='font-bold text-3xl mb-2'>Editar producto existente</h1>
       <p className='font-medium text-lg mb-5'>Edite precio y stock de cualquier producto</p>
-      <Dropdown type='listbox' shouldBlockScroll={false} className='overflow-y-scroll h-[600px]'>
-        <DropdownTrigger>
-          <Button className='bg-gray-400 text-black p-2 rounded-md'>{selectedProduct ? selectedProduct.name.slice(0, 20) + "..." : 'Seleccionar producto'}</Button>
-        </DropdownTrigger>
-        <DropdownMenu>
-          {products.map((product) => (
-            <DropdownItem key={product.id} className='p-2 text-2xl text-black' onPress={() => setSelectedProduct(product)} showDivider>
-              {product.name}
-            </DropdownItem>
-          ))}
-        </DropdownMenu>
-      </Dropdown>
-      <article className='flex flex-wrap gap-4'>
-        <section className='flex flex-col items-center justify-center p-5 bg-black rounded-xl my-5'>
-            <Input label='Cambiar precio' labelPlacement='outside' onChange={(e) => setNewPrice(Number(e.target.value))}/>
-            <Input label='Cambiar stock' labelPlacement='outside' onChange={(e) => setNewStock(Number(e.target.value))}/>
-        </section>
-        <div className='flex flex-col bg-black rounded-xl p-5 my-5 items-center'>
-          <p className='text-lg '>Lista de cambios:</p>
-          <ul className='mb-2 list-disc'>
-            <li className={`${newPrice==0 ? 'opacity-0' : 'opacity-100'}`}>Precio: {newPrice}</li>
-            <li className={`${newStock==0 ? 'opacity-0' : 'opacity-100'}`}>Stock: {newStock}</li>
-          </ul>
-        </div>
-      </article>
-      <Button disabled={ !selectedProduct || !newPrice || !newStock } className='bg-violet-600 text-white text-lg font-semibold p-6 hover:cursor-pointer' onPress={()=> setIsConfirming(true)}>Guardar cambios</Button>
+      <div className='flex gap-4 mb-6'>
+        <Dropdown>
+          <DropdownTrigger>
+            <Button>{selectedType || 'Seleccionar tipo de producto'}</Button>
+          </DropdownTrigger>
+          <DropdownMenu>
+            {uniqueTypes.map((type) => (
+              <DropdownItem key={type} onPress={() => setSelectedType(type)} className='text-black' showDivider>{type}</DropdownItem>
+            ))}
+          </DropdownMenu>
+        </Dropdown>
+
+        <Dropdown isDisabled={!selectedType}>
+          <DropdownTrigger>
+            <Button>{selectedProduct ? selectedProduct.name : 'Seleccionar producto'}</Button>
+          </DropdownTrigger>
+          <DropdownMenu>
+            {filteredProducts.map((product) => (
+              <DropdownItem key={product.id} onPress={() => setSelectedProduct(product)} className='text-black' showDivider>{product.name}</DropdownItem>
+            ))}
+          </DropdownMenu>
+        </Dropdown>
+      </div>
+      {selectedProduct && (
+        <form className='grid grid-cols-1 md:grid-cols-2 gap-4 bg-black p-6 rounded-xl mb-6'>
+          <Input label='Nombre' value={formState.name} onChange={(e) => setFormState({ ...formState, name: e.target.value })} />
+          <Input label='Precio' type='number' value={Number(formState.price.toString().replace(/[^0-9,]/g, '').replace(/\./g, '').replace(',', '.')).toString()} onChange={(e) => setFormState({ ...formState, price: + e.target.value })} />
+          <Input label='Descripción' value={formState.description} onChange={(e) => setFormState({ ...formState, description: e.target.value })} />
+          <Input label='Marca' value={formState.brand} onChange={(e) => setFormState({ ...formState, brand: e.target.value })} />
+          <Input label='Stock' type='number' value={formState.stock.toString()} onChange={(e) => setFormState({ ...formState, stock: + e.target.value })} />
+        </form>
+      )}
+      <Button disabled={ !selectedProduct } className='bg-violet-600 text-white text-lg font-semibold p-6 hover:cursor-pointer' onPress={()=> setIsConfirming(true)}>Guardar cambios</Button>
       <Link href={`/dashboard`} className='text-white text-lg my-4 hover:underline'>Volver atrás</Link>
       <Modal isOpen={isConfirming} onClose={() => setIsConfirming(false)} isDismissable={false} className='bg-gray-700' backdrop='opaque' classNames={{ backdrop: 'bg-gradient-to-t from-violet-900 to-zinc-900/10 backdrop-opacity-20'}}>
         <ModalContent>

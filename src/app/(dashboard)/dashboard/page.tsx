@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { /*Avatar*/ Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/react'
+import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useOrders } from '@/orders/provider'
@@ -9,14 +9,14 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, LineChart, L
 import { Order } from '@/orders/order'
 import { Product } from '@/product/products'
 import { useProducts } from '@/product/provider'
-// import { useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 
 const DashboardPage = () => {
 
   const [greeting, setGreeting] = useState('Hola');
   const orders:Order[] = useOrders();
   const products:Product[] = useProducts();
-  // const { data: session } = useSession();
+  const { data: session } = useSession();
 
   type OrderStatus = 'approved' | 'pending' | 'rejected'
 
@@ -162,9 +162,9 @@ const getOrdersPerMonth = (orders: Order[]): LineChartData[] => {
     <section className='flex flex-col w-full p-5 max-[750px]:p-0 mt-2 gap-5 rounded-2xl'>
       <aside className='w-full flex flex-row max-[1160px]:flex-col gap-5'>
         <article className='bg-black text-white p-5 rounded-xl flex flex-col justify-center max-[1160px]:w-full gap-5 w-1/2'>
-          <div className='flex flex-row text-center gap-2 justify-center items-center'>
-            {/* <Avatar src={session!.user.image!} size='lg'/> */}
-            <h2 className='font-bold text-2xl mb-3'>{greeting}, admin!</h2>
+          <div className='flex flex-row gap-2 justify-center items-center'>
+            {session && session.user.image && <Avatar src={session!.user.image!} size='lg'/>}
+            <h2 className='font-bold text-2xl'>{greeting}, admin!</h2>
           </div>
           <section className='flex flex-row gap-5 justify-between items-center text-center'>
             <div className='w-full flex flex-col'>
