@@ -24,7 +24,7 @@ export default function Home() {
 
   useEffect(() => {
     const featured = [...products].sort(()=>0.9-Math.random());
-    setFeaturedProducts(featured.slice(0,9));
+    setFeaturedProducts(featured.slice(0,8));
   }, [products]);
 
   return (

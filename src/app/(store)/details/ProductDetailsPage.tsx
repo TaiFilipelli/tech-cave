@@ -3,7 +3,7 @@ import { addToast, Button, Image } from "@heroui/react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartArrowDown, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCartStore } from "@/store/useCartStore";
 import { useSearchParams } from "next/navigation";
 import { useProducts } from "@/product/provider";
@@ -12,11 +12,17 @@ import { Product } from "@/product/products";
 export default function ProductDetailsClient() {
   
     const [isOnCart, setIsOnCart] = useState(false);
-    const { addToCart, removeFromCart } = useCartStore((state) => state);
+    const { cart, addToCart, removeFromCart } = useCartStore((state) => state);
     const productName = useSearchParams().get("name");
 
     const products = useProducts();
     const product: Product | undefined = products.find((product) => product.name == productName);
+
+    useEffect(() => {
+        if (!product) return;
+        const isOnCart = cart.some(item => item.id === product.id);
+        setIsOnCart(isOnCart);
+    }, [cart, product]);
 
     if(!product){
         return (
@@ -47,11 +53,12 @@ export default function ProductDetailsClient() {
     });
   };
 
+  
   const handleRemoveCart = () => {
     setIsOnCart(false);
-
+    
     removeFromCart(product!.id);
-
+    
     addToast({
       title: "Producto eliminado del carrito",
       timeout: 2000,
