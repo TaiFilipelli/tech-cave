@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPencil, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faPencil, faTrash, faPlus, faDownload } from '@fortawesome/free-solid-svg-icons'
 import { useOrders } from '@/orders/provider'
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, LineChart, Line, XAxis, YAxis, CartesianGrid, AreaChart, Area } from 'recharts'
 import { Order } from '@/orders/order'
@@ -272,6 +272,11 @@ const getOrdersPerMonth = (orders: Order[]): LineChartData[] => {
               <DropdownItem key='delete'>
                 <Button as={Link} href='/dashboard/delete' className='bg-gradient-to-br from-pink-600 to-yellow-600 text-white font-semibold w-full' startContent={<FontAwesomeIcon icon={faTrash} size='lg'/>}>
                   Eliminar producto
+                </Button>
+              </DropdownItem>
+              <DropdownItem key='download'>
+                <Button as={Link} href='https://docs.google.com/spreadsheets/d/1O_9reXr8yzEZDllwOo_YKOtJ3HZqKJd7dkF_cWrqa1g/export?format=xlsx' download target='_blank' rel='noopener noreferrer' className='bg-gradient-to-br from-green-600 to-blue-600 text-white font-semibold w-full' startContent={<FontAwesomeIcon icon={faDownload} size='lg' />}>
+                  Descargar hoja
                 </Button>
               </DropdownItem>
             </DropdownMenu>
