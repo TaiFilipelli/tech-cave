@@ -15,6 +15,7 @@ const Navbar = ({isAdmin}:{isAdmin:boolean}) => {
 
   const [darkMode, setDarkMode] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -24,6 +25,12 @@ const Navbar = ({isAdmin}:{isAdmin:boolean}) => {
         setDarkMode(true);
       }
     }
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 400);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const toggleDarkMode = () => {
@@ -34,7 +41,11 @@ const Navbar = ({isAdmin}:{isAdmin:boolean}) => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full flex flex-row justify-around items-center p-5 bg-gray-200/80 dark:bg-gray-900/80 bg-opacity-10 z-50">
+    <nav className={clsx( "fixed top-0 left-0 w-full flex flex-row justify-around items-center p-5 z-50 transition-colors duration-300",
+      scrolled 
+    ? "bg-gray-200/70 dark:bg-gray-900/70 backdrop-blur-md shadow-md" 
+    : "bg-transparent"
+    )}>
       <section className="flex flex-row gap-5 hover:cursor-pointer" onClick={() => router.push('/')}>
         <FontAwesomeIcon icon={faDragon} size="2xl"/>
         <h1 className="text-2xl font-bold"><span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">{`Tech's`}</span> Cave</h1>
