@@ -55,7 +55,7 @@ export default function Home() {
         <h3 className="text-4xl font-bold mb-5">Productos <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">destacados</span></h3> 
         { featuredProducts.length === 0 && (
           <article className="flex flex-col gap-4 m-10">
-            <h1 className="text-xl font-semibold text-black mb-4">Preparando productos...</h1>
+            <h2 className="text-xl font-semibold text-black mb-4">Preparando productos...</h2>
             <FontAwesomeIcon icon={faCircleNotch} spin size="2xl"/>
           </article>
         )}
@@ -73,17 +73,17 @@ export default function Home() {
       <section className="flex flex-row max-[510px]:flex-col gap-4 justify-around items-center text-center p-2">
         <article>
           <FontAwesomeIcon icon={faComputer} size="3x" className="mb-2"/>
-          <h1 className="text-2xl font-bold">Todo lo que necesitas</h1>
+          <h4 className="text-2xl font-bold">Todo lo que necesitas</h4>
           <p className="font-semibold">para tu PC de ensueño</p>
         </article>
         <article>
           <FontAwesomeIcon icon={faShieldHalved} size="3x" className="mb-2"/>
-          <h1 className="text-2xl font-bold">Garantia oficial</h1>
+          <h4 className="text-2xl font-bold">Garantia oficial</h4>
           <p className="font-semibold">en todos los productos</p>
         </article>
         <article>
           <FontAwesomeIcon icon={faTruckFast} size="3x" className="mb-2"/>
-          <h1 className="text-2xl font-bold">Envios a tu casa</h1>
+          <h4 className="text-2xl font-bold">Envios a tu casa</h4>
           <p className="font-semibold">rápidos y seguros</p>  
         </article>
       </section>

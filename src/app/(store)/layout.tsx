@@ -21,7 +21,7 @@ const mont = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Tech's Cave",
+  title: "Tech's Cave | Tu tienda de hardware de confianza",
   description: "El lugar perfecto donde llevar tu equipo al próximo nivel. Componentes electrónicos de alta gama con el mejor precio.",
   icons:{
     icon: "/logo.png",
@@ -51,7 +51,7 @@ export default async function RootLayout({ children, }: Readonly<{
   }
 
   return (
-    <html lang="en" className="bg-gray-200 dark:bg-black dark:text-white h-[100dvh]" suppressHydrationWarning>
+    <html lang="es" className="bg-gray-200 dark:bg-black dark:text-white h-[100dvh]" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${mont.className} antialiased dark:bg-black dark:text-white`}>
         <Providers>
           <ProductProvider products={products}>
