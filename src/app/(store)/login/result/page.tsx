@@ -113,7 +113,7 @@ const LoginResult = () => {
       </Modal>
 
       {!loading && (
-        <section className="h-full flex flex-col items-center justify-center text-center p-20 mt-16">
+        <section className="h-full flex flex-col items-center justify-center text-center p-36">
           <h1 className="text-4xl font-bold mb-2">Bienvenido, {session?.user?.name}!</h1>
           <p className="text-xl font-semibold mb-4">
             Puede realizar compras libremente por la aplicación
