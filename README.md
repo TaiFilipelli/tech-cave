@@ -35,7 +35,7 @@ Otro punto clave es que muchos emprendedores ya están familiarizados con **Exce
 
 ⚠️ En parte, sí. Por eso, Tech's Cave utiliza **un sistema de asincronía de datos** para mejorar la estabilidad.  
 
-En principio, la aplicación se conecta a **tres bases de datos distintas**:  
+En principio, la aplicación se conecta a **dos fuentes de datos distintas**:  
 
 1. **📋 Hoja de productos (Google Sheets)** → Principal fuente de datos. Contiene todos los productos y varios campos de utilidad (stock, precio, descripción, imagen, etc.).  
 2. **🗄️ Base de datos NoSQL (MongoDB)** → Para almacenar órdenes de compra y usuarios.
