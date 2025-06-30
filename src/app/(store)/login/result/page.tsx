@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Modal, ModalBody, ModalContent, ModalHeader } from '@heroui/react';
 import { useSession } from 'next-auth/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
 
 const LoginResult = () => {
@@ -114,11 +114,12 @@ const LoginResult = () => {
 
       {!loading && (
         <section className="h-full flex flex-col items-center justify-center text-center p-36">
+           <FontAwesomeIcon icon={faThumbsUp} beat size="3x" className="mb-2"/>
           <h1 className="text-4xl font-bold mb-2">Bienvenido, {session?.user?.name}!</h1>
           <p className="text-xl font-semibold mb-4">
             Puede realizar compras libremente por la aplicación
           </p>
-          <Button onPress={() => router.push('/')} className="text-lg font-semibold p-4 mt-6">
+          <Button onPress={() => router.push('/')} className="bg-violet-600 text-lg text-white font-semibold border-1 border-black dark:border-white p-4 mt-6">
             Volver atrás
           </Button>
         </section>

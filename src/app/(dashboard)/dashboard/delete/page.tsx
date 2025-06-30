@@ -59,10 +59,10 @@ const DeletePage = () => {
   };
   
   return (
-    <main className='flex flex-col items-center justify-center px-20 h-[100dvh]'>
+    <main className='flex flex-col items-center justify-center px-10 max-[950px]:px-5 h-[100dvh] max-[460px]:h-[120dvh]'>
       <h1 className='font-bold text-3xl mt-10'>Borrar producto existente</h1>
-      <section className='flex flex-row max-[850px]:flex-col min-[850px]:items-center gap-4 w-2/3 max-[850px]:w-full my-10 max-[850px]:my-0'>
-        <article className='bg-black rounded-xl p-6 w-1/2 max-[850px]:w-full'>
+      <section className='flex flex-row max-[850px]:flex-col min-[850px]:items-center gap-4 w-2/3 max-[950px]:w-full my-10 max-[850px]:my-2'>
+        <article className='bg-black rounded-xl p-6 max-[850px]:p-2 w-1/2 max-[850px]:w-full'>
           <h2 className='font-semibold text-xl my-4'>Seleccione el producto que desea borrar</h2>
             <div className='flex flex-wrap gap-4 mb-6'>
                 <Dropdown>
@@ -88,7 +88,7 @@ const DeletePage = () => {
                 </Dropdown>
               </div>
         </article>
-        <article className='bg-black rounded-xl p-6 mb-5 w-1/2 max-[850px]:w-full items-center'>
+        <article className='bg-black rounded-xl p-6 max-[850px]:p-2 mb-5 w-1/2 max-[850px]:w-full items-center'>
           <h3 className='font-semibold text-2xl my-4'>Producto seleccionado</h3>
           {selectedProduct ? 
           <>
@@ -96,7 +96,7 @@ const DeletePage = () => {
             <Image src={selectedProduct!.image} alt={selectedProduct!.name} width={200} height={200}/>
             <p className='text-lg'>Tipo de producto: {selectedProduct?.type}</p>
             <p className='text-lg'>Marca: {selectedProduct?.brand}</p>
-            <p className='text-lg'>Precio: ${selectedProduct?.price}</p>
+            <p className='text-lg'>Precio: {selectedProduct?.price}</p>
             <p className='text-lg'>Stock: {selectedProduct?.stock}</p>
           </>
           :
@@ -104,12 +104,12 @@ const DeletePage = () => {
         </article>
       </section>
       {selectedProduct && (
-      <article className='w-1/2 flex flex-col items-center justify-center bg-black rounded-xl p-2'>
+      <article className='w-1/2 max-[650px]:w-full flex flex-col items-center justify-center bg-black rounded-xl p-2 max-[850px]:p-2'>
           <h2 className='text-xl mb-4'>Desea eliminar el producto seleccionado?</h2>
           <Button disabled={!selectedProduct} className='text-lg bg-gradient-to-br from-red-400 to-red-600 text-white' startContent={<FontAwesomeIcon icon={faTrashCan}/>} onPress={()=>setIsDeleting(true)}>Eliminar producto</Button> 
       </article>
     )}
-    <Link href={'/dashboard'} className='hover:underline text-xl my-5'>Volver atrás</Link>
+    <Link href={'/dashboard'} className='hover:underline text-xl my-5 max-[850px]:my-2'>Volver atrás</Link>
      <Modal isOpen={isDeleting} onClose={() => setIsDeleting(false)} isDismissable={false} className='bg-gray-700' backdrop='opaque' classNames={{backdrop: 'bg-gradient-to-t from-red-900 to-zinc-900/10 backdrop-opacity-20'}}>
         <ModalContent>
           <ModalHeader className="text-xl font-semibold">¿Confirmar eliminación?</ModalHeader>
