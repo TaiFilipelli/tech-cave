@@ -13,7 +13,7 @@ Este e-commerce tiene una particularidad única: no utiliza una API REST, servid
 En su lugar, Tech's Cave reemplaza toda esa infraestructura con **una hoja de cálculo de Google Sheets**. Los datos de los productos se obtienen directamente gracias a herramientas como:  
 
 - 🚀 **Axios** → Para hacer peticiones HTTP.  
-- 📊 **Papa Parser** → Para convertir valores CSV en JSON.  
+- 📊 **Papa Parser** → Para convertir valores CSV en JSON.
 
 Este enfoque simplifica la gestión y hace que la plataforma sea accesible para pequeños negocios.  
 
@@ -23,7 +23,7 @@ En mi experiencia desarrollando soluciones web, y especialmente **tiendas virtua
 
 💸 **El costo de desarrollo es muy alto**. 
 
-- Un e-commerce estándar requiere, **al menos, dos servidores** (uno para la API y otro para la base de datos). Esto hace que **migrar o escalar un pequeño emprendimiento sea costoso y poco rentable**. 
+- Un e-commerce estándar requiere, **al menos, un servidor dedicado** uno para la base de datos. Eso sin contar aquellos casos donde **una API REST necesite un servidor aparte**, otro gasto extra. Esto hace que **migrar o escalar un pequeño emprendimiento sea costoso y poco rentable**. 
 
 - Tech's Cave busca erradicar este problema, facilitando la migración y ampliación digital de negocios pequeños de forma mucho más sencilla y económica.
 
