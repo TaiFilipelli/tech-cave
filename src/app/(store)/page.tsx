@@ -48,9 +48,13 @@ export default function Home() {
           })}
         </div>
       </section>
-      <Divider className="mb-5"/>
+      <div className="w-full dark:bg-gradient-to-b dark:from-black dark:to-gray-900/70">
+        <Divider className="mb-5 dark:bg-black"/>
+      </div>
         <BrandsStrip/>
-      <Divider className="my-5"/>
+      <div className="w-full dark:bg-gradient-to-b dark:from-gray-900/70 dark:to-black">
+        <Divider className="my-5 dark:bg-black"/>
+      </div>
       <section className="mx-5 p-2 text-center">
         <h3 className="text-4xl font-bold mb-5">Productos <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">destacados</span></h3> 
         { featuredProducts.length === 0 && (
