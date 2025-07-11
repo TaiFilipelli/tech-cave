@@ -50,4 +50,5 @@ html{
 .scrollbar-thin::-webkit-scrollbar-track {
   background: transparent;
   margin-top: 2px;
+  margin-bottom: 2px;
 }

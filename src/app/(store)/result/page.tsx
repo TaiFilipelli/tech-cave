@@ -41,7 +41,6 @@ const ResultPage = () => {
             items: JSON.parse(cart),
         };
 
-        console.log("Registrando orden:", orderData);
 
         const response = await fetch("/api/orders", {
             method: "POST",
@@ -49,7 +48,6 @@ const ResultPage = () => {
             body: JSON.stringify(orderData),
         });
 
-        console.log('Habemus response:', response);
 
         const data = await response.json();
         if (data.success) {

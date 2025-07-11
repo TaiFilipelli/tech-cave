@@ -36,7 +36,6 @@ const AddPage = () => {
       }
       const lastProduct = products[products.length - 1];
       const nextId = Number(lastProduct.id) + 1;
-      console.log("TOKEN DE SESIÓN:", session?.accessToken);
   
       const response = await fetch('/api/addProduct', {
         method: 'POST',

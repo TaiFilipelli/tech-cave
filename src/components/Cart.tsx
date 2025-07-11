@@ -67,7 +67,6 @@ const Cart = () => {
       });
 
       message += `Total: ${formattedSubtotal}`;
-      console.log(subtotal);
 
     return router.push(`https://wa.me/${number}?text=${message}`)
   }
@@ -83,7 +82,6 @@ const Cart = () => {
 
         const data = await response.json();
 
-        console.log('DATA:', data);
         
         if (!data.url) {
             throw new Error("No se recibió una URL de pago");

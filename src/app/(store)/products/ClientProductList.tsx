@@ -24,7 +24,6 @@ const ClientProductsList = () => {
 
     if (type) {
       result = result.filter(p => p.type === type);
-      console.log('Filtered by type:', type, result);
     }
 
     if(brand){

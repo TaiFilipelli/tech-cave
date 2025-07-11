@@ -2,7 +2,6 @@ export async function POST(req: Request) {
     try {
       const body = await req.json();
       const { accessToken, values, range } = body;
-      console.log("TOKEN DE SESIÓN:", accessToken);
   
       if (!accessToken || !values || !range) {
         return new Response(JSON.stringify({ error: "Faltan datos requeridos" }), {
