@@ -70,7 +70,7 @@ export default function ProductDetailsClient() {
   return (
     <main className="pt-32 pb-14 px-20 max-[640px]:p-5 max-[640px]:mt-[7.5rem]"> 
       <Button as={Link} href="/products" className="bg-transparent border-1 border-red-600 text-red-600 font-bold text-3xl items-center text-center">←</Button>
-      <section className="bg-white dark:bg-gray-800 text-black dark:text-white mt-10 mb-16 items-center rounded-2xl border-1 border-black">
+      <section className="bg-white dark:bg-[#1F2937] text-black dark:text-white mt-10 mb-16 items-center rounded-2xl border-1 border-black">
         <article className="flex flex-wrap max-[1000px]:flex-col max-[800px]:items-center p-10 max-[400px]:px-2">
           <div className="w-1/3 max-[800px]:w-2/3 max-[500px]:w-full flex items-center justify-center ">
             <Image src={product.image} alt={product.name} className="object-cover max-h-72"/>
@@ -94,7 +94,7 @@ export default function ProductDetailsClient() {
           </div>
           <div className="flex flex-wrap items-center mt-5">
             <p className="text-xl font-bold">Sobre este producto:</p>
-            <p className="p-3">{product.description}</p>
+            <p className="py-3">{product.description}</p>
           </div>
         </article>
       </section>

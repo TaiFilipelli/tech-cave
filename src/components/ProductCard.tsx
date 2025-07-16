@@ -55,7 +55,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
         <Image src={product.image} alt={product.name} className="object-cover transition-transform duration-500" width="100%" height="100%"/> 
       </CardBody>
       <CardFooter className="flex flex-col gap-2 z-10 text-small items-start border-t-1 border-black p-4">
-        <header className="w-full flex flex-wrap justify-between items-center">
+        <header className="flex flex-col text-start">
           <h3 className="text-violet-500 py-1 px-2 border border-violet-500 rounded-2xl">{product.type}</h3>
           <h3 className="text-violet-500 py-1 px-2">{product.brand}</h3>
         </header>
