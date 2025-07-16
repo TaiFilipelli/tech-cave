@@ -6,10 +6,12 @@ import ProductsPage from '@/components/ProductsPage'
 import FiltersComponent from '@/components/Filters'
 import { Product } from '@/product/products'
 import { useProducts } from '@/product/provider'
+import OrderComponent from '@/components/Order'
 
 const ClientProductsList = () => {
   const allProducts = useProducts();
   const searchParams = useSearchParams();
+  const [order, setOrder] = useState<'asc' | 'desc' | null>(null);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(allProducts);
 
   useEffect(() => {
@@ -19,6 +21,7 @@ const ClientProductsList = () => {
     const minPrice = searchParams.get('minPrice');
     const maxPrice = searchParams.get('maxPrice');
     const brand = searchParams.get('brand');
+
 
     let result = [...allProducts];
 
@@ -30,21 +33,44 @@ const ClientProductsList = () => {
       result = result.filter(p => p.brand === brand);
     }
     
+    const parsePrice = (price: string | number): number => {
+    if (typeof price === 'number') return price;
+    return Number(price.replace(/[^0-9]/g, ''));
+  };
+
     if (minPrice || maxPrice) {
-      const min = minPrice ? Number(minPrice) : 0;
-      const max = maxPrice ? Number(maxPrice) : Infinity;
-  
-      result = result.filter(p => Number(p.price.toString().replace(/[^0-9.,]/g, '').replace(',', '.')) >= min && Number(p.price.toString().replace(/[^0-9.,]/g, '').replace(',', '.')) <= max);
+      const min = minPrice ? parsePrice(minPrice) : 0;
+      const max = maxPrice ? parsePrice(maxPrice) : Infinity;
+
+      result = result.filter(p => parsePrice(p.price) >= min && parsePrice(p.price) <= max);
     }
+
+    if (order) {
+    result.sort((a, b) => 
+      order === 'asc'
+        ? Number(a.price) - Number(b.price)
+        : Number(b.price) - Number(a.price)
+    );
+    } else {
+      result.sort((a, b) => Number(a.id) - Number(b.id));
+    }
+    console.log('Productos filtrados:', result);
+    console.log('Precio formateado:', Number(result[1].price.toString().replace(/[^0-9.,]/g, '')));
     setFilteredProducts(result);
 
-  }, [searchParams.toString(), allProducts]);
+  }, [searchParams.toString(), allProducts, order]);
 
   return (
-    <>
+    <main className='w-full flex flex-row'>
       <FiltersComponent />
-      <ProductsPage products={filteredProducts} />
-    </>
+      <section className='flex flex-col mx-auto'>
+        <header className='flex flex-row justify-between items-center mb-5'>
+          <h2 className="text-5xl font-bold">Productos</h2>
+          <OrderComponent onChange={setOrder} order={order} />
+        </header>
+        <ProductsPage products={filteredProducts} />
+      </section>
+    </main>
   );
 };
 

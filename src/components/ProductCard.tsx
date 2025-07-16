@@ -54,12 +54,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
       <CardBody className="relative w-[16rem] min-h-[16rem] p-0 overflow-hidden justify-center bg-white">
         <Image src={product.image} alt={product.name} className="object-cover transition-transform duration-500" width="100%" height="100%"/> 
       </CardBody>
-      <CardFooter className="flex flex-col gap-2 z-10 text-small items-start border-t-1 border-black">
-        <h3 className="text-violet-500">{product.type}</h3>
+      <CardFooter className="flex flex-col gap-2 z-10 text-small items-start border-t-1 border-black p-4">
+        <header className="w-full flex flex-wrap justify-between items-center">
+          <h3 className="text-violet-500 py-1 px-2 border border-violet-500 rounded-2xl">{product.type}</h3>
+          <h3 className="text-violet-500 py-1 px-2">{product.brand}</h3>
+        </header>
         <h3 className="transition-colors duration-300 group-hover:text-violet-600 font-semibold text-medium">{product.name.length > 25 ? product.name.slice(0, 20) + "..." : product.name}</h3>
-        <article className="flex flex-row gap-2 justify-between items-center w-full">
-          <h3 className="font-semibold text-lg">{product.price}</h3>
-          <Button className={`${onCart ? "bg-green-600": "bg-gray-300 dark:bg-violet-500"} w-1/2 max-[1300px]:w-full hover:scale-105 font-bold dark:text-black`} onPress={handleAddToCart}>
+        <article className="flex flex-col text-start gap-2 w-full">
+          <h3 className="font-semibold text-xl">{product.price}</h3>
+          <Button className={`${onCart ? "bg-green-600": "bg-gray-300 dark:bg-violet-500"} w-full max-[1300px]:w-full hover:scale-105 font-bold dark:text-black`} onPress={handleAddToCart}>
             <FontAwesomeIcon icon={onCart ? faCheck : faCartShopping} size="xl" /> {onCart ? "Agregado" : "Agregar"}
           </Button>
         </article>

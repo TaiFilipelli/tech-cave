@@ -21,10 +21,10 @@ const ProductsPage:React.FC<ProductsPageProps> = ({products}) => {
     const paginatedProducts = products.slice((currentPage -1) * productsPerPage, currentPage * productsPerPage);
 
     return (
-       <section className='items-center justify-center flex flex-col'>
+      <section className='items-center justify-center flex flex-col mx-5'>
       {products.length > 0 ? (
         <>
-          <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10'>
+          <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
             {paginatedProducts.map((product) => (
               <ProductCard product={product} key={product.id} addToCart={addToCart} />
             ))}
