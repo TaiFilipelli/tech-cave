@@ -40,13 +40,11 @@ const FiltersComponent = () => {
       params.set('maxPrice', selectedPrice[1].toString());
     }
 
-    console.log('Filtros:', params.toString());
-    
     router.push(`?${params.toString()}`);
   };
 
   return (
-    <aside className="flex flex-col w-auto h-[50%] gap-5 bg-gray-400 p-5 my-2 rounded-xl shadow-lg">
+    <aside className="flex flex-col w-auto h-[50%] gap-5 bg-gray-400 dark:bg-[#1F2937] p-5 my-2 rounded-xl shadow-lg">
       <article>
         <label htmlFor="type-input" className="font-semibold block text-lg mb-2">Categorias</label>
         <input list="types" id="type-input" placeholder="Buscar categoria..." value={selectedType ?? ''} onChange={e => setSelectedType(e.target.value)} className="w-full border px-2 py-1 rounded"/>

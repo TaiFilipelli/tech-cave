@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col">
       <HeroSection/>
-      <section className="flex flex-col text-left p-10 dark:bg-black dark:text-white">
+      <section className="flex flex-col text-left p-10 dark:text-white">
         <h3 className='text-3xl font-bold my-5 opacity-0 animate-fade-up animation-delay-400'>Lo necesitas? Lo tenemos</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {categories.map((category, index) =>{
@@ -46,13 +46,9 @@ export default function Home() {
           })}
         </div>
       </section>
-      <div className="w-full dark:bg-gradient-to-b dark:from-black dark:to-gray-900/70">
-        <Divider className="mb-5 dark:bg-black"/>
-      </div>
-        <BrandsStrip/>
-      <div className="w-full dark:bg-gradient-to-b dark:from-gray-900/70 dark:to-black">
-        <Divider className="my-5 dark:bg-black"/>
-      </div>
+      <Divider className="mb-5"/>
+      <BrandsStrip/>
+      <Divider className="my-5"/>
       <section className="mx-5 p-2 text-center">
         <h3 className="text-4xl font-bold mb-5">Productos <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">destacados</span></h3> 
         { featuredProducts.length === 0 && (
@@ -90,7 +86,7 @@ export default function Home() {
         </article>
       </section>
       <Divider className="my-5"/>
-      <section id="about" className="flex flex-col text-center p-2 bg-gradient-to-b from-gray-200 to-gray-300 dark:from-black dark:to-gray-900">
+      <section id="about" className="flex flex-col text-center p-2 bg-gradient-to-b from-gray-200 to-gray-300 dark:from-[#111827] dark:to-gray-900">
         <h3 className="text-5xl font-bold mb-5 tracking-tighter">Qué es <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">{`Tech's`} Cave?</span></h3>
         <h4 className="text-xl font-semibold">2 años llevando calidad e innovación a los escritorios.</h4>
         <section className="flex flex-row max-[650px]:flex-col gap-4 justify-between max-[650px]:justify-center my-20 max-[650px]:my-5">

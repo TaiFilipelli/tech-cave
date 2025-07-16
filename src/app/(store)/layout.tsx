@@ -51,8 +51,8 @@ export default async function RootLayout({ children, }: Readonly<{
   }
 
   return (
-    <html lang="es" className="bg-gray-200 dark:bg-black dark:text-white h-[100dvh]" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${mont.className} antialiased dark:bg-black dark:text-white`}>
+    <html lang="es" className="bg-gray-200 dark:bg-[#111827] dark:text-white h-[100dvh]" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${mont.className} antialiased dark:bg-[#111827] dark:text-white`}>
         <Providers>
           <ProductProvider products={products}>
             <Navbar isAdmin={isAdmin}/>

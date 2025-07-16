@@ -50,7 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
   }, [cart, product.id]);
 
   return (
-    <Card isPressable onPress={() => { router.push(`/details?name=${encodeURIComponent(product.name)}`);}} className={`group h-auto justify-between flex flex-col items-center bg-white text-black dark:bg-black dark:text-white rounded-3xl border-1 border-black dark:border-white hover:border-violet-600 transition-all duration-400 ${product.stock === 0 ? "opacity-50" : ""}`}>
+    <Card isPressable onPress={() => { router.push(`/details?name=${encodeURIComponent(product.name)}`);}} className={`group h-auto justify-between flex flex-col items-center bg-white text-black dark:bg-[#1F2937] dark:text-white rounded-3xl border-1 border-gray-300 dark:border-gray-600 hover:border-violet-600 transition-all duration-400 ${product.stock === 0 ? "opacity-50" : ""}`}>
       <CardBody className="relative w-[16rem] min-h-[16rem] p-0 overflow-hidden justify-center bg-white">
         <Image src={product.image} alt={product.name} className="object-cover transition-transform duration-500" width="100%" height="100%"/> 
       </CardBody>

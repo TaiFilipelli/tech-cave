@@ -152,5 +152,5 @@ function ParticleBackground() {
       }
     }, [])
   
-    return <canvas ref={canvasRef} className="absolute inset-0 bg-gray-200 dark:bg-black"/>
+    return <canvas ref={canvasRef} className="absolute inset-0 bg-gray-200 dark:bg-[#111827]"/>
   }
