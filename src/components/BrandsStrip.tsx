@@ -5,7 +5,7 @@ export default function BrandsStrip(){
 
     const brands = [
       { src: "/brands/asus.png", alt: "ASUS"   },
-      { src: "/brands/amd.png", alt: "AMD" },
+      { src: "/brands/amd.svg", alt: "AMD" },
       { src: "/brands/intel.png", alt: "Intel" },
       { src: "/brands/nvidia.png", alt: "NVIDIA" },
       { src: "/brands/corsair.png", alt: "Corsair" },
@@ -20,7 +20,7 @@ export default function BrandsStrip(){
             {brands.concat(brands).map((brand, i) => (
                 <li key={i} className="flex flex-col items-center justify-center min-w-[165px]">
                     <div className="rounded-full bg-transparent p-6 transition-colors">
-                        <Image src={brand.src} alt={brand.alt} className="object-contain" width={100} height={100} />
+                        <Image src={brand.src} alt={brand.alt} className="object-contain dark:fill-white" width={100} height={100}/>
                     </div>
                 </li>
             ))}

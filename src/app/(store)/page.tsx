@@ -42,9 +42,7 @@ export default function Home() {
             <article className={`relative w-full h-40 rounded-xl overflow-hidden shadow-lg group transition-transform hover:scale-105 hover:cursor-pointer opacity-0 animate-fade-up ${delayClass}`} key={index} onClick={() => {router.push(`/products?type=${category.type}`)}}>
               <Image src={category.img} alt={category.name} fill className="object-cover brightness-50"/> 
               <span className="absolute inset-0 flex text-white font-semibold text-xl z-10 p-5">{category.name}</span>
-            </article>
-          )
-            
+            </article>)
           })}
         </div>
       </section>
@@ -92,7 +90,7 @@ export default function Home() {
         </article>
       </section>
       <Divider className="my-5"/>
-      <section id="about" className="flex flex-col text-center p-2 bg-gradient-to-b from-gray-200 to-gray-400 dark:from-black dark:to-gray-900">
+      <section id="about" className="flex flex-col text-center p-2 bg-gradient-to-b from-gray-200 to-gray-300 dark:from-black dark:to-gray-900">
         <h3 className="text-5xl font-bold mb-5 tracking-tighter">Qué es <span className="bg-gradient-to-r from-red-600 to-yellow-500 bg-clip-text text-transparent">{`Tech's`} Cave?</span></h3>
         <h4 className="text-xl font-semibold">2 años llevando calidad e innovación a los escritorios.</h4>
         <section className="flex flex-row max-[650px]:flex-col gap-4 justify-between max-[650px]:justify-center my-20 max-[650px]:my-5">

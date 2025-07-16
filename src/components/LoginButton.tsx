@@ -50,11 +50,11 @@ export default function AuthButton({isAdmin}:{isAdmin:boolean}) {
             </Dropdown>
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalContent>
-                    <ModalHeader className="text-lg font-semibold">Confirmar cierre de sesión</ModalHeader>
-                    <ModalBody>¿Estás seguro que querés cerrar sesión?</ModalBody>
+                    <ModalHeader className="text-xl font-semibold">Confirmar cierre de sesión</ModalHeader>
+                    <ModalBody className="text-lg">¿Estás seguro que querés cerrar sesión?</ModalBody>
                     <ModalFooter>
                         <Button variant="light" onPress={onClose}>Cancelar</Button>
-                        <Button className="bg-red-600 text-white" onPress={handleSignOut}>Cerrar sesión</Button>
+                        <Button className="bg-red-600 text-white font-bold" onPress={handleSignOut}>Cerrar sesión</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

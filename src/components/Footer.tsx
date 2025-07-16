@@ -7,7 +7,7 @@ import { faMoneyBillTransfer } from '@fortawesome/free-solid-svg-icons'
 
 const Footer = () => {
   return (
-    <footer className="dark:bg-gray-900 dark:text-white bg-gray-400 text-black px-6 py-10 flex flex-col items-center justify-center">
+    <footer className="dark:bg-gray-900 dark:text-white bg-gray-300 text-black px-6 py-10 flex flex-col items-center justify-center">
       <section className="container mx-auto flex flex-row justify-between items-center gap-4 max-[650px]:flex-col max-[650px]:gap-10">
         <nav className="flex flex-col gap-4 max-[650px]:w-full">
           <h3 className="text-xl font-semibold">Navegación Rápida</h3>
