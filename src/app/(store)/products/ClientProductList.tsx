@@ -54,8 +54,6 @@ const ClientProductsList = () => {
     } else {
       result.sort((a, b) => Number(a.id) - Number(b.id));
     }
-    console.log('Productos filtrados:', result);
-    console.log('Precio formateado:', Number(result[1].price.toString().replace(/[^0-9.,]/g, '')));
     setFilteredProducts(result);
 
   }, [searchParams.toString(), allProducts, order]);
@@ -63,8 +61,8 @@ const ClientProductsList = () => {
   return (
     <main className='w-full flex flex-row'>
       <FiltersComponent />
-      <section className='flex flex-col mx-auto'>
-        <header className='flex flex-row justify-between items-center mb-5'>
+      <section className='w-full flex flex-col'>
+        <header className='flex flex-row justify-between items-center mb-5 mx-10'>
           <h2 className="text-5xl font-bold">Productos</h2>
           <OrderComponent onChange={setOrder} order={order} />
         </header>

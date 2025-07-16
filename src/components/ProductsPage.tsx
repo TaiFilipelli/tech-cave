@@ -35,9 +35,9 @@ const ProductsPage:React.FC<ProductsPageProps> = ({products}) => {
           </div>
         </>
       ) : (
-        <section className='flex flex-col gap-4 m-10 items-center'>
-          <h1 className='text-xl font-semibold text-black mb-4'>No hay productos disponibles.</h1>
-          <FontAwesomeIcon icon={faFaceSadTear} size="2xl" />
+        <section className='flex flex-col gap-4 m-10 items-center h-[50dvh]'>
+          <h1 className='text-3xl font-semibold mb-4'>No hay productos disponibles.</h1>
+          <FontAwesomeIcon icon={faFaceSadTear} size="5x" />
         </section>
       )}
     </section>
