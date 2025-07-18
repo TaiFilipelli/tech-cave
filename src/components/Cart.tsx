@@ -18,6 +18,9 @@ const Cart = () => {
   const [isLogged, setIsLogged] = useState(false);
   const [subtotal, setSubtotal] = useState(0);
   const [count, setCount] = useState(0);
+  const [confirmDeleteProductId, setConfirmDeleteProductId] = useState<number | null>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
   const {data:session} = useSession();
 
   const router = useRouter();
@@ -41,7 +44,16 @@ const Cart = () => {
     if (cantidad > 1) {
       updateCartItem(id, cantidad - 1);
     } else {
-      removeFromCart(id);
+      setConfirmDeleteProductId(id);
+      setIsDeleteModalOpen(true);
+    }
+  };
+
+  const confirmRemoveProduct = () => {
+    if (confirmDeleteProductId !== null) {
+      removeFromCart(confirmDeleteProductId);
+      setConfirmDeleteProductId(null);
+      setIsDeleteModalOpen(false);
     }
   };
 
@@ -179,8 +191,22 @@ const Cart = () => {
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
+      {isDeleteModalOpen && (
+        <Modal isOpen={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
+          <ModalContent>
+            <ModalHeader className="text-xl font-bold">Eliminar del carrito</ModalHeader>
+            <ModalBody>
+              <p>Estás por eliminar este producto del carrito. ¿Estás seguro?</p>
+            </ModalBody>
+            <ModalFooter className="flex gap-2">
+              <Button variant="light" className="hover:underline" onPress={() => setIsDeleteModalOpen(false)}>Cancelar</Button>
+              <Button className="bg-red-600 text-white font-semibold text-lg" onPress={confirmRemoveProduct}>Eliminar</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      )}
     </>
   );
-};
+}
 
 export default Cart;
