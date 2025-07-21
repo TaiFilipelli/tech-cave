@@ -192,7 +192,7 @@ const Cart = () => {
         </DrawerContent>
       </Drawer>
       {isDeleteModalOpen && (
-        <Modal isOpen={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
+        <Modal isOpen={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen} backdrop='opaque' classNames={{backdrop: 'bg-gradient-to-t from-red-900 to-zinc-900/10 backdrop-opacity-20'}}>
           <ModalContent>
             <ModalHeader className="text-xl font-bold">Eliminar del carrito</ModalHeader>
             <ModalBody>

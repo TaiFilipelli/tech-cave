@@ -4,6 +4,7 @@ import { useProducts } from '@/product/provider'
 import { addToast, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@heroui/react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
+import { productSchema } from '@/lib/schemas/productCreationSchema'
 
 const AddPage = () => {
 
@@ -30,10 +31,27 @@ const AddPage = () => {
 
   const handleChanges = async () => {
     try {
-      if (!name || !type || !price || !description || !brand || !stock) {
-        addToast({title: "Error al agregar producto", description:'Todos los campos son obligatorios', color: "warning"});
+
+      const parsed = productSchema.safeParse({
+        name,
+        type,
+        price,
+        description,
+        brand,
+        img,
+        stock
+      });
+
+      if (!parsed.success) {
+        const firstError = Object.values(parsed.error.flatten().fieldErrors)[0]?.[0] || "Hay errores en el formulario";
+        addToast({
+          title: "Error al agregar producto",
+          description: firstError,
+          color: "warning",
+        });
         return;
       }
+      
       const lastProduct = products[products.length - 1];
       const nextId = Number(lastProduct.id) + 1;
   
