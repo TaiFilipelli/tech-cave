@@ -105,7 +105,16 @@ const AddPage = () => {
       <Input type="number" label='Stock disponible' labelPlacement='outside' isRequired value={stock.toString()} onChange={(e) => setStock(Number(e.target.value))} className='w-1/2 max-[640px]:w-2/3'/>
       <Input type="text" label='URL imagen' labelPlacement='outside' placeholder='Ej: https://imagen_stock.com' isRequired value={img} onChange={(e) => setImg(e.target.value)} className='w-1/2 max-[640px]:w-2/3'/>
       <div className='w-full flex flex-col gap-4 items-center'>
-      <Dropdown>
+      <article>
+        <label htmlFor="type">Tipo de producto</label>
+        <input type="text" id="type" value={type} onChange={(e) => setType(e.target.value)} />
+        <datalist id='types'>
+          {types.map((type, index) => (
+            <option key={index} value={type} />
+          ))}
+        </datalist>
+      </article>
+      {/* <Dropdown>
         <DropdownTrigger className='w-1/2 mt-2'>
           <Button className='font-semibold text-md'>{type ? type : 'Tipo'}</Button>
         </DropdownTrigger>
@@ -116,7 +125,7 @@ const AddPage = () => {
             </DropdownItem>
           ))}
         </DropdownMenu>
-      </Dropdown>
+      </Dropdown> */}
       <Dropdown>
         <DropdownTrigger className='w-1/2'>
           <Button className='font-semibold text-md'>{brand ? brand : 'Marca'}</Button>
