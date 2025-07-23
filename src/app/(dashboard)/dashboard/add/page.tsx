@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { useProducts } from '@/product/provider'
-import { addToast, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@heroui/react'
+import { addToast, Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@heroui/react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { productSchema } from '@/lib/schemas/productCreationSchema'
@@ -95,7 +95,7 @@ const AddPage = () => {
   }
 
   return (
-    <section className='flex flex-col items-center justify-center px-20 py-16 max-[640px]:p-10'>
+    <section className='flex flex-col items-center justify-center h-[100vh] px-20 py-16 max-[640px]:p-10'>
       <h1 className='font-bold text-3xl'>Agregar producto</h1>
       <h2 className='font-semibold text-xl my-5'>Complete TODOS los campos a continuación</h2>
       <section className='flex flex-col items-center justify-center w-[60dvw] max-[600px]:w-[90dvw] bg-black rounded-2xl p-5 gap-4 my-4'>
@@ -104,40 +104,25 @@ const AddPage = () => {
       <Input type="text" label='Descripción' labelPlacement='outside' placeholder='Ej: Este es un producto único...' isRequired value={description} onChange={(e) => setDescription(e.target.value)} className='w-1/2 max-[640px]:w-2/3'/>
       <Input type="number" label='Stock disponible' labelPlacement='outside' isRequired value={stock.toString()} onChange={(e) => setStock(Number(e.target.value))} className='w-1/2 max-[640px]:w-2/3'/>
       <Input type="text" label='URL imagen' labelPlacement='outside' placeholder='Ej: https://imagen_stock.com' isRequired value={img} onChange={(e) => setImg(e.target.value)} className='w-1/2 max-[640px]:w-2/3'/>
-      <div className='w-full flex flex-col gap-4 items-center'>
+      <div className='w-full flex flex-col gap-4 items-center justify-start'>
       <article>
-        <label htmlFor="type">Tipo de producto</label>
-        <input type="text" id="type" value={type} onChange={(e) => setType(e.target.value)} />
+        <label htmlFor="type" className='font-semibold text-md px-4'>Tipo de producto</label>
+        <input type="text" id="type" list='types' value={type} onChange={(e) => setType(e.target.value)} className='text-black rounded-lg p-2 ' />
         <datalist id='types'>
           {types.map((type, index) => (
             <option key={index} value={type} />
           ))}
         </datalist>
       </article>
-      {/* <Dropdown>
-        <DropdownTrigger className='w-1/2 mt-2'>
-          <Button className='font-semibold text-md'>{type ? type : 'Tipo'}</Button>
-        </DropdownTrigger>
-        <DropdownMenu selectionMode='single' disallowEmptySelection variant='flat'>
-          {types.map((type, index) => (
-            <DropdownItem key={index} onPress={()=> setType(type)} className='text-2xl text-black'>
-              {type}
-            </DropdownItem>
-          ))}
-        </DropdownMenu>
-      </Dropdown> */}
-      <Dropdown>
-        <DropdownTrigger className='w-1/2'>
-          <Button className='font-semibold text-md'>{brand ? brand : 'Marca'}</Button>
-        </DropdownTrigger>
-        <DropdownMenu selectionMode='single' disallowEmptySelection variant='flat'>
+      <article>
+        <label htmlFor="brand" className='font-semibold text-md px-4'>Marca</label>
+        <input type="text" id="brand" list='brands' value={brand} onChange={(e) => setBrand(e.target.value)} className='text-black rounded-lg p-2 ' />
+        <datalist id='brands'>
           {brands.map((brand, index) => (
-            <DropdownItem key={index} onPress={()=> setBrand(brand)} className='text-2xl text-black'>
-              {brand}
-            </DropdownItem>
+            <option key={index} value={brand} />
           ))}
-        </DropdownMenu>
-      </Dropdown>
+        </datalist>
+      </article>
       </div>
       </section>
       <Button onPress={() => setIsConfirming(true)} className='bg-gradient-to-br from-blue-600 to-violet-600 text-white font-semibold text-xl p-6 border-2 border-black '>Agregar producto</Button>

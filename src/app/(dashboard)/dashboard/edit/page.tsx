@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { useProducts } from '@/product/provider'
-import { Button, Dropdown, DropdownTrigger, DropdownItem, DropdownMenu, Input, addToast, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@heroui/react';
+import { Button, Input, addToast, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@heroui/react';
 import { Product } from '@/product/products';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -96,27 +96,25 @@ const EditPage = () => {
       <h1 className='font-bold text-3xl mb-2'>Editar producto existente</h1>
       <p className='font-medium text-lg mb-5'>Edite precio y stock de cualquier producto</p>
       <div className='flex flex-wrap gap-4 mb-6'>
-        <Dropdown>
-          <DropdownTrigger>
-            <Button>{selectedType || 'Seleccionar tipo de producto'}</Button>
-          </DropdownTrigger>
-          <DropdownMenu>
-            {uniqueTypes.map((type) => (
-              <DropdownItem key={type} onPress={() => setSelectedType(type)} className='text-black' showDivider>{type}</DropdownItem>
+        <article>
+          <label htmlFor="type" className='font-semibold text-md px-4'>Tipo de producto</label>
+          <input type="text" id="type" list='types' value={selectedType} onChange={(e) => setSelectedType(e.target.value)} className='text-black rounded-lg p-2 ' />
+          <datalist id='types'>
+            {uniqueTypes.map((type, index) => (
+              <option key={index} value={type} />
             ))}
-          </DropdownMenu>
-        </Dropdown>
+          </datalist>
+        </article>
 
-        <Dropdown isDisabled={!selectedType}>
-          <DropdownTrigger>
-            <Button>{selectedProduct ? selectedProduct.name.slice(0, 20) + "..." : 'Seleccionar producto'}</Button>
-          </DropdownTrigger>
-          <DropdownMenu>
-            {filteredProducts.map((product) => (
-              <DropdownItem key={product.id} onPress={() => setSelectedProduct(product)} className='text-black' showDivider>{product.name.slice(0, 30) + "..."}</DropdownItem>
+        <article>
+          <label htmlFor="product" className='font-semibold text-md px-4'>Producto</label>
+          <input type="text" id="product" list='products' value={selectedProduct?.name} onChange={(e) => setSelectedProduct(filteredProducts.find(p => p.name === e.target.value))} className='text-black rounded-lg p-2 ' />
+          <datalist id='products'>
+            {filteredProducts.map((product, index) => (
+              <option key={index} value={product.name} />
             ))}
-          </DropdownMenu>
-        </Dropdown>
+          </datalist>
+        </article>
       </div>
       {selectedProduct && (
         <form className='grid grid-cols-1 md:grid-cols-2 gap-4 bg-black p-6 rounded-xl mb-6 max-[450px]:w-full'>

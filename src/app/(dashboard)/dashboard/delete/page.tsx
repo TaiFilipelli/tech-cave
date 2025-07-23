@@ -2,7 +2,7 @@
 import React from 'react'
 import { useProducts } from '@/product/provider'
 import { Product } from '@/product/products'
-import { addToast, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@heroui/react'
+import { addToast, Button, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@heroui/react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -64,29 +64,27 @@ const DeletePage = () => {
       <section className='flex flex-row max-[850px]:flex-col min-[850px]:items-center gap-4 w-2/3 max-[950px]:w-full my-10 max-[850px]:my-2'>
         <article className='bg-black rounded-xl p-6 max-[850px]:p-2 w-1/2 max-[850px]:w-full'>
           <h2 className='font-semibold text-xl my-4'>Seleccione el producto que desea borrar</h2>
-            <div className='flex flex-wrap gap-4 mb-6'>
-                <Dropdown>
-                  <DropdownTrigger>
-                    <Button>{selectedType || 'Seleccionar tipo de producto'}</Button>
-                  </DropdownTrigger>
-                  <DropdownMenu>
-                    {uniqueTypes.map((type) => (
-                      <DropdownItem key={type} onPress={() => setSelectedType(type)} className='text-black' showDivider>{type}</DropdownItem>
-                    ))}
-                  </DropdownMenu>
-                </Dropdown>
-        
-                <Dropdown isDisabled={!selectedType}>
-                  <DropdownTrigger>
-                    <Button>{selectedProduct ? selectedProduct.name.slice(0, 20) + "..." : 'Seleccionar producto'}</Button>
-                  </DropdownTrigger>
-                  <DropdownMenu>
-                    {filteredProducts.map((product) => (
-                      <DropdownItem key={product.id} onPress={() => setSelectedProduct(product)} className='text-black' showDivider>{product.name.slice(0, 30) + "..."}</DropdownItem>
-                    ))}
-                  </DropdownMenu>
-                </Dropdown>
-              </div>
+          <div className='flex flex-wrap gap-4 mb-6'>
+            <article>
+              <label htmlFor="type" className='font-semibold text-md px-4'>Tipo de producto</label>
+              <input type="text" id="type" list='types' value={selectedType} onChange={(e) => setSelectedType(e.target.value)} className='text-black rounded-lg p-2 ' />
+              <datalist id='types'>
+                {uniqueTypes.map((type, index) => (
+                  <option key={index} value={type} />
+                ))}
+              </datalist>
+            </article>
+
+          <article>
+            <label htmlFor="product" className='font-semibold text-md px-4'>Producto</label>
+            <input type="text" id="product" list='products' value={selectedProduct?.name} onChange={(e) => setSelectedProduct(filteredProducts.find(p => p.name === e.target.value) ?? null)} className='text-black rounded-lg p-2 ' />
+            <datalist id='products'>
+              {filteredProducts.map((product, index) => (
+                <option key={index} value={product.name} />
+              ))}
+            </datalist>
+          </article>
+        </div>
         </article>
         <article className='bg-black rounded-xl p-6 max-[850px]:p-2 mb-5 w-1/2 max-[850px]:w-full items-center'>
           <h3 className='font-semibold text-2xl my-4'>Producto seleccionado</h3>
