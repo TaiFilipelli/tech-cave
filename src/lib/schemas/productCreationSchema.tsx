@@ -9,3 +9,4 @@ export const productSchema = z.object({
   type: z.string().min(1, "Debe seleccionar un tipo"),
   brand: z.string().min(1, "Debe seleccionar una marca"),
 });
+export type Product = z.infer<typeof productSchema>;
