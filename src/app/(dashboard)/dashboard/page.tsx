@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/react'
+import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, SortDescriptor } from '@heroui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faTrash, faPlus, faDownload } from '@fortawesome/free-solid-svg-icons'
 import { useOrders } from '@/orders/provider'
@@ -14,11 +14,20 @@ import { useSession } from 'next-auth/react'
 const DashboardPage = () => {
 
   const [greeting, setGreeting] = useState('Hola');
+  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({column: "date", direction: "descending"});
   const orders:Order[] = useOrders();
   const products:Product[] = useProducts();
   const { data: session } = useSession();
 
   type OrderStatus = 'approved' | 'pending' | 'rejected'
+
+  const headerColumns = [
+    {name: 'ID', uid: 'payment_id', sortable:true},
+    {name: 'Estado', uid: 'status', sortable:true},
+    {name: 'Fecha', uid: 'date', sortable:true},
+    {name: 'Total', uid: 'total', sortable:true},
+    {name: 'Email', uid: 'user_email', sortable:true}
+  ];
 
   const STATUS_COLORS: Record<OrderStatus, string> = {
     approved: '#10B981',
@@ -145,6 +154,21 @@ const getOrdersPerMonth = (orders: Order[]): LineChartData[] => {
 }
 
   const revenueData = getRevenuePerMonth(orders || []);
+
+   const sortedOrders = React.useMemo(() => {
+    return [...orders].sort((a: Order, b: Order) => {
+      const first = a[sortDescriptor.column as keyof Order];
+      const second = b[sortDescriptor.column as keyof Order];
+      const cmp = first < second ? -1 : first > second ? 1 : 0;
+
+      return sortDescriptor.direction === "descending" ? -cmp : cmp;
+    });
+  }, [orders, sortDescriptor]);
+
+  const calculateTotal = (items: Order['items']) => {
+    return items.reduce((total, item) => total + 
+      (Number(item.price.toString().replace(/[^0-9,]/g, '').replace(/\./g, '').replace(',', '.')) * item.cantidad), 0);
+  };
 
   useEffect(() => {
     const hour = new Date().getHours()
@@ -311,50 +335,39 @@ const getOrdersPerMonth = (orders: Order[]): LineChartData[] => {
             <p className='text-gray-400'>No cargan los productos. Verifique la hoja de cálculo.</p>
           )}
       </article>
-      <article className='w-1/2 max-[800px]:w-full bg-black p-5 rounded-xl h-full'>
-        <h2 className='font-semibold text-xl mb-5'>Últimos pedidos</h2>
-        <div className='bg-gray-900 rounded-xl p-5'>
+      <article className="w-1/2 max-[800px]:w-full bg-black p-5 rounded-xl h-full">
+        <h2 className="font-semibold text-xl mb-5">Últimos pedidos</h2>
+        <div className="bg-gray-900 rounded-xl p-5">
           {orders?.length > 0 ? (
-            <div className="overflow-x-scroll overflow-y-scroll scrollbar-thin">
-              <table className="min-w-full divide-y divide-gray-700">
-                <thead>
-                  <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">ID</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Estado</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Fecha</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Total</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Email</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-700">
-                  {orders.slice(0, 10).map((order, index) => (
-                    <tr key={index}>
-                      <td className="px-4 py-3 whitespace-nowrap">#{order.payment_id}</td>
-                      <td className="px-4 py-3 whitespace-nowrap">
-                        <span className={`px-2 py-1 text-xs rounded-full ${
-                          order.status === 'approved' ? 'bg-green-500' : 
-                          order.status === 'pending' ? 'bg-yellow-500' : 'bg-red-500'
-                        }`}>
-                          {order.status}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 whitespace-nowrap">
-                        {new Date(order.date).toLocaleDateString()}, {new Date(order.date).toLocaleTimeString()}
-                      </td>
-                      <td className="px-4 py-3 whitespace-nowrap">
-                        ${order.items.reduce((total, item) => total + (Number(item.price.toString().replace(/[^0-9,]/g, '').replace(/\./g, '').replace(',', '.')) * item.cantidad), 0)}
-                      </td>
-                      <td className="px-4 py-3 whitespace-nowrap">{order.user_email}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <p className='text-gray-400'>No hay pedidos recientes.</p>
-          )}
-        </div>
-      </article>
+            <Table aria-label="Últimos pedidos" 
+              classNames={{ base: "overflow-scroll scrollbar-thin", wrapper:"bg-transparent", table: "min-w-full divide-y divide-gray-700 bg-gray-900 rounded-xl",}}
+              sortDescriptor={sortDescriptor}
+              onSortChange={setSortDescriptor}
+            >
+            <TableHeader columns={headerColumns} className=''>
+             {(column) => (
+              <TableColumn key={column.uid} allowsSorting={column.sortable}>
+                {column.name}
+              </TableColumn>
+            )}
+            </TableHeader>
+            <TableBody items={sortedOrders.slice(0, 10)} emptyContent={"No se encontraron órdenes."}>
+              {(order) => (
+                <TableRow key={order.payment_id}>
+                  <TableCell>{order.payment_id}</TableCell>
+                  <TableCell>{order.status}</TableCell>
+                  <TableCell>{order.date}</TableCell>
+                  <TableCell>${calculateTotal(order.items)}</TableCell>
+                  <TableCell>${order.user_email}</TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        ) : (
+          <p className="text-gray-400">No hay pedidos recientes.</p>
+        )}
+      </div>
+    </article>
       </aside>
     </section>
     

@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { Button, Slider } from '@heroui/react';
+import { Button, Slider, Autocomplete, AutocompleteItem } from '@heroui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -45,20 +45,16 @@ const FiltersComponent = () => {
 
   return (
     <aside className="flex flex-col w-auto h-[50%] gap-5 bg-gray-400 dark:bg-[#1F2937] p-5 my-2 rounded-xl shadow-lg">
-      <article>
-        <label htmlFor="type-input" className="font-semibold block text-lg mb-2">Categorias</label>
-        <input list="types" id="type-input" placeholder="Buscar categoria..." value={selectedType ?? ''} onChange={e => setSelectedType(e.target.value)} className="w-full border px-2 py-1 rounded"/>
-        <datalist id="types">
-          {types.map((type, i) => <option key={i} value={type} />)}
-        </datalist>
-      </article>
-      <article>  
-        <label htmlFor="brand-input" className="font-semibold block text-lg mb-2">Marcas</label>
-        <input list="brands" id="brand-input" placeholder="Buscar marca..." value={selectedBrand ?? ''} onChange={e => setSelectedBrand(e.target.value)} className="w-full border px-2 py-1 rounded"/>
-        <datalist id="brands">
-          {brands.map((brand, i) => <option key={i} value={brand} />)}
-        </datalist>
-      </article>
+      <Autocomplete className='w-full' label="Categorias" labelPlacement='outside' placeholder='Buscar categoria...' variant='bordered'>
+        {types.map((type, i) => (
+          <AutocompleteItem key={i} onSelect={() => setSelectedType(type)}>{type}</AutocompleteItem>
+        ))}
+      </Autocomplete>
+       <Autocomplete className='w-full' label="Marcas" labelPlacement='outside' placeholder='Buscar por marca...' variant='bordered'>
+        {brands.map((brand, i) => (
+          <AutocompleteItem key={i} onSelect={() => setSelectedBrand(brand)}>{brand}</AutocompleteItem>
+        ))}
+      </Autocomplete>
       <article>
         <label className="font-semibold block text-lg mb-2">Precio</label>
         <Slider minValue={0} maxValue={3000000} value={selectedPrice} onChange={(value) => {if (Array.isArray(value)) {setSelectedPrice(value);}}} step={100} defaultValue={[0, 3000000]}/>
