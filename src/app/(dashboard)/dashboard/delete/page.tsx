@@ -2,7 +2,7 @@
 import React from 'react'
 import { useProducts } from '@/product/provider'
 import { Product } from '@/product/products'
-import { addToast, Button, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@heroui/react'
+import { addToast, Button, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Autocomplete, AutocompleteItem } from '@heroui/react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -27,13 +27,12 @@ const DeletePage = () => {
   }, [selectedType, products]);
 
   const handleDelete = async () => {
+
     if (!selectedProduct || !session?.accessToken) {
 
       addToast({ title: "Error al eliminar producto", description: 'No hay producto seleccionado o no hay sesión válida', color: "warning"});
       return;
     }
-
-
     try {
       const response = await fetch('/api/deleteProduct', {
         method: 'POST',
@@ -65,26 +64,17 @@ const DeletePage = () => {
         <article className='bg-black rounded-xl p-6 max-[850px]:p-2 w-1/2 max-[850px]:w-full'>
           <h2 className='font-semibold text-xl my-4'>Seleccione el producto que desea borrar</h2>
           <div className='flex flex-wrap gap-4 mb-6'>
-            <article>
-              <label htmlFor="type" className='font-semibold text-md px-4'>Tipo de producto</label>
-              <input type="text" id="type" list='types' value={selectedType} onChange={(e) => setSelectedType(e.target.value)} className='text-black rounded-lg p-2 ' />
-              <datalist id='types'>
-                {uniqueTypes.map((type, index) => (
-                  <option key={index} value={type} />
-                ))}
-              </datalist>
-            </article>
-
-          <article>
-            <label htmlFor="product" className='font-semibold text-md px-4'>Producto</label>
-            <input type="text" id="product" list='products' value={selectedProduct?.name} onChange={(e) => setSelectedProduct(filteredProducts.find(p => p.name === e.target.value) ?? null)} className='text-black rounded-lg p-2 ' />
-            <datalist id='products'>
-              {filteredProducts.map((product, index) => (
-                <option key={index} value={product.name} />
-              ))}
-            </datalist>
-          </article>
-        </div>
+            <Autocomplete className='w-full' label="Categorias" labelPlacement='outside' placeholder='Buscar categoria...' variant='bordered'>
+            {uniqueTypes.map((type, i) => (
+              <AutocompleteItem key={i} onSelect={() => setSelectedType(type)}>{type}</AutocompleteItem>
+            ))}
+            </Autocomplete>
+           <Autocomplete className='w-full' label="Productos" labelPlacement='outside' placeholder='Buscar producto...' variant='bordered'>
+            {filteredProducts.map((product, i) => (
+              <AutocompleteItem key={i} onSelect={() => setSelectedProduct(product)}>{product.name}</AutocompleteItem>
+            ))}
+            </Autocomplete>
+          </div>
         </article>
         <article className='bg-black rounded-xl p-6 max-[850px]:p-2 mb-5 w-1/2 max-[850px]:w-full items-center'>
           <h3 className='font-semibold text-2xl my-4'>Producto seleccionado</h3>
