@@ -32,27 +32,26 @@ const FiltersComponent = () => {
   }
   const handleApplyFilters = () => {
     const params = new URLSearchParams(searchParams.toString());
-
+    
     if (selectedType) params.set('type', selectedType);
     if (selectedBrand) params.set('brand', selectedBrand);
     if (selectedPrice){
       params.set('minPrice', selectedPrice[0].toString());
       params.set('maxPrice', selectedPrice[1].toString());
     }
-
     router.push(`?${params.toString()}`);
   };
 
   return (
     <aside className="flex flex-col w-auto h-[50%] gap-5 bg-gray-400 dark:bg-[#1F2937] p-5 my-2 rounded-xl shadow-lg">
-      <Autocomplete className='w-full' label="Categorias" labelPlacement='outside' placeholder='Buscar categoria...' variant='bordered'>
-        {types.map((type, i) => (
-          <AutocompleteItem key={i} onSelect={() => setSelectedType(type)}>{type}</AutocompleteItem>
+      <Autocomplete className='w-full' label="Categorias" labelPlacement='outside' placeholder='Buscar categoria...' variant='bordered' selectedKey={selectedType ?? undefined} onSelectionChange={(key) => setSelectedType(key as string)}>
+        {types.map((type) => (
+          <AutocompleteItem key={type}>{type}</AutocompleteItem>
         ))}
       </Autocomplete>
-       <Autocomplete className='w-full' label="Marcas" labelPlacement='outside' placeholder='Buscar por marca...' variant='bordered'>
-        {brands.map((brand, i) => (
-          <AutocompleteItem key={i} onSelect={() => setSelectedBrand(brand)}>{brand}</AutocompleteItem>
+       <Autocomplete className='w-full' label="Marcas" labelPlacement='outside' placeholder='Buscar por marca...' variant='bordered' selectedKey={selectedBrand ?? undefined} onSelectionChange={(key) => setSelectedBrand(key as string)}>
+        {brands.map((brand) => (
+          <AutocompleteItem key={brand}>{brand}</AutocompleteItem>
         ))}
       </Autocomplete>
       <article>
