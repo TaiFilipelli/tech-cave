@@ -64,14 +64,14 @@ const DeletePage = () => {
         <article className='bg-black rounded-xl p-6 max-[850px]:p-2 w-1/2 max-[850px]:w-full'>
           <h2 className='font-semibold text-xl my-4'>Seleccione el producto que desea borrar</h2>
           <div className='flex flex-wrap gap-4 mb-6'>
-            <Autocomplete className='w-full' label="Categorias" labelPlacement='outside' placeholder='Buscar categoria...' variant='bordered'>
-            {uniqueTypes.map((type, i) => (
-              <AutocompleteItem key={i} onSelect={() => setSelectedType(type)}>{type}</AutocompleteItem>
+            <Autocomplete className='w-full' label="Categorias" labelPlacement='outside' placeholder='Buscar categoria...' variant='bordered' selectedKey={selectedType ?? undefined} onSelectionChange={(key) => setSelectedType(key as string)}>
+            {uniqueTypes.map((type) => (
+              <AutocompleteItem key={type} onSelect={() => setSelectedType(type)}>{type}</AutocompleteItem>
             ))}
             </Autocomplete>
-           <Autocomplete className='w-full' label="Productos" labelPlacement='outside' placeholder='Buscar producto...' variant='bordered'>
-            {filteredProducts.map((product, i) => (
-              <AutocompleteItem key={i} onSelect={() => setSelectedProduct(product)}>{product.name}</AutocompleteItem>
+           <Autocomplete className='w-full' label="Productos" labelPlacement='outside' placeholder='Buscar producto...' variant='bordered' selectedKey={selectedProduct?.id ?? undefined} onSelectionChange={(key) => setSelectedProduct(filteredProducts.find((p) => p.id === key) ?? null)}>
+            {filteredProducts.map((product) => (
+              <AutocompleteItem key={product.id}>{product.name}</AutocompleteItem>
             ))}
             </Autocomplete>
           </div>

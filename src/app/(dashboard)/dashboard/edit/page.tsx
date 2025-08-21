@@ -96,14 +96,14 @@ const EditPage = () => {
       <h1 className='font-bold text-3xl mb-2'>Editar producto existente</h1>
       <p className='font-medium text-lg mb-5'>Edite precio y stock de cualquier producto</p>
       <div className='flex flex-wrap gap-4 mb-6'>
-        <Autocomplete className='w-full' label="Categorias" labelPlacement='outside' placeholder='Buscar categoria...' variant='bordered'>
-        {uniqueTypes.map((type, i) => (
-          <AutocompleteItem key={i} onSelect={() => setSelectedType(type)}>{type}</AutocompleteItem>
+        <Autocomplete className='w-full' label="Categorias" labelPlacement='outside' placeholder='Buscar categoria...' variant='bordered' selectedKey={selectedType ?? undefined} onSelectionChange={(key) => setSelectedType(key as string)}>
+        {uniqueTypes.map((type) => (
+          <AutocompleteItem key={type}>{type}</AutocompleteItem>
         ))}
         </Autocomplete>
-        <Autocomplete className='w-full' label="Productos" labelPlacement='outside' placeholder='Buscar producto...' variant='bordered'>
-          {filteredProducts.map((product, i) => (
-            <AutocompleteItem key={i} onSelect={() => setSelectedProduct(product)}>{product.name}</AutocompleteItem>
+        <Autocomplete className='w-full' label="Productos" labelPlacement='outside' placeholder='Buscar producto...' variant='bordered' selectedKey={selectedProduct?.id ?? undefined} onSelectionChange={(key) => setSelectedProduct(filteredProducts.find((p) => p.id === key) ?? undefined)}>
+          {filteredProducts.map((product) => (
+            <AutocompleteItem key={product.id}>{product.name}</AutocompleteItem>
           ))}
         </Autocomplete>
       </div>
