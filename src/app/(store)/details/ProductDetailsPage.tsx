@@ -69,7 +69,7 @@ export default function ProductDetailsClient() {
 
   return (
     <main className="pt-32 pb-14 px-20 max-[640px]:p-5 max-[640px]:mt-[7.5rem]"> 
-      <Button as={Link} href="/products" className="bg-transparent hover:bg-red-700 text-gray-300 font-semibold text-xl items-center text-center">← Volver a productos</Button>
+      <Button as={Link} href="/products" className="bg-transparent hover:bg-red-700 text-black dark:text-gray-300 font-semibold text-xl items-center text-center">← Volver a productos</Button>
       <section className="bg-white dark:bg-[#1F2937] text-black dark:text-white mt-10 mb-16 items-center rounded-2xl border-1 border-black">
         <article className="flex flex-row max-[1000px]:flex-col max-[800px]:items-center p-10 max-[400px]:px-2">
           <div className="w-1/3 max-[800px]:w-2/3 max-[500px]:w-full flex items-center justify-center">

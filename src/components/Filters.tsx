@@ -1,27 +1,37 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Slider, Autocomplete, AutocompleteItem } from '@heroui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useRouter, useSearchParams } from 'next/navigation';
+import brandsApi from '@/brands/api';
+import typesApi from '@/productTypes/api';
+import { Brand } from '@/brands/brand';
+import { Type } from '@/productTypes/type';
 
 
 const FiltersComponent = () => {
 
-  const types:string[] = [
-    'Procesador', 'Placa de Video', 'Placa madre', 'Memoria RAM', 'Almacenamiento SSD', 
-    'Almacenamiento HDD', 'Fuente de Alimentacion', 'Otros'
-  ];
+  useEffect(() => {
+    async function fetchData() {
+      const brands:Brand[] = await brandsApi.list();
+      const types:Type[] = await typesApi.list();
+      setBrands(brands);
+      setTypes(types);
 
-  const brands:string[] = [
-    'AMD', 'Intel', 'NVIDIA', 'Asrock', 'ASUS', 'Patriot', 'Corsair', 'ADATA', 'T-CREATE', 'WD', 'Corsair', 'Cougar', 'HYTE'
-  ]
+      console.log("Tipos:", types);
+      console.log("Marcas:",brands);
+    }
+    fetchData();
+  },[]);
 
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [selectedType, setSelectedType] = React.useState<string | null>(null);
-  const [selectedBrand, setSelectedBrand] = React.useState<string | null>(null);
+  const [brands, setBrands] = React.useState<Brand[]>([]);
+  const [types, setTypes] = React.useState<Type[]>([]);
+  const [selectedType, setSelectedType] = React.useState<number | null>(null);
+  const [selectedBrand, setSelectedBrand] = React.useState<number | null>(null);
   const [selectedPrice, setSelectedPrice] = React.useState<number[]>([0, 3000000]);
 
   const handleClearFilters = () => {
@@ -32,9 +42,14 @@ const FiltersComponent = () => {
   }
   const handleApplyFilters = () => {
     const params = new URLSearchParams(searchParams.toString());
-    
-    if (selectedType) params.set('type', selectedType);
-    if (selectedBrand) params.set('brand', selectedBrand);
+    if (selectedType){
+      const typeObj = types.find(type => Number(type.id) === selectedType);
+      if (typeObj) params.set('type', typeObj.tipo);
+    }
+    if (selectedBrand) {
+      const brandObj = brands.find(brand => Number(brand.id) === selectedBrand);
+      if (brandObj) params.set('brand', brandObj.marca);
+    }
     if (selectedPrice){
       params.set('minPrice', selectedPrice[0].toString());
       params.set('maxPrice', selectedPrice[1].toString());
@@ -43,15 +58,15 @@ const FiltersComponent = () => {
   };
 
   return (
-    <aside className="flex flex-col w-auto h-[50%] gap-5 bg-gray-400 dark:bg-[#1F2937] p-5 my-2 rounded-xl shadow-lg">
-      <Autocomplete className='w-full' label="Categorias" labelPlacement='outside' placeholder='Buscar categoria...' variant='bordered' selectedKey={selectedType ?? undefined} onSelectionChange={(key) => setSelectedType(key as string)}>
+    <aside className="flex flex-col w-auto h-[50%] gap-5 bg-white dark:bg-[#1F2937] p-5 my-2 rounded-xl shadow-lg">
+      <Autocomplete className='w-full' label="Categorias" labelPlacement='outside' placeholder='Buscar categoria...' variant='bordered' selectedKey={selectedType ? String(selectedType) : undefined} onSelectionChange={(key) => setSelectedType(key ? Number(key) : null)}>
         {types.map((type) => (
-          <AutocompleteItem key={type}>{type}</AutocompleteItem>
+          <AutocompleteItem key={type.id}>{type.tipo}</AutocompleteItem>
         ))}
       </Autocomplete>
-       <Autocomplete className='w-full' label="Marcas" labelPlacement='outside' placeholder='Buscar por marca...' variant='bordered' selectedKey={selectedBrand ?? undefined} onSelectionChange={(key) => setSelectedBrand(key as string)}>
+      <Autocomplete className='w-full' label="Marcas" labelPlacement='outside' placeholder='Buscar por marca...' variant='bordered' selectedKey={selectedBrand ? String(selectedBrand) : undefined} onSelectionChange={(key) => setSelectedBrand(key ? Number(key) : null)}>
         {brands.map((brand) => (
-          <AutocompleteItem key={brand}>{brand}</AutocompleteItem>
+          <AutocompleteItem key={brand.id}>{brand.marca}</AutocompleteItem>
         ))}
       </Autocomplete>
       <article>

@@ -22,15 +22,14 @@ const ClientProductsList = () => {
     const maxPrice = searchParams.get('maxPrice');
     const brand = searchParams.get('brand');
 
-
     let result = [...allProducts];
 
     if (type) {
-      result = result.filter(p => p.type === type);
+      result = result.filter(p => p.type.toLowerCase() === type.toLowerCase());
     }
 
     if(brand){
-      result = result.filter(p => p.brand === brand);
+      result = result.filter(p => p.brand.toLowerCase() === brand.toLowerCase());
     }
     
     const parsePrice = (price: string | number): number => {
