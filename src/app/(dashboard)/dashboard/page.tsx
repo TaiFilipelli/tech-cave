@@ -15,6 +15,7 @@ const DashboardPage = () => {
 
   const [greeting, setGreeting] = useState('Hola');
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({column: "date", direction: "descending"});
+  const [productSortDescriptor, setProductSortDescriptor] = useState<SortDescriptor>({column: "name", direction: "ascending"});
   const orders:Order[] = useOrders();
   const products:Product[] = useProducts();
   const { data: session } = useSession();
@@ -27,6 +28,14 @@ const DashboardPage = () => {
     {name: 'Fecha', uid: 'date', sortable:true},
     {name: 'Total', uid: 'total', sortable:true},
     {name: 'Email', uid: 'user_email', sortable:true}
+  ];
+
+  const productsHeaderColumns = [
+    {name: 'Nombre', uid: 'name', sortable:true},
+    {name: 'Categoria', uid: 'type', sortable:true},
+    {name: 'Precio', uid: 'price', sortable:true},
+    {name: 'Marca', uid: 'brand', sortable:true},
+    {name: 'Stock', uid: 'stock', sortable:true}
   ];
 
   const STATUS_COLORS: Record<OrderStatus, string> = {
@@ -126,7 +135,7 @@ const getOrdersPerMonth = (orders: Order[]): LineChartData[] => {
   const lineData = getOrdersPerMonth(orders || []);
   // LÓGICA PARA EL GRÁFICO DE LÍNEA DE PEDIDOS POR MES.	
   const getRevenuePerMonth = (orders: Order[]) => {
-  const revenueMap: Record<string, number> = {};
+    const revenueMap: Record<string, number> = {};
 
   orders.forEach(order => {
     if (order.status !== "approved") return;
@@ -164,6 +173,16 @@ const getOrdersPerMonth = (orders: Order[]): LineChartData[] => {
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
     });
   }, [orders, sortDescriptor]);
+
+  const sortedProducts = React.useMemo(() => {
+    return [...products].sort((a: Product, b: Product) => {
+      const first = a[productSortDescriptor.column as keyof Product];
+      const second = b[productSortDescriptor.column as keyof Product];
+      const cmp = first < second ? -1 : first > second ? 1 : 0;
+
+      return productSortDescriptor.direction === "descending" ? -cmp : cmp;
+    });
+  }, [products, productSortDescriptor]);
 
   const calculateTotal = (items: Order['items']) => {
     return items.reduce((total, item) => total + 
@@ -307,29 +326,30 @@ const getOrdersPerMonth = (orders: Order[]): LineChartData[] => {
           </Dropdown>
         </header>
           {products?.length > 0 ? (
-            <div className="overflow-x-scroll overflow-y-scroll scrollbar-thin">
-              <table className="min-w-full divide-y divide-gray-700 bg-gray-900 rounded-xl">
-                <thead>
-                  <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Nombre</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Categoria</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Precio</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Marca</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Stock</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-700">
-                  {products.map((product, index) => (
-                    <tr key={index}>
-                      <td className="px-4 py-3 whitespace-nowrap">{product.name}</td>
-                      <td className="px-4 py-3 whitespace-nowrap">{product.type}</td>
-                      <td className="px-4 py-3 whitespace-nowrap">${Number(product.price.toString().replace(/[^0-9,]/g, '').replace(/\./g, '').replace(',', '.'))}</td>
-                      <td className="px-4 py-3 whitespace-nowrap">{product.brand}</td>
-                      <td className="px-4 py-3 whitespace-nowrap">{product.stock}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="overflow-x-scroll overflow-y-scroll scrollbar-thin bg-gray-900 rounded-xl p-5">
+              <Table aria-label='Inventario productos' 
+                 classNames={{ base: "overflow-scroll scrollbar-thin", wrapper:"bg-transparent", table: "min-w-full divide-y divide-gray-700 bg-gray-900 rounded-xl",}}
+                 sortDescriptor={productSortDescriptor}
+                 onSortChange={setProductSortDescriptor}>
+                <TableHeader columns={productsHeaderColumns} className=''>
+                  {(column) => (
+                    <TableColumn key={column.uid} allowsSorting={column.sortable}>
+                      {column.name}
+                    </TableColumn>
+                  )}
+                </TableHeader>
+                <TableBody items={sortedProducts.slice(0,10)} emptyContent={"No se encontraron items"}>
+                  {(product) => (
+                    <TableRow key={product.id}>
+                      <TableCell className="px-4 py-3 whitespace-nowrap">{product.name}</TableCell>
+                      <TableCell className="px-4 py-3 whitespace-nowrap">{product.type}</TableCell>
+                      <TableCell className="px-4 py-3 whitespace-nowrap">${Number(product.price.toString().replace(/[^0-9,]/g, '').replace(/\./g, '').replace(',', '.'))}</TableCell>
+                      <TableCell className="px-4 py-3 whitespace-nowrap">{product.brand}</TableCell>
+                      <TableCell className="px-4 py-3 whitespace-nowrap">{product.stock}</TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
             </div>
           ) : (
             <p className='text-gray-400'>No cargan los productos. Verifique la hoja de cálculo.</p>
@@ -337,7 +357,7 @@ const getOrdersPerMonth = (orders: Order[]): LineChartData[] => {
       </article>
       <article className="w-1/2 max-[800px]:w-full bg-black p-5 rounded-xl h-full">
         <h2 className="font-semibold text-xl mb-5">Últimos pedidos</h2>
-        <div className="bg-gray-900 rounded-xl p-5">
+        <div className="overflow-x-scroll overflow-y-scroll scrollbar-thin bg-gray-900 rounded-xl p-5">
           {orders?.length > 0 ? (
             <Table aria-label="Últimos pedidos" 
               classNames={{ base: "overflow-scroll scrollbar-thin", wrapper:"bg-transparent", table: "min-w-full divide-y divide-gray-700 bg-gray-900 rounded-xl",}}
