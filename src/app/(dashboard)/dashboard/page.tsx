@@ -317,6 +317,11 @@ const getOrdersPerMonth = (orders: Order[]): LineChartData[] => {
                   Eliminar producto
                 </Button>
               </DropdownItem>
+              <DropdownItem key='addItem'>
+                <Button as={Link} href='/dashboard/add-normalized' className='bg-gradient-to-br from-pink-600 to-yellow-600 text-white font-semibold w-full' startContent={<FontAwesomeIcon icon={faPlus} size='lg'/>}>
+                  Agregar Tipo/Marca
+                </Button>
+              </DropdownItem>
               <DropdownItem key='download'>
                 <Button as={Link} href='https://docs.google.com/spreadsheets/d/1O_9reXr8yzEZDllwOo_YKOtJ3HZqKJd7dkF_cWrqa1g/export?format=xlsx' download target='_blank' rel='noopener noreferrer' className='bg-gradient-to-br from-green-600 to-blue-600 text-white font-semibold w-full' startContent={<FontAwesomeIcon icon={faDownload} size='lg' />}>
                   Descargar hoja
