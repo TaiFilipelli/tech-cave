@@ -381,7 +381,15 @@ const getOrdersPerMonth = (orders: Order[]): LineChartData[] => {
                 <TableRow key={order.payment_id}>
                   <TableCell>{order.payment_id}</TableCell>
                   <TableCell>{order.status}</TableCell>
-                  <TableCell>{order.date}</TableCell>
+                    <TableCell>
+                    {new Date(order.date).toLocaleString("es-AR", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                    </TableCell>
                   <TableCell>${calculateTotal(order.items)}</TableCell>
                   <TableCell>${order.user_email}</TableCell>
                 </TableRow>
